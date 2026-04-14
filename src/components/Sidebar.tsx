@@ -10,6 +10,7 @@ const nav = [
   { href: "/timeline", label: "Timeline", icon: "📅" },
   { href: "/contractors", label: "Contractors", icon: "👷" },
   { href: "/loan", label: "Loan", icon: "🏦" },
+  { href: "/design", label: "Home Design", icon: "🏡" },
   { href: "/documents", label: "Plans & Permits", icon: "📄" },
 ];
 
