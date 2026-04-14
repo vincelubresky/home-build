@@ -1,65 +1,139 @@
-import Image from "next/image";
+export const dynamic = "force-dynamic";
 
-export default function Home() {
+import { prisma } from "@/lib/prisma";
+import Link from "next/link";
+
+async function getStats() {
+  const [
+    totalExpenses,
+    totalAllocated,
+    materialCounts,
+    milestoneCounts,
+    contractorCount,
+    loanTotal,
+  ] = await Promise.all([
+    prisma.expense.aggregate({ _sum: { amount: true } }),
+    prisma.budgetCategory.aggregate({ _sum: { allocated: true } }),
+    prisma.material.groupBy({ by: ["status"], _count: true }),
+    prisma.milestone.groupBy({ by: ["status"], _count: true }),
+    prisma.contractor.count({ where: { status: "active" } }),
+    prisma.loan.aggregate({ _sum: { totalAmount: true } }),
+  ]);
+
+  return {
+    spent: totalExpenses._sum.amount ?? 0,
+    allocated: totalAllocated._sum.allocated ?? 0,
+    materials: materialCounts,
+    milestones: milestoneCounts,
+    activeContractors: contractorCount,
+    loanTotal: loanTotal._sum.totalAmount ?? 0,
+  };
+}
+
+const sectionCards = [
+  { href: "/budget", label: "Budget", icon: "💰", color: "bg-green-50 border-green-200" },
+  { href: "/materials", label: "Materials", icon: "🧱", color: "bg-amber-50 border-amber-200" },
+  { href: "/timeline", label: "Timeline", icon: "📅", color: "bg-blue-50 border-blue-200" },
+  { href: "/contractors", label: "Contractors", icon: "👷", color: "bg-purple-50 border-purple-200" },
+  { href: "/loan", label: "Loan & Draws", icon: "🏦", color: "bg-cyan-50 border-cyan-200" },
+  { href: "/documents", label: "Plans & Permits", icon: "📄", color: "bg-rose-50 border-rose-200" },
+];
+
+function fmt(n: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(n);
+}
+
+export default async function OverviewPage() {
+  const stats = await getStats();
+
+  const completedMilestones = stats.milestones.find((m) => m.status === "completed")?._count ?? 0;
+  const totalMilestones = stats.milestones.reduce((s, m) => s + m._count, 0);
+  const totalMaterials = stats.materials.reduce((s, m) => s + m._count, 0);
+  const budgetPct = stats.allocated > 0 ? Math.min((stats.spent / stats.allocated) * 100, 100) : 0;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <div className="max-w-5xl mx-auto">
+      <h2 className="text-2xl font-bold mb-1">Overview</h2>
+      <p className="text-slate-500 mb-8">Your home build at a glance</p>
+
+      {/* Key numbers */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <StatCard label="Total Spent" value={fmt(stats.spent)} sub={`of ${fmt(stats.allocated)} budgeted`} />
+        <StatCard label="Loan Amount" value={fmt(stats.loanTotal)} sub="total financing" />
+        <StatCard label="Active Contractors" value={String(stats.activeContractors)} sub="currently on site" />
+        <StatCard label="Milestones" value={`${completedMilestones} / ${totalMilestones}`} sub="completed" />
+      </div>
+
+      {/* Budget bar */}
+      {stats.allocated > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-5 mb-8">
+          <div className="flex justify-between text-sm mb-2">
+            <span className="font-medium">Budget used</span>
+            <span className="text-slate-500">{budgetPct.toFixed(1)}%</span>
+          </div>
+          <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
+            <div
+              className={`h-full rounded-full transition-all ${
+                budgetPct > 90 ? "bg-red-500" : budgetPct > 70 ? "bg-amber-400" : "bg-green-500"
+              }`}
+              style={{ width: `${budgetPct}%` }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+          <div className="flex justify-between text-xs text-slate-400 mt-1.5">
+            <span>{fmt(stats.spent)} spent</span>
+            <span>{fmt(stats.allocated - stats.spent)} remaining</span>
+          </div>
         </div>
-      </main>
+      )}
+
+      {/* Materials summary */}
+      {totalMaterials > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-5 mb-8">
+          <p className="font-medium text-sm mb-3">Materials Status</p>
+          <div className="flex gap-6 text-sm">
+            {stats.materials.map((m) => (
+              <div key={m.status} className="text-center">
+                <div className="text-xl font-bold">{m._count}</div>
+                <div className="text-slate-500 capitalize">{m.status}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Section nav cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        {sectionCards.map(({ href, label, icon, color }) => (
+          <Link
+            key={href}
+            href={href}
+            className={`rounded-xl border p-5 flex items-center gap-4 hover:shadow-md transition-shadow ${color}`}
+          >
+            <span className="text-3xl">{icon}</span>
+            <span className="font-semibold">{label}</span>
+          </Link>
+        ))}
+      </div>
+
+      {totalMilestones === 0 && stats.spent === 0 && (
+        <p className="text-center text-slate-400 text-sm mt-10">
+          No data yet — click any section above to start adding your build details.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function StatCard({ label, value, sub }: { label: string; value: string; sub: string }) {
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <p className="text-xs text-slate-500 mb-1">{label}</p>
+      <p className="text-xl font-bold">{value}</p>
+      <p className="text-xs text-slate-400 mt-0.5">{sub}</p>
     </div>
   );
 }

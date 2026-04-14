@@ -1,0 +1,133 @@
+// Home Build Dashboard — Prisma Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ── Budget ──────────────────────────────────────────────────────────────────
+model BudgetCategory {
+  id        Int       @id @default(autoincrement())
+  name      String
+  allocated Float     @default(0)
+  spent     Float     @default(0)
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  expenses  Expense[]
+}
+
+model Expense {
+  id         Int            @id @default(autoincrement())
+  category   BudgetCategory @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  description String
+  amount     Float
+  date       DateTime
+  vendor     String?
+  receipt    String?        // URL or file reference
+  createdAt  DateTime       @default(now())
+}
+
+// ── Materials ────────────────────────────────────────────────────────────────
+model Material {
+  id          Int      @id @default(autoincrement())
+  name        String
+  category    String   // e.g. Framing, Plumbing, Electrical, Roofing
+  quantity    Float
+  unit        String   // e.g. board-ft, sq-ft, each
+  unitCost    Float?
+  totalCost   Float?
+  status      String   @default("needed") // needed | ordered | delivered | installed
+  vendor      String?
+  orderDate   DateTime?
+  deliveryDate DateTime?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ── Timeline ─────────────────────────────────────────────────────────────────
+model Milestone {
+  id          Int      @id @default(autoincrement())
+  phase       String   // e.g. Site Prep, Foundation, Framing, Roofing, etc.
+  title       String
+  description String?
+  status      String   @default("upcoming") // upcoming | in_progress | completed | delayed
+  startDate   DateTime?
+  targetDate  DateTime?
+  completedDate DateTime?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ── Contractors ───────────────────────────────────────────────────────────────
+model Contractor {
+  id        Int      @id @default(autoincrement())
+  name      String
+  trade     String   // e.g. General, Plumbing, Electrical, HVAC, Framing
+  company   String?
+  phone     String?
+  email     String?
+  status    String   @default("active") // active | completed | on_hold
+  notes     Note[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Note {
+  id           Int        @id @default(autoincrement())
+  contractor   Contractor @relation(fields: [contractorId], references: [id])
+  contractorId Int
+  content      String
+  date         DateTime   @default(now())
+  createdAt    DateTime   @default(now())
+}
+
+// ── Loan ─────────────────────────────────────────────────────────────────────
+model Loan {
+  id            Int       @id @default(autoincrement())
+  lender        String
+  loanType      String    // e.g. Construction, Permanent, Bridge
+  totalAmount   Float
+  interestRate  Float
+  closingDate   DateTime?
+  drawSchedule  Draw[]
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Draw {
+  id          Int      @id @default(autoincrement())
+  loan        Loan     @relation(fields: [loanId], references: [id])
+  loanId      Int
+  drawNumber  Int
+  amount      Float
+  requestDate DateTime?
+  approvedDate DateTime?
+  fundedDate  DateTime?
+  status      String   @default("pending") // pending | approved | funded
+  notes       String?
+  createdAt   DateTime @default(now())
+}
+
+// ── Home Plans & Permits ──────────────────────────────────────────────────────
+model Document {
+  id          Int      @id @default(autoincrement())
+  type        String   // plan | permit | inspection | certificate | other
+  title       String
+  description String?
+  fileUrl     String?
+  status      String   @default("pending") // pending | submitted | approved | rejected | expired
+  submittedDate DateTime?
+  approvedDate  DateTime?
+  expiryDate    DateTime?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
