@@ -1,5 +1,15 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+const adapter = new PrismaPg({
+  host: "dpg-d7f67of41pts73cb8vqg-a.oregon-postgres.render.com",
+  port: 5432,
+  database: "homebuild",
+  user: "homebuild",
+  password: "cezjKf8dl2AvtnbVUo5SHWAVXLF7Tjjy",
+  ssl: { rejectUnauthorized: false },
+});
+const prisma = new PrismaClient({ adapter });
 
 const categories = [
   { name: "Site & Permits",            allocated: 5500,  notes: "Health dept, county permit, engineering, survey, house plans" },
@@ -18,23 +28,20 @@ const categories = [
   { name: "Basement — Phase 2 (TBD)", allocated: 0,     notes: "Not budgeted. Est $60k-$80k if finished. Decision TBD after main floor complete." },
 ];
 
-export async function POST() {
-  try {
-    const existing = await prisma.budgetCategory.count();
-    if (existing > 0) {
-      return NextResponse.json({ message: `Already seeded (${existing} categories exist). Delete first if you want to re-seed.` });
-    }
+async function seed() {
+  console.log("Clearing existing budget data...");
+  await prisma.expense.deleteMany();
+  await prisma.budgetCategory.deleteMany();
 
-    const created = [];
-    for (const cat of categories) {
-      const c = await prisma.budgetCategory.create({ data: cat });
-      created.push({ name: c.name, allocated: c.allocated });
-    }
-
-    const total = categories.reduce((s, c) => s + c.allocated, 0);
-    return NextResponse.json({ success: true, categoriesCreated: created.length, totalAllocated: total });
-  } catch (error) {
-    console.error("Seed error:", error);
-    return NextResponse.json({ error: String(error) }, { status: 500 });
+  console.log("Seeding budget categories...");
+  for (const cat of categories) {
+    const c = await prisma.budgetCategory.create({ data: cat });
+    console.log(`  ✓  $${c.allocated.toLocaleString().padStart(7)}  ${c.name}`);
   }
+
+  const total = categories.reduce((s, c) => s + c.allocated, 0);
+  console.log(`\n  Total allocated:  $${total.toLocaleString()}`);
+  await prisma.$disconnect();
 }
+
+seed().catch(e => { console.error(e); process.exit(1); });
