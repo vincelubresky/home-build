@@ -20,11 +20,18 @@ const STATUS_COLORS: Record<string, string> = {
 
 const blank = { type: "plan", title: "", description: "", fileUrl: "", status: "pending", submittedDate: "", approvedDate: "", expiryDate: "", notes: "" };
 
+function toDateInput(val: string | null) {
+  if (!val) return "";
+  return val.split("T")[0];
+}
+
 export default function DocumentsPage() {
   const [docs, setDocs] = useState<Document[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [filter, setFilter] = useState("all");
   const [form, setForm] = useState(blank);
+  const [editId, setEditId] = useState<number | null>(null);
+  const [editForm, setEditForm] = useState(blank);
   const [loading, setLoading] = useState(true);
 
   async function load() {
@@ -43,6 +50,35 @@ export default function DocumentsPage() {
     });
     setForm(blank);
     setShowForm(false);
+    load();
+  }
+
+  function startEdit(d: Document) {
+    setEditId(d.id);
+    setEditForm({
+      type: d.type, title: d.title, description: d.description ?? "",
+      fileUrl: d.fileUrl ?? "", status: d.status,
+      submittedDate: toDateInput(d.submittedDate),
+      approvedDate: toDateInput(d.approvedDate),
+      expiryDate: toDateInput(d.expiryDate),
+      notes: d.notes ?? "",
+    });
+  }
+
+  async function saveEdit(e: React.FormEvent) {
+    e.preventDefault();
+    await fetch(`/api/documents/${editId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editForm),
+    });
+    setEditId(null);
+    load();
+  }
+
+  async function deleteDoc(id: number) {
+    if (!confirm("Delete this document?")) return;
+    await fetch(`/api/documents/${id}`, { method: "DELETE" });
     load();
   }
 
@@ -66,10 +102,9 @@ export default function DocumentsPage() {
           <h2 className="text-2xl font-bold">Plans & Permits</h2>
           <p className="text-slate-500 text-sm mt-0.5">Home plans, permits, inspections, and certificates</p>
         </div>
-        <button onClick={() => setShowForm(!showForm)} className="btn-primary">+ Add Document</button>
+        <button onClick={() => { setShowForm(!showForm); setEditId(null); }} className="btn-primary">+ Add Document</button>
       </div>
 
-      {/* Type filter */}
       <div className="flex gap-2 mb-6 flex-wrap">
         {["all", ...TYPES].map((t) => (
           <button key={t} onClick={() => setFilter(t)}
@@ -83,46 +118,7 @@ export default function DocumentsPage() {
       {showForm && (
         <form onSubmit={save} className="bg-white rounded-xl border border-slate-200 p-5 mb-6 grid grid-cols-2 gap-4">
           <h3 className="col-span-2 font-semibold">New Document</h3>
-          <div>
-            <label className="label">Type</label>
-            <select className="input" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
-              {TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="label">Title</label>
-            <input className="input" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="e.g. Building Permit, Floor Plan Set A" />
-          </div>
-          <div className="col-span-2">
-            <label className="label">Description</label>
-            <textarea className="input" rows={2} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
-          </div>
-          <div className="col-span-2">
-            <label className="label">File URL (optional)</label>
-            <input className="input" type="url" value={form.fileUrl} onChange={(e) => setForm({ ...form, fileUrl: e.target.value })} placeholder="Link to Google Drive, Dropbox, etc." />
-          </div>
-          <div>
-            <label className="label">Status</label>
-            <select className="input" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
-              {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="label">Submitted Date</label>
-            <input className="input" type="date" value={form.submittedDate} onChange={(e) => setForm({ ...form, submittedDate: e.target.value })} />
-          </div>
-          <div>
-            <label className="label">Approved Date</label>
-            <input className="input" type="date" value={form.approvedDate} onChange={(e) => setForm({ ...form, approvedDate: e.target.value })} />
-          </div>
-          <div>
-            <label className="label">Expiry Date</label>
-            <input className="input" type="date" value={form.expiryDate} onChange={(e) => setForm({ ...form, expiryDate: e.target.value })} />
-          </div>
-          <div className="col-span-2">
-            <label className="label">Notes</label>
-            <textarea className="input" rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
-          </div>
+          <DocumentFields form={form} setForm={setForm} />
           <div className="col-span-2 flex gap-2 justify-end">
             <button type="button" onClick={() => setShowForm(false)} className="btn-secondary">Cancel</button>
             <button type="submit" className="btn-primary">Save</button>
@@ -134,39 +130,101 @@ export default function DocumentsPage() {
         <p className="text-slate-400 text-sm text-center py-12">No documents yet — add one above.</p>
       ) : (
         <div className="space-y-3">
-          {filtered.map((d) => (
-            <div key={d.id} className="bg-white rounded-xl border border-slate-200 p-4">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded capitalize">{d.type}</span>
-                    <p className="font-medium">{d.title}</p>
-                  </div>
-                  {d.description && <p className="text-sm text-slate-500">{d.description}</p>}
-                  <div className="flex gap-4 mt-1 text-xs text-slate-400 flex-wrap">
-                    {d.submittedDate && <span>Submitted: {new Date(d.submittedDate).toLocaleDateString()}</span>}
-                    {d.approvedDate && <span className="text-green-600">Approved: {new Date(d.approvedDate).toLocaleDateString()}</span>}
-                    {d.expiryDate && <span className="text-orange-600">Expires: {new Date(d.expiryDate).toLocaleDateString()}</span>}
-                  </div>
-                  {d.notes && <p className="text-xs text-slate-400 italic mt-1">{d.notes}</p>}
-                  {d.fileUrl && (
-                    <a href={d.fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline mt-1 inline-block">
-                      📎 View file
-                    </a>
-                  )}
+          {filtered.map((d) =>
+            editId === d.id ? (
+              <form key={d.id} onSubmit={saveEdit} className="bg-white rounded-xl border border-slate-200 p-5 grid grid-cols-2 gap-4">
+                <h3 className="col-span-2 font-semibold text-sm text-slate-600">Editing: {d.title}</h3>
+                <DocumentFields form={editForm} setForm={setEditForm} />
+                <div className="col-span-2 flex gap-2 justify-end">
+                  <button type="button" onClick={() => setEditId(null)} className="btn-secondary">Cancel</button>
+                  <button type="submit" className="btn-primary">Save</button>
                 </div>
-                <select
-                  value={d.status}
-                  onChange={(e) => updateStatus(d.id, e.target.value)}
-                  className={`text-xs font-medium px-2 py-1 rounded-full border-0 cursor-pointer flex-shrink-0 ${STATUS_COLORS[d.status]}`}
-                >
-                  {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-                </select>
+              </form>
+            ) : (
+              <div key={d.id} className="bg-white rounded-xl border border-slate-200 p-4 group">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      <span className="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded capitalize">{d.type}</span>
+                      <p className="font-medium">{d.title}</p>
+                    </div>
+                    {d.description && <p className="text-sm text-slate-500">{d.description}</p>}
+                    <div className="flex gap-4 mt-1 text-xs text-slate-400 flex-wrap">
+                      {d.submittedDate && <span>Submitted: {new Date(d.submittedDate).toLocaleDateString()}</span>}
+                      {d.approvedDate && <span className="text-green-600">Approved: {new Date(d.approvedDate).toLocaleDateString()}</span>}
+                      {d.expiryDate && <span className="text-orange-600">Expires: {new Date(d.expiryDate).toLocaleDateString()}</span>}
+                    </div>
+                    {d.notes && <p className="text-xs text-slate-400 italic mt-1">{d.notes}</p>}
+                    {d.fileUrl && (
+                      <a href={d.fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline mt-1 inline-block">
+                        📎 View file
+                      </a>
+                    )}
+                    <div className="flex gap-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button onClick={() => startEdit(d)} className="text-xs text-slate-400 hover:text-slate-700 underline">Edit</button>
+                      <button onClick={() => deleteDoc(d.id)} className="text-xs text-red-400 hover:text-red-600 underline">Delete</button>
+                    </div>
+                  </div>
+                  <select
+                    value={d.status}
+                    onChange={(e) => updateStatus(d.id, e.target.value)}
+                    className={`text-xs font-medium px-2 py-1 rounded-full border-0 cursor-pointer flex-shrink-0 ${STATUS_COLORS[d.status]}`}
+                  >
+                    {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       )}
     </div>
+  );
+}
+
+function DocumentFields({ form, setForm }: { form: typeof blank; setForm: (f: typeof blank) => void }) {
+  return (
+    <>
+      <div>
+        <label className="label">Type</label>
+        <select className="input" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
+          {TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+        </select>
+      </div>
+      <div>
+        <label className="label">Title</label>
+        <input className="input" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="e.g. Building Permit, Floor Plan Set A" />
+      </div>
+      <div className="col-span-2">
+        <label className="label">Description</label>
+        <textarea className="input" rows={2} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+      </div>
+      <div className="col-span-2">
+        <label className="label">File URL (optional)</label>
+        <input className="input" type="url" value={form.fileUrl} onChange={(e) => setForm({ ...form, fileUrl: e.target.value })} placeholder="Link to Google Drive, Dropbox, etc." />
+      </div>
+      <div>
+        <label className="label">Status</label>
+        <select className="input" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
+          {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+        </select>
+      </div>
+      <div>
+        <label className="label">Submitted Date</label>
+        <input className="input" type="date" value={form.submittedDate} onChange={(e) => setForm({ ...form, submittedDate: e.target.value })} />
+      </div>
+      <div>
+        <label className="label">Approved Date</label>
+        <input className="input" type="date" value={form.approvedDate} onChange={(e) => setForm({ ...form, approvedDate: e.target.value })} />
+      </div>
+      <div>
+        <label className="label">Expiry Date</label>
+        <input className="input" type="date" value={form.expiryDate} onChange={(e) => setForm({ ...form, expiryDate: e.target.value })} />
+      </div>
+      <div className="col-span-2">
+        <label className="label">Notes</label>
+        <textarea className="input" rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
+      </div>
+    </>
   );
 }

@@ -18,11 +18,18 @@ const STATUS_COLORS: Record<string, string> = {
 
 const blank = { name: "", category: "", quantity: "1", unit: "each", unitCost: "", vendor: "", orderDate: "", deliveryDate: "", notes: "", status: "needed" };
 
+function toDateInput(val: string | null) {
+  if (!val) return "";
+  return val.split("T")[0];
+}
+
 export default function MaterialsPage() {
   const [materials, setMaterials] = useState<Material[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [filterStatus, setFilterStatus] = useState("all");
   const [form, setForm] = useState(blank);
+  const [editId, setEditId] = useState<number | null>(null);
+  const [editForm, setEditForm] = useState(blank);
   const [loading, setLoading] = useState(true);
 
   async function load() {
@@ -30,7 +37,6 @@ export default function MaterialsPage() {
     setMaterials(data);
     setLoading(false);
   }
-
   useEffect(() => { load(); }, []);
 
   async function save(e: React.FormEvent) {
@@ -47,16 +53,37 @@ export default function MaterialsPage() {
     load();
   }
 
-  async function updateStatus(id: number, status: string) {
-    await fetch(`/api/materials/${id}`, {
+  function startEdit(m: Material) {
+    setEditId(m.id);
+    setEditForm({
+      name: m.name, category: m.category, quantity: String(m.quantity), unit: m.unit,
+      unitCost: m.unitCost != null ? String(m.unitCost) : "", vendor: m.vendor ?? "",
+      orderDate: toDateInput(m.orderDate), deliveryDate: toDateInput(m.deliveryDate),
+      notes: m.notes ?? "", status: m.status,
+    });
+  }
+
+  async function saveEdit(e: React.FormEvent) {
+    e.preventDefault();
+    const qty = parseFloat(editForm.quantity);
+    const cost = editForm.unitCost ? parseFloat(editForm.unitCost) : null;
+    await fetch(`/api/materials/${editId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
+      body: JSON.stringify({ ...editForm, quantity: qty, unitCost: cost, totalCost: cost != null ? qty * cost : null }),
     });
+    setEditId(null);
+    load();
+  }
+
+  async function deleteMaterial(id: number) {
+    if (!confirm("Delete this material?")) return;
+    await fetch(`/api/materials/${id}`, { method: "DELETE" });
     load();
   }
 
   const filtered = filterStatus === "all" ? materials : materials.filter((m) => m.status === filterStatus);
+  const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
 
   if (loading) return <p className="text-slate-400">Loading…</p>;
 
@@ -67,69 +94,43 @@ export default function MaterialsPage() {
           <h2 className="text-2xl font-bold">Materials</h2>
           <p className="text-slate-500 text-sm mt-0.5">Track what you need, ordered, and installed</p>
         </div>
-        <button onClick={() => setShowForm(!showForm)} className="btn-primary">+ Add Material</button>
+        <button onClick={() => { setShowForm(!showForm); setEditId(null); }} className="btn-primary">+ Add Material</button>
       </div>
 
-      {/* Status filter */}
       <div className="flex gap-2 mb-6">
         {["all", ...STATUSES].map((s) => (
-          <button
-            key={s}
-            onClick={() => setFilterStatus(s)}
+          <button key={s} onClick={() => setFilterStatus(s)}
             className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors capitalize
-              ${filterStatus === s ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
-          >
+              ${filterStatus === s ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}>
             {s} {s !== "all" && `(${materials.filter((m) => m.status === s).length})`}
           </button>
         ))}
       </div>
 
-      {/* Add form */}
       {showForm && (
         <form onSubmit={save} className="bg-white rounded-xl border border-slate-200 p-5 mb-6 grid grid-cols-2 gap-4">
           <h3 className="col-span-2 font-semibold">New Material</h3>
-          <div className="col-span-2">
-            <label className="label">Name</label>
-            <input className="input" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="e.g. 2×4 Lumber, OSB Sheathing" />
-          </div>
-          <div>
-            <label className="label">Category</label>
-            <input className="input" required value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} placeholder="e.g. Framing, Roofing, Plumbing" />
-          </div>
-          <div>
-            <label className="label">Status</label>
+          <div className="col-span-2"><label className="label">Name</label>
+            <input className="input" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="e.g. 2×4 Lumber, OSB Sheathing" /></div>
+          <div><label className="label">Category</label>
+            <input className="input" required value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} placeholder="e.g. Framing, Roofing" /></div>
+          <div><label className="label">Status</label>
             <select className="input" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
-              {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="label">Quantity</label>
-            <input className="input" type="number" step="any" required value={form.quantity} onChange={(e) => setForm({ ...form, quantity: e.target.value })} />
-          </div>
-          <div>
-            <label className="label">Unit</label>
-            <input className="input" value={form.unit} onChange={(e) => setForm({ ...form, unit: e.target.value })} placeholder="e.g. each, board-ft, sq-ft" />
-          </div>
-          <div>
-            <label className="label">Unit Cost ($)</label>
-            <input className="input" type="number" step="0.01" value={form.unitCost} onChange={(e) => setForm({ ...form, unitCost: e.target.value })} />
-          </div>
-          <div>
-            <label className="label">Vendor</label>
-            <input className="input" value={form.vendor} onChange={(e) => setForm({ ...form, vendor: e.target.value })} />
-          </div>
-          <div>
-            <label className="label">Order Date</label>
-            <input className="input" type="date" value={form.orderDate} onChange={(e) => setForm({ ...form, orderDate: e.target.value })} />
-          </div>
-          <div>
-            <label className="label">Expected Delivery</label>
-            <input className="input" type="date" value={form.deliveryDate} onChange={(e) => setForm({ ...form, deliveryDate: e.target.value })} />
-          </div>
-          <div className="col-span-2">
-            <label className="label">Notes</label>
-            <textarea className="input" rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
-          </div>
+              {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}</select></div>
+          <div><label className="label">Quantity</label>
+            <input className="input" type="number" step="any" required value={form.quantity} onChange={(e) => setForm({ ...form, quantity: e.target.value })} /></div>
+          <div><label className="label">Unit</label>
+            <input className="input" value={form.unit} onChange={(e) => setForm({ ...form, unit: e.target.value })} placeholder="each, board-ft, sq-ft" /></div>
+          <div><label className="label">Unit Cost ($)</label>
+            <input className="input" type="number" step="0.01" value={form.unitCost} onChange={(e) => setForm({ ...form, unitCost: e.target.value })} /></div>
+          <div><label className="label">Vendor</label>
+            <input className="input" value={form.vendor} onChange={(e) => setForm({ ...form, vendor: e.target.value })} /></div>
+          <div><label className="label">Order Date</label>
+            <input className="input" type="date" value={form.orderDate} onChange={(e) => setForm({ ...form, orderDate: e.target.value })} /></div>
+          <div><label className="label">Expected Delivery</label>
+            <input className="input" type="date" value={form.deliveryDate} onChange={(e) => setForm({ ...form, deliveryDate: e.target.value })} /></div>
+          <div className="col-span-2"><label className="label">Notes</label>
+            <textarea className="input" rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
           <div className="col-span-2 flex gap-2 justify-end">
             <button type="button" onClick={() => setShowForm(false)} className="btn-secondary">Cancel</button>
             <button type="submit" className="btn-primary">Save</button>
@@ -137,7 +138,6 @@ export default function MaterialsPage() {
         </form>
       )}
 
-      {/* Materials list */}
       {filtered.length === 0 ? (
         <p className="text-slate-400 text-sm text-center py-12">No materials {filterStatus !== "all" && `with status "${filterStatus}"`} yet.</p>
       ) : (
@@ -151,26 +151,64 @@ export default function MaterialsPage() {
                 <th className="text-right px-4 py-3 font-medium text-slate-600">Cost</th>
                 <th className="text-left px-4 py-3 font-medium text-slate-600">Vendor</th>
                 <th className="text-left px-4 py-3 font-medium text-slate-600">Status</th>
+                <th className="px-4 py-3 w-20" />
               </tr>
             </thead>
             <tbody>
-              {filtered.map((m) => (
-                <tr key={m.id} className="border-b border-slate-100 last:border-0">
-                  <td className="px-4 py-3 font-medium">{m.name}</td>
+              {filtered.map((m) => editId === m.id ? (
+                <tr key={m.id}>
+                  <td colSpan={7} className="p-0">
+                    <form onSubmit={saveEdit} className="grid grid-cols-4 gap-3 px-4 py-3 bg-slate-50 border-b border-slate-200">
+                      <div className="col-span-2"><label className="label">Name</label>
+                        <input className="input" required value={editForm.name} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })} /></div>
+                      <div><label className="label">Category</label>
+                        <input className="input" value={editForm.category} onChange={(e) => setEditForm({ ...editForm, category: e.target.value })} /></div>
+                      <div><label className="label">Status</label>
+                        <select className="input" value={editForm.status} onChange={(e) => setEditForm({ ...editForm, status: e.target.value })}>
+                          {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}</select></div>
+                      <div><label className="label">Qty</label>
+                        <input className="input" type="number" step="any" value={editForm.quantity} onChange={(e) => setEditForm({ ...editForm, quantity: e.target.value })} /></div>
+                      <div><label className="label">Unit</label>
+                        <input className="input" value={editForm.unit} onChange={(e) => setEditForm({ ...editForm, unit: e.target.value })} /></div>
+                      <div><label className="label">Unit Cost ($)</label>
+                        <input className="input" type="number" step="0.01" value={editForm.unitCost} onChange={(e) => setEditForm({ ...editForm, unitCost: e.target.value })} /></div>
+                      <div><label className="label">Vendor</label>
+                        <input className="input" value={editForm.vendor} onChange={(e) => setEditForm({ ...editForm, vendor: e.target.value })} /></div>
+                      <div><label className="label">Order Date</label>
+                        <input className="input" type="date" value={editForm.orderDate} onChange={(e) => setEditForm({ ...editForm, orderDate: e.target.value })} /></div>
+                      <div><label className="label">Delivery Date</label>
+                        <input className="input" type="date" value={editForm.deliveryDate} onChange={(e) => setEditForm({ ...editForm, deliveryDate: e.target.value })} /></div>
+                      <div className="col-span-2"><label className="label">Notes</label>
+                        <input className="input" value={editForm.notes} onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })} /></div>
+                      <div className="col-span-4 flex gap-2 justify-end pt-1">
+                        <button type="button" onClick={() => setEditId(null)} className="btn-secondary">Cancel</button>
+                        <button type="submit" className="btn-primary">Save</button>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+              ) : (
+                <tr key={m.id} className="border-b border-slate-100 last:border-0 group hover:bg-slate-50">
+                  <td className="px-4 py-3 font-medium">{m.name}
+                    {m.notes && <p className="text-xs text-slate-400 font-normal">{m.notes}</p>}</td>
                   <td className="px-4 py-3 text-slate-500">{m.category}</td>
                   <td className="px-4 py-3 text-right">{m.quantity} {m.unit}</td>
                   <td className="px-4 py-3 text-right text-slate-600">
-                    {m.totalCost != null ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(m.totalCost) : "—"}
-                  </td>
+                    {m.totalCost != null ? fmt(m.totalCost) : m.unitCost != null ? `${fmt(m.unitCost)}/unit` : "—"}</td>
                   <td className="px-4 py-3 text-slate-500">{m.vendor ?? "—"}</td>
                   <td className="px-4 py-3">
-                    <select
-                      value={m.status}
-                      onChange={(e) => updateStatus(m.id, e.target.value)}
-                      className={`text-xs font-medium px-2 py-1 rounded-full border-0 cursor-pointer ${STATUS_COLORS[m.status]}`}
-                    >
+                    <select value={m.status} onChange={(e) => {
+                        fetch(`/api/materials/${m.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ status: e.target.value }) }).then(load);
+                      }}
+                      className={`text-xs font-medium px-2 py-1 rounded-full border-0 cursor-pointer ${STATUS_COLORS[m.status]}`}>
                       {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
                     </select>
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2 justify-end">
+                      <button onClick={() => startEdit(m)} className="text-xs text-slate-400 hover:text-slate-700 underline">Edit</button>
+                      <button onClick={() => deleteMaterial(m.id)} className="text-xs text-red-400 hover:text-red-600 underline">Del</button>
+                    </span>
                   </td>
                 </tr>
               ))}

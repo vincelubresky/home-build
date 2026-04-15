@@ -161,6 +161,8 @@ export default function BudgetPage() {
   const [showExpForm, setShowExpForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
+  const [editCatId, setEditCatId] = useState<number | null>(null);
+  const [editCatForm, setEditCatForm] = useState({ name: "", allocated: "", notes: "" });
 
   const [catForm, setCatForm] = useState({ name: "", allocated: "", notes: "" });
   const [expForm, setExpForm] = useState({ description: "", amount: "", date: "", vendor: "", categoryId: "" });
@@ -194,6 +196,28 @@ export default function BudgetPage() {
     });
     setCatForm({ name: "", allocated: "", notes: "" });
     setShowCatForm(false);
+    load();
+  }
+
+  function startEditCat(c: Category) {
+    setEditCatId(c.id);
+    setEditCatForm({ name: c.name, allocated: String(c.allocated), notes: c.notes ?? "" });
+  }
+
+  async function saveEditCat(e: React.FormEvent) {
+    e.preventDefault();
+    await fetch(`/api/budget/categories/${editCatId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: editCatForm.name, allocated: parseFloat(editCatForm.allocated), notes: editCatForm.notes || null }),
+    });
+    setEditCatId(null);
+    load();
+  }
+
+  async function deleteCategory(id: number) {
+    if (!confirm("Delete this budget category and all its line items?")) return;
+    await fetch(`/api/budget/categories/${id}`, { method: "DELETE" });
     load();
   }
 
@@ -323,38 +347,68 @@ export default function BudgetPage() {
               const hasItems = c.lineItems.length > 0;
               return (
                 <>
-                  <tr
-                    key={c.id}
-                    onClick={() => toggleExpand(c.id)}
-                    className="border-b border-slate-100 cursor-pointer hover:bg-slate-50 transition-colors"
-                  >
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <span className={`text-slate-400 text-xs transition-transform ${isOpen ? "rotate-90" : ""}`}>▶</span>
-                        <div>
-                          <span className="font-medium">{c.name}</span>
-                          {hasItems && (
-                            <span className="ml-2 text-xs text-slate-400">{c.lineItems.length} items</span>
-                          )}
-                          {c.notes && <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{c.notes}</p>}
+                  {editCatId === c.id ? (
+                    <tr key={c.id}>
+                      <td colSpan={5} className="p-0">
+                        <form onSubmit={saveEditCat} className="flex items-end gap-3 px-4 py-3 bg-slate-50 border-b border-slate-200">
+                          <div className="flex-1">
+                            <label className="label">Category Name</label>
+                            <input className="input" required value={editCatForm.name}
+                              onChange={(e) => setEditCatForm({ ...editCatForm, name: e.target.value })} />
+                          </div>
+                          <div className="w-36">
+                            <label className="label">Allocated ($)</label>
+                            <input className="input" type="number" step="1" required value={editCatForm.allocated}
+                              onChange={(e) => setEditCatForm({ ...editCatForm, allocated: e.target.value })} />
+                          </div>
+                          <div className="flex-1">
+                            <label className="label">Notes</label>
+                            <input className="input" value={editCatForm.notes}
+                              onChange={(e) => setEditCatForm({ ...editCatForm, notes: e.target.value })} />
+                          </div>
+                          <button type="submit" className="btn-primary py-2">Save</button>
+                          <button type="button" onClick={() => setEditCatId(null)} className="btn-secondary py-2">Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr
+                      key={c.id}
+                      onClick={() => toggleExpand(c.id)}
+                      className="border-b border-slate-100 cursor-pointer hover:bg-slate-50 transition-colors group"
+                    >
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <span className={`text-slate-400 text-xs transition-transform ${isOpen ? "rotate-90" : ""}`}>▶</span>
+                          <div className="flex-1">
+                            <span className="font-medium">{c.name}</span>
+                            {hasItems && (
+                              <span className="ml-2 text-xs text-slate-400">{c.lineItems.length} items</span>
+                            )}
+                            {c.notes && <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{c.notes}</p>}
+                          </div>
+                          <span className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2 ml-2" onClick={(e) => e.stopPropagation()}>
+                            <button onClick={() => startEditCat(c)} className="text-xs text-slate-400 hover:text-slate-700 underline">Edit</button>
+                            <button onClick={() => deleteCategory(c.id)} className="text-xs text-red-400 hover:text-red-600 underline">Del</button>
+                          </span>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-right font-medium">{fmt(c.allocated)}</td>
-                    <td className="px-4 py-3 text-right text-slate-600">{fmt(c.spent)}</td>
-                    <td className={`px-4 py-3 text-right font-medium ${remaining < 0 ? "text-red-600" : "text-green-600"}`}>
-                      {fmt(remaining)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="w-24 h-2 bg-slate-100 rounded-full overflow-hidden ml-auto">
-                        <div
-                          className={`h-full rounded-full ${c.allocated > 0 && c.spent / c.allocated > 0.9 ? "bg-red-400" : "bg-green-400"}`}
-                          style={{ width: c.allocated > 0 ? `${Math.min((c.spent / c.allocated) * 100, 100)}%` : "0%" }}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                  {isOpen && <LineItemsPanel key={`panel-${c.id}`} cat={c} onRefresh={load} />}
+                      </td>
+                      <td className="px-4 py-3 text-right font-medium">{fmt(c.allocated)}</td>
+                      <td className="px-4 py-3 text-right text-slate-600">{fmt(c.spent)}</td>
+                      <td className={`px-4 py-3 text-right font-medium ${remaining < 0 ? "text-red-600" : "text-green-600"}`}>
+                        {fmt(remaining)}
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="w-24 h-2 bg-slate-100 rounded-full overflow-hidden ml-auto">
+                          <div
+                            className={`h-full rounded-full ${c.allocated > 0 && c.spent / c.allocated > 0.9 ? "bg-red-400" : "bg-green-400"}`}
+                            style={{ width: c.allocated > 0 ? `${Math.min((c.spent / c.allocated) * 100, 100)}%` : "0%" }}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                  {isOpen && editCatId !== c.id && <LineItemsPanel key={`panel-${c.id}`} cat={c} onRefresh={load} />}
                 </>
               );
             })}
