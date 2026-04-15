@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const categories = await prisma.budgetCategory.findMany({
-    include: { expenses: true },
+    include: { expenses: true, lineItems: { orderBy: { createdAt: "asc" } } },
     orderBy: { name: "asc" },
   });
   const enriched = categories.map((c) => ({

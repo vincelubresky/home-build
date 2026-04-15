@@ -10,14 +10,25 @@ datasource db {
 
 // ── Budget ──────────────────────────────────────────────────────────────────
 model BudgetCategory {
-  id        Int       @id @default(autoincrement())
+  id        Int             @id @default(autoincrement())
   name      String
-  allocated Float     @default(0)
-  spent     Float     @default(0)
+  allocated Float           @default(0)
+  spent     Float           @default(0)
   notes     String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
   expenses  Expense[]
+  lineItems BudgetLineItem[]
+}
+
+model BudgetLineItem {
+  id          Int            @id @default(autoincrement())
+  category    BudgetCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId  Int
+  description String
+  amount      Float
+  notes       String?
+  createdAt   DateTime       @default(now())
 }
 
 model Expense {

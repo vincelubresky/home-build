@@ -2,11 +2,156 @@
 
 import { useEffect, useState } from "react";
 
-type Category = { id: number; name: string; allocated: number; spent: number; notes: string | null };
+type LineItem = { id: number; description: string; amount: number; notes: string | null };
+type Category = {
+  id: number; name: string; allocated: number; spent: number; notes: string | null;
+  lineItems: LineItem[];
+};
 type Expense = { id: number; description: string; amount: number; date: string; vendor: string | null; categoryId: number };
 
 function fmt(n: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+}
+
+function LineItemsPanel({ cat, onRefresh }: { cat: Category; onRefresh: () => void }) {
+  const [adding, setAdding] = useState(false);
+  const [editId, setEditId] = useState<number | null>(null);
+  const [form, setForm] = useState({ description: "", amount: "", notes: "" });
+  const [editForm, setEditForm] = useState({ description: "", amount: "", notes: "" });
+
+  const lineTotal = cat.lineItems.reduce((s, l) => s + l.amount, 0);
+  const diff = cat.allocated - lineTotal;
+
+  async function addItem(e: React.FormEvent) {
+    e.preventDefault();
+    await fetch("/api/budget/line-items", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ categoryId: cat.id, description: form.description, amount: parseFloat(form.amount), notes: form.notes || null }),
+    });
+    setForm({ description: "", amount: "", notes: "" });
+    setAdding(false);
+    onRefresh();
+  }
+
+  async function saveEdit(id: number) {
+    await fetch(`/api/budget/line-items/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ description: editForm.description, amount: parseFloat(editForm.amount), notes: editForm.notes || null }),
+    });
+    setEditId(null);
+    onRefresh();
+  }
+
+  async function deleteItem(id: number) {
+    await fetch(`/api/budget/line-items/${id}`, { method: "DELETE" });
+    onRefresh();
+  }
+
+  function startEdit(item: LineItem) {
+    setEditId(item.id);
+    setEditForm({ description: item.description, amount: String(item.amount), notes: item.notes ?? "" });
+  }
+
+  return (
+    <tr>
+      <td colSpan={5} className="px-0 pb-2">
+        <div className="mx-4 mb-2 bg-slate-50 rounded-lg border border-slate-200 text-sm">
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-2 border-b border-slate-200">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Cost Breakdown</span>
+            <div className="flex items-center gap-3">
+              {cat.lineItems.length > 0 && (
+                <span className={`text-xs font-medium ${Math.abs(diff) < 100 ? "text-green-600" : diff > 0 ? "text-amber-600" : "text-red-600"}`}>
+                  {Math.abs(diff) < 100
+                    ? "Breakdown matches budget"
+                    : diff > 0
+                    ? `${fmt(diff)} unaccounted in breakdown`
+                    : `Breakdown exceeds budget by ${fmt(-diff)}`}
+                </span>
+              )}
+              <button onClick={() => setAdding(!adding)} className="text-xs text-slate-500 hover:text-slate-800 underline">
+                + Add item
+              </button>
+            </div>
+          </div>
+
+          {/* Add form */}
+          {adding && (
+            <form onSubmit={addItem} className="flex items-end gap-2 px-4 py-3 border-b border-slate-200 bg-white">
+              <div className="flex-1">
+                <label className="text-xs text-slate-500 block mb-1">Description</label>
+                <input className="input text-sm" required placeholder="e.g. Excavation" value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })} />
+              </div>
+              <div className="w-32">
+                <label className="text-xs text-slate-500 block mb-1">Amount ($)</label>
+                <input className="input text-sm" type="number" step="1" required placeholder="0"
+                  value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} />
+              </div>
+              <div className="flex-1">
+                <label className="text-xs text-slate-500 block mb-1">Note (optional)</label>
+                <input className="input text-sm" placeholder="e.g. 250 ft depth estimate"
+                  value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
+              </div>
+              <button type="submit" className="btn-primary text-sm py-2">Save</button>
+              <button type="button" onClick={() => setAdding(false)} className="btn-secondary text-sm py-2">Cancel</button>
+            </form>
+          )}
+
+          {/* Line items */}
+          {cat.lineItems.length === 0 && !adding ? (
+            <p className="text-xs text-slate-400 italic px-4 py-3">No breakdown items yet — click "+ Add item" to explain this estimate.</p>
+          ) : (
+            <table className="w-full text-sm">
+              <tbody>
+                {cat.lineItems.map((item) => (
+                  editId === item.id ? (
+                    <tr key={item.id} className="border-b border-slate-100 bg-white">
+                      <td className="px-4 py-2 w-full" colSpan={3}>
+                        <div className="flex items-center gap-2">
+                          <input className="input text-sm flex-1" value={editForm.description}
+                            onChange={(e) => setEditForm({ ...editForm, description: e.target.value })} />
+                          <input className="input text-sm w-28" type="number" step="1" value={editForm.amount}
+                            onChange={(e) => setEditForm({ ...editForm, amount: e.target.value })} />
+                          <input className="input text-sm flex-1" placeholder="Note" value={editForm.notes}
+                            onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })} />
+                          <button onClick={() => saveEdit(item.id)} className="btn-primary text-xs py-1.5">Save</button>
+                          <button onClick={() => setEditId(null)} className="btn-secondary text-xs py-1.5">Cancel</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr key={item.id} className="border-b border-slate-100 last:border-0 hover:bg-white group">
+                      <td className="px-4 py-2.5">
+                        <span className="font-medium text-slate-700">{item.description}</span>
+                        {item.notes && <span className="text-xs text-slate-400 ml-2 italic">{item.notes}</span>}
+                      </td>
+                      <td className="px-4 py-2.5 text-right font-medium text-slate-700 whitespace-nowrap">{fmt(item.amount)}</td>
+                      <td className="px-4 py-2.5 text-right whitespace-nowrap">
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2 justify-end">
+                          <button onClick={() => startEdit(item)} className="text-xs text-slate-400 hover:text-slate-700 underline">edit</button>
+                          <button onClick={() => deleteItem(item.id)} className="text-xs text-red-400 hover:text-red-600 underline">delete</button>
+                        </span>
+                      </td>
+                    </tr>
+                  )
+                ))}
+                {cat.lineItems.length > 0 && (
+                  <tr className="bg-slate-100">
+                    <td className="px-4 py-2 font-semibold text-slate-600 text-xs uppercase tracking-wide">Breakdown total</td>
+                    <td className="px-4 py-2 text-right font-bold text-slate-800">{fmt(lineTotal)}</td>
+                    <td />
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </td>
+    </tr>
+  );
 }
 
 export default function BudgetPage() {
@@ -15,6 +160,7 @@ export default function BudgetPage() {
   const [showCatForm, setShowCatForm] = useState(false);
   const [showExpForm, setShowExpForm] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [expanded, setExpanded] = useState<Set<number>>(new Set());
 
   const [catForm, setCatForm] = useState({ name: "", allocated: "", notes: "" });
   const [expForm, setExpForm] = useState({ description: "", amount: "", date: "", vendor: "", categoryId: "" });
@@ -30,6 +176,14 @@ export default function BudgetPage() {
   }
 
   useEffect(() => { load(); }, []);
+
+  function toggleExpand(id: number) {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  }
 
   async function addCategory(e: React.FormEvent) {
     e.preventDefault();
@@ -61,11 +215,11 @@ export default function BudgetPage() {
   if (loading) return <p className="text-slate-400">Loading…</p>;
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-2xl font-bold">Budget</h2>
-          <p className="text-slate-500 text-sm mt-0.5">Track spending by category</p>
+          <p className="text-slate-500 text-sm mt-0.5">Click any category to see the cost breakdown</p>
         </div>
         <div className="flex gap-2">
           <button onClick={() => setShowCatForm(!showCatForm)} className="btn-secondary">+ Category</button>
@@ -97,11 +251,12 @@ export default function BudgetPage() {
           <h3 className="col-span-2 font-semibold">New Budget Category</h3>
           <div>
             <label className="label">Category Name</label>
-            <input className="input" required value={catForm.name} onChange={(e) => setCatForm({ ...catForm, name: e.target.value })} placeholder="e.g. Framing, Plumbing" />
+            <input className="input" required value={catForm.name} onChange={(e) => setCatForm({ ...catForm, name: e.target.value })} />
           </div>
           <div>
-            <label className="label">Allocated Amount ($)</label>
-            <input className="input" type="number" step="0.01" required value={catForm.allocated} onChange={(e) => setCatForm({ ...catForm, allocated: e.target.value })} placeholder="0.00" />
+            <label className="label">Allocated ($)</label>
+            <input className="input" type="number" step="1" required value={catForm.allocated}
+              onChange={(e) => setCatForm({ ...catForm, allocated: e.target.value })} />
           </div>
           <div className="col-span-2">
             <label className="label">Notes</label>
@@ -120,11 +275,12 @@ export default function BudgetPage() {
           <h3 className="col-span-2 font-semibold">New Expense</h3>
           <div className="col-span-2">
             <label className="label">Description</label>
-            <input className="input" required value={expForm.description} onChange={(e) => setExpForm({ ...expForm, description: e.target.value })} placeholder="What was purchased?" />
+            <input className="input" required value={expForm.description} onChange={(e) => setExpForm({ ...expForm, description: e.target.value })} />
           </div>
           <div>
             <label className="label">Amount ($)</label>
-            <input className="input" type="number" step="0.01" required value={expForm.amount} onChange={(e) => setExpForm({ ...expForm, amount: e.target.value })} />
+            <input className="input" type="number" step="0.01" required value={expForm.amount}
+              onChange={(e) => setExpForm({ ...expForm, amount: e.target.value })} />
           </div>
           <div>
             <label className="label">Date</label>
@@ -132,7 +288,7 @@ export default function BudgetPage() {
           </div>
           <div>
             <label className="label">Vendor</label>
-            <input className="input" value={expForm.vendor} onChange={(e) => setExpForm({ ...expForm, vendor: e.target.value })} placeholder="Store or contractor name" />
+            <input className="input" value={expForm.vendor} onChange={(e) => setExpForm({ ...expForm, vendor: e.target.value })} />
           </div>
           <div>
             <label className="label">Category</label>
@@ -149,27 +305,42 @@ export default function BudgetPage() {
       )}
 
       {/* Categories table */}
-      {categories.length === 0 ? (
-        <p className="text-slate-400 text-sm text-center py-12">No budget categories yet — add one above.</p>
-      ) : (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden mb-8">
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200">
-              <tr>
-                <th className="text-left px-4 py-3 font-medium text-slate-600">Category</th>
-                <th className="text-right px-4 py-3 font-medium text-slate-600">Allocated</th>
-                <th className="text-right px-4 py-3 font-medium text-slate-600">Spent</th>
-                <th className="text-right px-4 py-3 font-medium text-slate-600">Remaining</th>
-                <th className="px-4 py-3" />
-              </tr>
-            </thead>
-            <tbody>
-              {categories.map((c) => {
-                const remaining = c.allocated - c.spent;
-                return (
-                  <tr key={c.id} className="border-b border-slate-100 last:border-0">
-                    <td className="px-4 py-3 font-medium">{c.name}</td>
-                    <td className="px-4 py-3 text-right">{fmt(c.allocated)}</td>
+      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden mb-8">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th className="text-left px-4 py-3 font-medium text-slate-600">Category</th>
+              <th className="text-right px-4 py-3 font-medium text-slate-600">Budgeted</th>
+              <th className="text-right px-4 py-3 font-medium text-slate-600">Spent</th>
+              <th className="text-right px-4 py-3 font-medium text-slate-600">Remaining</th>
+              <th className="px-4 py-3 w-28" />
+            </tr>
+          </thead>
+          <tbody>
+            {categories.map((c) => {
+              const remaining = c.allocated - c.spent;
+              const isOpen = expanded.has(c.id);
+              const hasItems = c.lineItems.length > 0;
+              return (
+                <>
+                  <tr
+                    key={c.id}
+                    onClick={() => toggleExpand(c.id)}
+                    className="border-b border-slate-100 cursor-pointer hover:bg-slate-50 transition-colors"
+                  >
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <span className={`text-slate-400 text-xs transition-transform ${isOpen ? "rotate-90" : ""}`}>▶</span>
+                        <div>
+                          <span className="font-medium">{c.name}</span>
+                          {hasItems && (
+                            <span className="ml-2 text-xs text-slate-400">{c.lineItems.length} items</span>
+                          )}
+                          {c.notes && <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{c.notes}</p>}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-right font-medium">{fmt(c.allocated)}</td>
                     <td className="px-4 py-3 text-right text-slate-600">{fmt(c.spent)}</td>
                     <td className={`px-4 py-3 text-right font-medium ${remaining < 0 ? "text-red-600" : "text-green-600"}`}>
                       {fmt(remaining)}
@@ -183,12 +354,13 @@ export default function BudgetPage() {
                       </div>
                     </td>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
+                  {isOpen && <LineItemsPanel key={`panel-${c.id}`} cat={c} onRefresh={load} />}
+                </>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
 
       {/* Recent expenses */}
       {expenses.length > 0 && (
