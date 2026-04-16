@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Build — Shelby County, Alabama</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23d97706'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='18' font-family='sans-serif' font-weight='bold'%3E%F0%9F%8F%A0%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="app">
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-mark"><i class="fa-solid fa-house"></i></div>
+      <div>
+        <div class="sidebar-logo-name">Home Build</div>
+        <div class="sidebar-logo-sub">Shelby County, Alabama</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Project</div>
+    <a href="#overview" class="nav-item active" onclick="setActive(this)"><i class="fa-solid fa-gauge-high"></i>Overview</a>
+    <a href="#budget" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-dollar-sign"></i>Budget<span class="nav-badge amber">$278K</span></a>
+    <div class="nav-section-label">Design</div>
+    <a href="#design" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-drafting-compass"></i>Home Design</a>
+    <a href="#lowtox" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-leaf"></i>Low-Tox Specs</a>
+    <div class="nav-section-label">Build Tracking</div>
+    <a href="#materials" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-boxes-stacked"></i>Materials</a>
+    <a href="#timeline" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-calendar-days"></i>Timeline</a>
+    <a href="#contractors" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-hard-hat"></i>Contractors</a>
+    <div class="nav-section-label">Finance</div>
+    <a href="#loan" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-building-columns"></i>Loan & Draws</a>
+    <a href="#permits" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-file-contract"></i>Plans & Permits</a>
+  </nav>
+</aside>
+
+<!-- ══════════ MAIN ══════════ -->
+<main class="main" id="main">
+
+  <!-- ══ OVERVIEW ══ -->
+  <section id="overview" class="section">
+    <div class="section-header">
+      <div class="section-title">Overview</div>
+      <div class="section-sub">Shelby County, Alabama · New construction · 2,228 sq ft</div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card amber">
+        <div class="stat-label">Total Budget</div>
+        <div class="stat-value">$277,517</div>
+        <div class="stat-sub">14 categories · 84 line items</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="stat-label">Total Size</div>
+        <div class="stat-value">2,228 ft²</div>
+        <div class="stat-sub">1,114 main + 1,114 basement</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Build Status</div>
+        <div class="stat-value" style="font-size:18px;margin-top:4px"><span class="badge planning"><i class="fa-solid fa-circle-dot"></i> Planning</span></div>
+        <div class="stat-sub">Survey submitted to county</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Construction Loan</div>
+        <div class="stat-value" style="font-size:18px;margin-top:4px"><span class="badge pending"><i class="fa-regular fa-clock"></i> Not started</span></div>
+        <div class="stat-sub">Waiting on survey approval</div>
+      </div>
+    </div>
+
+    <div style="margin-top:8px">
+      <div class="status-card">
+        <div class="status-icon amber"><i class="fa-solid fa-map"></i></div>
+        <div class="status-text">
+          <div class="status-label">Survey</div>
+          <div class="status-detail">Submitted to county — awaiting approval &amp; final survey</div>
+        </div>
+        <span class="badge planning">In Review</span>
+      </div>
+      <div class="status-card">
+        <div class="status-icon muted"><i class="fa-solid fa-building-columns"></i></div>
+        <div class="status-text">
+          <div class="status-label">Construction Loan</div>
+          <div class="status-detail">Not started — waiting on approved survey to proceed</div>
+        </div>
+        <span class="badge pending">Pending</span>
+      </div>
+      <div class="status-card">
+        <div class="status-icon green"><i class="fa-solid fa-file-lines"></i></div>
+        <div class="status-text">
+          <div class="status-label">Home Plans</div>
+          <div class="status-detail">4 PDFs complete — foundation, floor plan, front/rear elevations, side elevations (SLP 4/9/2026)</div>
+        </div>
+        <span class="badge complete">Complete</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ BUDGET ══ -->
+  <section id="budget" class="section">
+    <div class="section-header">
+      <div class="section-title">Budget</div>
+      <div class="section-sub">Click any category to expand line items · All figures are estimates</div>
+    </div>
+
+    <div class="budget-header">
+      <div>Category</div>
+      <div style="text-align:right">Allocated</div>
+      <div style="text-align:right">Spent</div>
+      <div style="text-align:right">Items</div>
+    </div>
+
+    <div id="budget-list"></div>
+
+    <div class="budget-total-row">
+      <div class="budget-total-label">Total Budget</div>
+      <div class="budget-total-amount" id="budget-total">$0</div>
+      <div class="budget-spent" style="text-align:right;font-family:'Space Grotesk';font-weight:600;color:var(--text-400)">$0</div>
+      <div></div>
+    </div>
+  </section>
+
+  <!-- ══ HOME DESIGN ══ -->
+  <section id="design" class="section">
+    <div class="section-header">
+      <div class="section-title">Home Design</div>
+      <div class="section-sub">Based on SLP drawings dated 4/9/2026 · Hardie B&amp;B · Galvanized metal roof · Earth tone palette</div>
+    </div>
+
+    <!-- House SVG Rendering -->
+    <div class="design-svg-container">
+      <svg viewBox="0 0 1000 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Front elevation of home">
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#87AECF"/>
+            <stop offset="100%" stop-color="#C8DFF0"/>
+          </linearGradient>
+          <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6B8C4A"/>
+            <stop offset="60%" stop-color="#4A6628"/>
+            <stop offset="100%" stop-color="#3A5020"/>
+          </linearGradient>
+          <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#CCA870"/>
+            <stop offset="100%" stop-color="#B8944A"/>
+          </linearGradient>
+          <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#B0B8BC"/>
+            <stop offset="100%" stop-color="#8A9298"/>
+          </linearGradient>
+          <linearGradient id="carportRoofGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#B0B8BC"/>
+            <stop offset="100%" stop-color="#8A9298"/>
+          </linearGradient>
+          <linearGradient id="porchRoofGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#B8C0C4"/>
+            <stop offset="100%" stop-color="#90989E"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Sky -->
+        <rect x="0" y="0" width="1000" height="460" fill="url(#skyGrad)"/>
+
+        <!-- Ground -->
+        <rect x="0" y="380" width="1000" height="80" fill="url(#groundGrad)"/>
+
+        <!-- === CARPORT (left side) === -->
+        <!-- Carport columns -->
+        <rect x="138" y="285" width="10" height="95" fill="#5C3D18" rx="2"/>
+        <rect x="250" y="285" width="10" height="95" fill="#5C3D18" rx="2"/>
+
+        <!-- Carport walls (back/left) -->
+        <rect x="135" y="230" width="130" height="150" fill="#CCA870"/>
+        <!-- Board & Batten on carport -->
+        <g stroke="#9A7040" stroke-width="1.5" opacity="0.6">
+          <line x1="150" y1="230" x2="150" y2="380"/>
+          <line x1="165" y1="230" x2="165" y2="380"/>
+          <line x1="180" y1="230" x2="180" y2="380"/>
+          <line x1="195" y1="230" x2="195" y2="380"/>
+          <line x1="210" y1="230" x2="210" y2="380"/>
+          <line x1="225" y1="230" x2="225" y2="380"/>
+          <line x1="240" y1="230" x2="240" y2="380"/>
+          <line x1="255" y1="230" x2="255" y2="380"/>
+        </g>
+
+        <!-- Carport roof (lower pitch) -->
+        <polygon points="130,230 268,230 278,265 120,265" fill="url(#carportRoofGrad)"/>
+        <!-- Carport roof seam lines -->
+        <g stroke="#8090A0" stroke-width="0.8" opacity="0.5">
+          <line x1="141" y1="230" x2="131" y2="265"/>
+          <line x1="155" y1="230" x2="145" y2="265"/>
+          <line x1="169" y1="230" x2="159" y2="265"/>
+          <line x1="183" y1="230" x2="173" y2="265"/>
+          <line x1="197" y1="230" x2="187" y2="265"/>
+          <line x1="211" y1="230" x2="201" y2="265"/>
+          <line x1="225" y1="230" x2="215" y2="265"/>
+          <line x1="239" y1="230" x2="229" y2="265"/>
+          <line x1="253" y1="230" x2="243" y2="265"/>
+          <line x1="267" y1="230" x2="257" y2="265"/>
+        </g>
+
+        <!-- Carport opening (open bay) -->
+        <rect x="140" y="295" width="115" height="85" fill="#1A2030" rx="2"/>
+
+        <!-- === MAIN HOUSE BODY === -->
+        <!-- Wall (42' wide, 9' tall: ~400px × 115px) -->
+        <rect x="265" y="265" width="470" height="115" fill="url(#wallGrad)"/>
+
+        <!-- Board & Batten siding texture - wide boards -->
+        <g stroke="#9A7040" stroke-width="2" opacity="0.5">
+          <line x1="281" y1="265" x2="281" y2="380"/>
+          <line x1="297" y1="265" x2="297" y2="380"/>
+          <line x1="313" y1="265" x2="313" y2="380"/>
+          <line x1="329" y1="265" x2="329" y2="380"/>
+          <line x1="345" y1="265" x2="345" y2="380"/>
+          <line x1="361" y1="265" x2="361" y2="380"/>
+          <line x1="377" y1="265" x2="377" y2="380"/>
+          <line x1="393" y1="265" x2="393" y2="380"/>
+          <line x1="409" y1="265" x2="409" y2="380"/>
+          <line x1="425" y1="265" x2="425" y2="380"/>
+          <line x1="441" y1="265" x2="441" y2="380"/>
+          <line x1="457" y1="265" x2="457" y2="380"/>
+          <line x1="473" y1="265" x2="473" y2="380"/>
+          <line x1="489" y1="265" x2="489" y2="380"/>
+          <line x1="505" y1="265" x2="505" y2="380"/>
+          <line x1="521" y1="265" x2="521" y2="380"/>
+          <line x1="537" y1="265" x2="537" y2="380"/>
+          <line x1="553" y1="265" x2="553" y2="380"/>
+          <line x1="569" y1="265" x2="569" y2="380"/>
+          <line x1="585" y1="265" x2="585" y2="380"/>
+          <line x1="601" y1="265" x2="601" y2="380"/>
+          <line x1="617" y1="265" x2="617" y2="380"/>
+          <line x1="633" y1="265" x2="633" y2="380"/>
+          <line x1="649" y1="265" x2="649" y2="380"/>
+          <line x1="665" y1="265" x2="665" y2="380"/>
+          <line x1="681" y1="265" x2="681" y2="380"/>
+          <line x1="697" y1="265" x2="697" y2="380"/>
+          <line x1="713" y1="265" x2="713" y2="380"/>
+          <line x1="729" y1="265" x2="729" y2="380"/>
+        </g>
+        <!-- Batten caps (thinner, offset) -->
+        <g stroke="#8A6030" stroke-width="1" opacity="0.3">
+          <line x1="289" y1="265" x2="289" y2="380"/>
+          <line x1="305" y1="265" x2="305" y2="380"/>
+          <line x1="321" y1="265" x2="321" y2="380"/>
+          <line x1="337" y1="265" x2="337" y2="380"/>
+          <line x1="353" y1="265" x2="353" y2="380"/>
+          <line x1="369" y1="265" x2="369" y2="380"/>
+          <line x1="385" y1="265" x2="385" y2="380"/>
+          <line x1="401" y1="265" x2="401" y2="380"/>
+          <line x1="417" y1="265" x2="417" y2="380"/>
+          <line x1="433" y1="265" x2="433" y2="380"/>
+          <line x1="449" y1="265" x2="449" y2="380"/>
+          <line x1="465" y1="265" x2="465" y2="380"/>
+          <line x1="481" y1="265" x2="481" y2="380"/>
+          <line x1="497" y1="265" x2="497" y2="380"/>
+          <line x1="513" y1="265" x2="513" y2="380"/>
+          <line x1="529" y1="265" x2="529" y2="380"/>
+          <line x1="545" y1="265" x2="545" y2="380"/>
+          <line x1="561" y1="265" x2="561" y2="380"/>
+          <line x1="577" y1="265" x2="577" y2="380"/>
+          <line x1="593" y1="265" x2="593" y2="380"/>
+          <line x1="609" y1="265" x2="609" y2="380"/>
+          <line x1="625" y1="265" x2="625" y2="380"/>
+          <line x1="641" y1="265" x2="641" y2="380"/>
+          <line x1="657" y1="265" x2="657" y2="380"/>
+          <line x1="673" y1="265" x2="673" y2="380"/>
+          <line x1="689" y1="265" x2="689" y2="380"/>
+          <line x1="705" y1="265" x2="705" y2="380"/>
+          <line x1="721" y1="265" x2="721" y2="380"/>
+        </g>
+
+        <!-- === MAIN ROOF (8:12 pitch) === -->
+        <!-- Left half -->
+        <polygon points="255,265 500,130 500,265" fill="url(#roofGrad)"/>
+        <!-- Right half -->
+        <polygon points="500,130 745,265 500,265" fill="url(#roofGrad)" opacity="0.9"/>
+        <!-- Roof outline -->
+        <polyline points="255,265 500,130 745,265" fill="none" stroke="#70808A" stroke-width="1.5"/>
+
+        <!-- Roof standing seam lines - left slope -->
+        <g stroke="#8090A0" stroke-width="0.9" opacity="0.55">
+          <line x1="270" y1="265" x2="294" y2="200"/>
+          <line x1="285" y1="265" x2="310" y2="198"/>
+          <line x1="300" y1="265" x2="325" y2="196"/>
+          <line x1="315" y1="265" x2="342" y2="194"/>
+          <line x1="330" y1="265" x2="358" y2="192"/>
+          <line x1="345" y1="265" x2="373" y2="190"/>
+          <line x1="360" y1="265" x2="389" y2="188"/>
+          <line x1="375" y1="265" x2="405" y2="186"/>
+          <line x1="390" y1="265" x2="421" y2="184"/>
+          <line x1="405" y1="265" x2="437" y2="182"/>
+          <line x1="420" y1="265" x2="452" y2="178"/>
+          <line x1="435" y1="265" x2="468" y2="175"/>
+          <line x1="450" y1="265" x2="484" y2="152"/>
+          <line x1="465" y1="265" x2="490" y2="140"/>
+          <line x1="480" y1="265" x2="497" y2="133"/>
+        </g>
+        <!-- Roof standing seam lines - right slope -->
+        <g stroke="#7888A0" stroke-width="0.9" opacity="0.45">
+          <line x1="520" y1="265" x2="505" y2="133"/>
+          <line x1="535" y1="265" x2="513" y2="140"/>
+          <line x1="550" y1="265" x2="521" y2="152"/>
+          <line x1="565" y1="265" x2="532" y2="175"/>
+          <line x1="580" y1="265" x2="548" y2="178"/>
+          <line x1="595" y1="265" x2="563" y2="182"/>
+          <line x1="610" y1="265" x2="579" y2="184"/>
+          <line x1="625" y1="265" x2="595" y2="186"/>
+          <line x1="640" y1="265" x2="611" y2="188"/>
+          <line x1="655" y1="265" x2="627" y2="190"/>
+          <line x1="670" y1="265" x2="642" y2="192"/>
+          <line x1="685" y1="265" x2="658" y2="194"/>
+          <line x1="700" y1="265" x2="675" y2="196"/>
+          <line x1="715" y1="265" x2="690" y2="198"/>
+          <line x1="730" y1="265" x2="706" y2="200"/>
+        </g>
+        <!-- Ridge cap -->
+        <rect x="496" y="127" width="8" height="8" rx="1" fill="#9AA0A8"/>
+
+        <!-- === PORCH === -->
+        <!-- Porch roof -->
+        <polygon points="285,318 715,318 715,265 285,265" fill="url(#porchRoofGrad)" opacity="0.6"/>
+        <!-- Porch roof edge -->
+        <rect x="281" y="316" width="438" height="5" fill="#8A9298" rx="1"/>
+        <!-- Porch columns (4) -->
+        <rect x="315" y="320" width="10" height="60" fill="#F0E4CC" rx="2"/>
+        <rect x="427" y="320" width="10" height="60" fill="#F0E4CC" rx="2"/>
+        <rect x="558" y="320" width="10" height="60" fill="#F0E4CC" rx="2"/>
+        <rect x="670" y="320" width="10" height="60" fill="#F0E4CC" rx="2"/>
+        <!-- Porch floor -->
+        <rect x="285" y="374" width="430" height="6" fill="#B89050" rx="1"/>
+
+        <!-- === WINDOWS === -->
+        <!-- Left window (double-hung) -->
+        <rect x="330" y="282" width="72" height="72" fill="#1A2838" stroke="#F0E4CC" stroke-width="2" rx="2"/>
+        <line x1="366" y1="282" x2="366" y2="354" stroke="#F0E4CC" stroke-width="1.5"/>
+        <line x1="330" y1="318" x2="402" y2="318" stroke="#F0E4CC" stroke-width="1.5"/>
+
+        <!-- Right window (double-hung) -->
+        <rect x="590" y="282" width="72" height="72" fill="#1A2838" stroke="#F0E4CC" stroke-width="2" rx="2"/>
+        <line x1="626" y1="282" x2="626" y2="354" stroke="#F0E4CC" stroke-width="1.5"/>
+        <line x1="590" y1="318" x2="662" y2="318" stroke="#F0E4CC" stroke-width="1.5"/>
+
+        <!-- === FRONT DOOR (center, French style) === -->
+        <rect x="462" y="298" width="75" height="82" fill="#5C2E0A" rx="3"/>
+        <!-- Door panels -->
+        <rect x="466" y="302" width="30" height="36" fill="#4A2408" rx="1"/>
+        <rect x="500" y="302" width="30" height="36" fill="#4A2408" rx="1"/>
+        <rect x="466" y="342" width="30" height="34" fill="#4A2408" rx="1"/>
+        <rect x="500" y="342" width="30" height="34" fill="#4A2408" rx="1"/>
+        <!-- Door hardware -->
+        <circle cx="495" cy="338" r="3" fill="#D4AF37"/>
+        <circle cx="505" cy="338" r="3" fill="#D4AF37"/>
+
+        <!-- Door transom window -->
+        <rect x="464" y="285" width="71" height="14" fill="#1A2838" stroke="#F0E4CC" stroke-width="1.5" rx="1"/>
+        <line x1="499" y1="285" x2="499" y2="299" stroke="#F0E4CC" stroke-width="1"/>
+
+        <!-- === PINE TREES === -->
+        <!-- Left pine tree -->
+        <polygon points="60,380 85,290 110,380" fill="#2D5A1B"/>
+        <polygon points="65,340 85,265 105,340" fill="#367020"/>
+        <polygon points="70,305 85,248" fill="#2D5A1B"/>
+        <rect x="82" y="378" width="6" height="10" fill="#4A2A0A"/>
+
+        <!-- Far left pine -->
+        <polygon points="10,380 30,310 50,380" fill="#1E3D12" opacity="0.8"/>
+        <polygon points="14,350 30,294" fill="#1E3D12" opacity="0.8"/>
+
+        <!-- Right pine tree -->
+        <polygon points="855,380 880,290 905,380" fill="#2D5A1B"/>
+        <polygon points="860,340 880,265 900,340" fill="#367020"/>
+        <polygon points="865,305 880,248" fill="#2D5A1B"/>
+        <rect x="877" y="378" width="6" height="10" fill="#4A2A0A"/>
+
+        <!-- Far right pine -->
+        <polygon points="930,380 950,310 970,380" fill="#1E3D12" opacity="0.8"/>
+        <polygon points="934,350 950,294" fill="#1E3D12" opacity="0.8"/>
+
+        <!-- Ground grass detail -->
+        <rect x="0" y="378" width="1000" height="4" fill="#5A7A38" opacity="0.6"/>
+
+        <!-- Label -->
+        <text x="500" y="432" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" fill="#8ba5c0" opacity="0.7">
+          Front Elevation · Hardie Board &amp; Batten · Galvanized Metal Roof · Warm Clay
+        </text>
+      </svg>
+    </div>
+
+    <!-- Specs Cards -->
+    <div class="specs-grid">
+      <div class="specs-card">
+        <div class="specs-card-title"><i class="fa-solid fa-ruler-combined"></i> Dimensions</div>
+        <div id="specs-dimensions"></div>
+      </div>
+      <div class="specs-card">
+        <div class="specs-card-title"><i class="fa-solid fa-house-chimney"></i> Exterior</div>
+        <div id="specs-exterior"></div>
+      </div>
+      <div class="specs-card" id="plans-card">
+        <div class="specs-card-title"><i class="fa-solid fa-file-pdf"></i> Plan Documents</div>
+        <div id="specs-plans"></div>
+      </div>
+    </div>
+
+    <!-- Room Layout -->
+    <div class="rooms-grid">
+      <div class="rooms-card">
+        <div class="rooms-title"><i class="fa-solid fa-layer-group" style="color:var(--accent)"></i> Main Floor — 1,114 sq ft</div>
+        <div id="rooms-main"></div>
+      </div>
+      <div class="rooms-card">
+        <div class="rooms-title"><i class="fa-solid fa-stairs" style="color:var(--text-400)"></i> Basement — 1,114 sq ft</div>
+        <div id="rooms-basement"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ LOW-TOX SPECS ══ -->
+  <section id="lowtox" class="section">
+    <div class="section-header">
+      <div class="section-title">Low-Tox Specifications</div>
+      <div class="section-sub">Material and system choices to minimize chemical exposure and EMF</div>
+    </div>
+    <div class="lowtox-grid" id="lowtox-grid"></div>
+  </section>
+
+  <!-- ══ MATERIALS ══ -->
+  <section id="materials" class="section">
+    <div class="section-header">
+      <div class="section-title">Materials</div>
+      <div class="section-sub">Track materials from ordered → delivered → installed</div>
+    </div>
+    <div class="empty-state">
+      <div class="empty-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+      <div class="empty-title">No materials tracked yet</div>
+      <div class="empty-sub">Build hasn't started — add materials to js/data.js as the project progresses</div>
+    </div>
+  </section>
+
+  <!-- ══ TIMELINE ══ -->
+  <section id="timeline" class="section">
+    <div class="section-header">
+      <div class="section-title">Timeline</div>
+      <div class="section-sub">Phases and milestones</div>
+    </div>
+    <div class="empty-state">
+      <div class="empty-icon"><i class="fa-solid fa-calendar-days"></i></div>
+      <div class="empty-title">Timeline not set yet</div>
+      <div class="empty-sub">Waiting on loan approval to establish build schedule</div>
+    </div>
+  </section>
+
+  <!-- ══ CONTRACTORS ══ -->
+  <section id="contractors" class="section">
+    <div class="section-header">
+      <div class="section-title">Contractors</div>
+      <div class="section-sub">Contact info, quotes, and notes</div>
+    </div>
+    <div class="empty-state">
+      <div class="empty-icon"><i class="fa-solid fa-hard-hat"></i></div>
+      <div class="empty-title">No contractors added yet</div>
+      <div class="empty-sub">Add contractor info to js/data.js as bids come in</div>
+    </div>
+  </section>
+
+  <!-- ══ LOAN & DRAWS ══ -->
+  <section id="loan" class="section">
+    <div class="section-header">
+      <div class="section-title">Loan & Draws</div>
+      <div class="section-sub">Construction loan details and draw schedule</div>
+    </div>
+    <div class="empty-state">
+      <div class="empty-icon"><i class="fa-solid fa-building-columns"></i></div>
+      <div class="empty-title">Loan not started</div>
+      <div class="empty-sub">Will begin loan process after county approves survey — add details here when ready</div>
+    </div>
+  </section>
+
+  <!-- ══ PLANS & PERMITS ══ -->
+  <section id="permits" class="section">
+    <div class="section-header">
+      <div class="section-title">Plans & Permits</div>
+      <div class="section-sub">Home plans, permits, inspections, and certificates</div>
+    </div>
+
+    <div class="status-card">
+      <div class="status-icon green"><i class="fa-solid fa-file-lines"></i></div>
+      <div class="status-text">
+        <div class="status-label">Foundation Plan</div>
+        <div class="status-detail">SLP drawings — 4/9/2026</div>
+      </div>
+      <span class="badge complete">Complete</span>
+    </div>
+    <div class="status-card">
+      <div class="status-icon green"><i class="fa-solid fa-file-lines"></i></div>
+      <div class="status-text">
+        <div class="status-label">Floor Plan</div>
+        <div class="status-detail">SLP drawings — 4/9/2026</div>
+      </div>
+      <span class="badge complete">Complete</span>
+    </div>
+    <div class="status-card">
+      <div class="status-icon green"><i class="fa-solid fa-file-lines"></i></div>
+      <div class="status-text">
+        <div class="status-label">Front &amp; Rear Elevations</div>
+        <div class="status-detail">SLP drawings — 4/9/2026</div>
+      </div>
+      <span class="badge complete">Complete</span>
+    </div>
+    <div class="status-card">
+      <div class="status-icon green"><i class="fa-solid fa-file-lines"></i></div>
+      <div class="status-text">
+        <div class="status-label">Side Elevations</div>
+        <div class="status-detail">SLP drawings — 4/9/2026</div>
+      </div>
+      <span class="badge complete">Complete</span>
+    </div>
+    <div class="status-card">
+      <div class="status-icon amber"><i class="fa-solid fa-map"></i></div>
+      <div class="status-text">
+        <div class="status-label">Survey</div>
+        <div class="status-detail">Submitted to county — awaiting approval and final survey</div>
+      </div>
+      <span class="badge planning">In Review</span>
+    </div>
+    <div class="status-card">
+      <div class="status-icon muted"><i class="fa-solid fa-file-signature"></i></div>
+      <div class="status-text">
+        <div class="status-label">Building Permit</div>
+        <div class="status-detail">Not yet submitted — requires approved survey</div>
+      </div>
+      <span class="badge pending">Not Started</span>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script src="js/data.js"></script>
+<script>
+// ── Budget rendering ──
+function fmt(n) {
+  return '$' + n.toLocaleString('en-US');
+}
+
+function renderBudget() {
+  const list = document.getElementById('budget-list');
+  let totalAllocated = 0;
+
+  BUDGET_CATEGORIES.forEach(cat => {
+    totalAllocated += cat.allocated;
+    const hasItems = cat.items && cat.items.length > 0;
+    const itemsHtml = hasItems ? cat.items.map(item => `
+      <div class="budget-item-row">
+        <div>
+          <div class="budget-item-name">${item.name}</div>
+          ${item.notes ? `<div class="budget-item-notes">${item.notes}</div>` : ''}
+        </div>
+        <div class="budget-item-cost">${fmt(item.cost)}</div>
+      </div>`).join('') : '';
+
+    const row = document.createElement('div');
+    row.className = 'budget-row';
+    row.innerHTML = `
+      <div class="budget-row-main" onclick="toggleBudget(this.parentElement)">
+        <div class="budget-cat-name">
+          <i class="fa-solid fa-chevron-right chevron"></i>
+          ${cat.name}
+        </div>
+        <div class="budget-amount">${fmt(cat.allocated)}</div>
+        <div class="budget-spent">${fmt(0)}</div>
+        <div style="text-align:right;font-size:12px;color:var(--text-400)">${hasItems ? cat.items.length : '—'}</div>
+      </div>
+      ${hasItems ? `<div class="budget-items">${itemsHtml}</div>` : ''}
+    `;
+    list.appendChild(row);
+  });
+
+  document.getElementById('budget-total').textContent = fmt(totalAllocated);
+}
+
+function toggleBudget(row) {
+  if (!row.querySelector('.budget-items')) return;
+  row.classList.toggle('open');
+}
+
+// ── Specs rendering ──
+function renderSpecs() {
+  const dims = document.getElementById('specs-dimensions');
+  SPECS.dimensions.forEach(s => {
+    dims.innerHTML += `<div class="spec-row"><span class="spec-label">${s.label}</span><span class="spec-value">${s.value}</span></div>`;
+  });
+
+  const ext = document.getElementById('specs-exterior');
+  SPECS.exterior.forEach(s => {
+    ext.innerHTML += `<div class="spec-row"><span class="spec-label">${s.label}</span><span class="spec-value">${s.value}</span></div>`;
+  });
+
+  const plans = document.getElementById('specs-plans');
+  SPECS.plans.forEach(p => {
+    if (p.url) {
+      plans.innerHTML += `<div class="spec-row"><span class="spec-label">${p.label}</span><a href="${p.url}" target="_blank" class="spec-value" style="color:var(--accent);text-decoration:none;font-size:12px"><i class="fa-solid fa-arrow-up-right-from-square"></i> View</a></div>`;
+    } else {
+      plans.innerHTML += `<div class="spec-row"><span class="spec-label">${p.label}</span><span class="spec-value" style="color:var(--text-400);font-size:12px">Link TBD</span></div>`;
+    }
+  });
+
+  const rm = document.getElementById('rooms-main');
+  SPECS.rooms_main.forEach(r => { rm.innerHTML += `<span class="room-chip">${r}</span>`; });
+
+  const rb = document.getElementById('rooms-basement');
+  SPECS.rooms_basement.forEach(r => { rb.innerHTML += `<span class="room-chip">${r}</span>`; });
+}
+
+// ── Low-tox rendering ──
+function renderLowTox() {
+  const grid = document.getElementById('lowtox-grid');
+  LOW_TOX.forEach(item => {
+    grid.innerHTML += `<div class="lowtox-item"><i class="fa-solid ${item.icon}"></i>${item.text}</div>`;
+  });
+}
+
+// ── Nav active state ──
+function setActive(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── Scroll spy ──
+const sections = ['overview','budget','design','lowtox','materials','timeline','contractors','loan','permits'];
+const navLinks = {};
+sections.forEach(id => {
+  navLinks[id] = document.querySelector(`.nav-item[href="#${id}"]`);
+});
+
+window.addEventListener('scroll', () => {
+  let current = 'overview';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) current = id;
+  });
+  sections.forEach(id => {
+    if (navLinks[id]) navLinks[id].classList.remove('active');
+  });
+  if (navLinks[current]) navLinks[current].classList.add('active');
+}, { passive: true });
+
+// ── Init ──
+renderBudget();
+renderSpecs();
+renderLowTox();
+</script>
+</body>
+</html>
