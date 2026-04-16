@@ -101,14 +101,14 @@ const BUDGET_CATEGORIES = [
   {
     id: 4,
     name: "Framing & Structure",
-    allocated: 33338,
-    notes: "Stick-built materials, framing labor, roofing labor, porch framing, dumpster",
+    allocated: 30636,
+    notes: "Stick-built materials, framing labor ($7/sq ft × 1,114 sq ft), roofing labor, porch framing, dumpster",
     items: [
       { name: "Framing lumber package — walls, plates, blocking", cost: 8500, notes: "2×6 exterior walls for R-23 cavity insulation; 2×4 interior" },
       { name: "LVL beams + ridge + headers", cost: 2800, notes: "Required over all openings and long spans" },
       { name: "OSB wall sheathing (all walls)", cost: 1800, notes: "" },
       { name: "Weather-resistant barrier (house wrap)", cost: 600, notes: "" },
-      { name: "Framing labor — walls, floor", cost: 10500, notes: "Stick-built labor rate in AL; varies by contractor" },
+      { name: "Framing labor — walls, floor", cost: 7798, notes: "$7/sq ft × 1,114 sq ft — confirmed rate" },
       { name: "Roof framing — rafters or trusses + sheathing", cost: 5638, notes: "Roof area ~1,300 sq ft with pitch and overhang" },
       { name: "Porch framing — materials + labor", cost: 2500, notes: "Covered front/back porch included in plans" },
       { name: "Dumpster rental (framing phase)", cost: 1000, notes: "Two hauls typical for framing debris" },
