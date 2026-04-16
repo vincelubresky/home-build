@@ -436,13 +436,16 @@
   <section id="materials" class="section">
     <div class="section-header">
       <div class="section-title">Materials</div>
-      <div class="section-sub">Track materials from ordered → delivered → installed</div>
+      <div class="section-sub">Key materials, brand recommendations, and sourcing notes · Update status in js/data.js as build progresses</div>
     </div>
-    <div class="empty-state">
-      <div class="empty-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
-      <div class="empty-title">No materials tracked yet</div>
-      <div class="empty-sub">Build hasn't started — add materials to js/data.js as the project progresses</div>
+    <div class="mat-filter-bar">
+      <button class="mat-filter active" data-filter="all" onclick="filterMaterials(this,'all')">All</button>
+      <button class="mat-filter" data-filter="needed" onclick="filterMaterials(this,'needed')"><span class="dot needed"></span>Needed</button>
+      <button class="mat-filter" data-filter="ordered" onclick="filterMaterials(this,'ordered')"><span class="dot ordered"></span>Ordered</button>
+      <button class="mat-filter" data-filter="delivered" onclick="filterMaterials(this,'delivered')"><span class="dot delivered"></span>Delivered</button>
+      <button class="mat-filter" data-filter="installed" onclick="filterMaterials(this,'installed')"><span class="dot installed"></span>Installed</button>
     </div>
+    <div id="materials-list"></div>
   </section>
 
   <!-- ══ TIMELINE ══ -->
@@ -653,10 +656,61 @@ window.addEventListener('scroll', () => {
   if (navLinks[current]) navLinks[current].classList.add('active');
 }, { passive: true });
 
+// ── Materials rendering ──
+function renderMaterials(filterStatus) {
+  const list = document.getElementById('materials-list');
+  list.innerHTML = '';
+  MATERIALS.forEach(group => {
+    const items = filterStatus === 'all'
+      ? group.items
+      : group.items.filter(i => i.status === filterStatus);
+    if (!items.length) return;
+
+    const section = document.createElement('div');
+    section.className = 'mat-group';
+    section.innerHTML = `<div class="mat-group-title"><i class="fa-solid ${group.icon}"></i>${group.category}</div>`;
+
+    items.forEach(item => {
+      const brandHtml = item.brands && item.brands.length
+        ? item.brands.map(b => b.url
+            ? `<a href="${b.url}" target="_blank" rel="noopener" class="mat-brand-link">${b.name} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>`
+            : `<span class="mat-brand-link no-link">${b.name}</span>`
+          ).join('')
+        : '<span style="color:var(--text-400);font-size:11px">Commodity — source locally</span>';
+
+      const card = document.createElement('div');
+      card.className = `mat-card mat-card--${item.status}`;
+      card.innerHTML = `
+        <div class="mat-card-top">
+          <div class="mat-card-left">
+            <div class="mat-card-name">${item.name}</div>
+            <div class="mat-card-spec">${item.spec}</div>
+          </div>
+          <div class="mat-card-right">
+            <span class="badge ${item.status}">${item.status}</span>
+            <div class="mat-qty">${item.qty}</div>
+          </div>
+        </div>
+        <div class="mat-brands">${brandHtml}</div>
+        ${item.notes ? `<div class="mat-notes">${item.notes}</div>` : ''}
+      `;
+      section.appendChild(card);
+    });
+    list.appendChild(section);
+  });
+}
+
+function filterMaterials(btn, status) {
+  document.querySelectorAll('.mat-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMaterials(status);
+}
+
 // ── Init ──
 renderBudget();
 renderSpecs();
 renderLowTox();
+renderMaterials('all');
 </script>
 </body>
 </html>

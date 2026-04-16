@@ -51,6 +51,741 @@ const LOW_TOX = [
   { icon: "fa-grip-lines-vertical", text: "Shiplap walls preferred over drywall" },
 ];
 
+// ─────────────────────────────────────────────
+// MATERIALS
+// status options: "needed" | "ordered" | "delivered" | "installed"
+// Update status and qty as the build progresses.
+// ─────────────────────────────────────────────
+const MATERIALS = [
+
+  // ── FOUNDATION & STRUCTURE ──────────────────
+  {
+    category: "Foundation & Structure",
+    icon: "fa-layer-group",
+    items: [
+      {
+        name: "AdvanTech Subfloor Panels",
+        spec: "23/32\" T&G, 4×8 sheets",
+        qty: "~35 sheets (1,114 sq ft)",
+        status: "needed",
+        brands: [
+          { name: "Huber AdvanTech", url: "https://www.huberwood.com" }
+        ],
+        notes: "Moisture-resistant structural subfloor — far superior to standard OSB. T&G edges, no OSB-style swelling. Use on main floor deck over basement."
+      },
+      {
+        name: "LVL Rim Beams & Headers",
+        spec: "1.75×9.5\" or 1.75×11.25\" — confirm with engineer",
+        qty: "Per structural plan",
+        status: "needed",
+        brands: [
+          { name: "Boise Cascade (BCI Joists)", url: "https://www.bc.com" },
+          { name: "Weyerhaeuser (Trus Joist)", url: "https://www.weyerhaeuser.com" }
+        ],
+        notes: "Engineered for main floor span over basement. Size and species determined by structural engineer. Get local supplier quote — pricing varies."
+      },
+      {
+        name: "Engineered Floor Joists (I-Joists)",
+        spec: "11-7/8\" or 14\" depth — confirm with engineer",
+        qty: "Per structural plan",
+        status: "needed",
+        brands: [
+          { name: "Boise Cascade (BCI Joists)", url: "https://www.bc.com" },
+          { name: "Weyerhaeuser (Trus Joist)", url: "https://www.weyerhaeuser.com" }
+        ],
+        notes: "Span basement walls to carry main floor. Engineered joists minimize bounce and squeak. Builder's lumber package should include these."
+      },
+      {
+        name: "Concrete Block — Basement Walls",
+        spec: "8\"×8\"×16\" CMU block",
+        qty: "~3,600 block (~134 lin ft × 9 ft wall)",
+        status: "needed",
+        brands: [],
+        notes: "Standard 8-inch CMU from local masonry supplier. Get quotes from 2–3 local suppliers — block pricing varies by region. Could also pour concrete walls; builder will advise."
+      },
+      {
+        name: "Concrete — Footings",
+        spec: "3,000 PSI mix, 24\"×16\" continuous",
+        qty: "Per pour schedule",
+        status: "needed",
+        brands: [],
+        notes: "Ready-mix from local batch plant. Confirm continuous footing dimensions with engineer — plan shows 24\"×16\"."
+      },
+      {
+        name: "Foundation Waterproofing Membrane",
+        spec: "Self-adhering rubberized asphalt or spray-applied",
+        qty: "~1,200 sq ft",
+        status: "needed",
+        brands: [
+          { name: "GRACE Bituthene", url: "https://www.grace.com" },
+          { name: "Henry BlueMax", url: "https://www.henry.com" }
+        ],
+        notes: "Applied to exterior face of basement walls before backfill. Critical to get this right — do not skip or cut corners here."
+      },
+      {
+        name: "Drainage Board + Filter Fabric",
+        spec: "Dimple mat drainage board with geotextile",
+        qty: "~1,200 sq ft",
+        status: "needed",
+        brands: [
+          { name: "DELTA-MS (Cosella-Dörken)", url: "https://www.cosella-dorken.com" }
+        ],
+        notes: "Goes over waterproofing membrane — protects it from backfill and directs water down to drain tile."
+      },
+      {
+        name: "Perforated Drain Tile (French Drain)",
+        spec: "4\" perforated pipe with sock",
+        qty: "~140 lin ft",
+        status: "needed",
+        brands: [],
+        notes: "Runs at base of footing around full perimeter, directs groundwater to sump pit. Wrap with filter fabric sock to keep sediment out."
+      },
+      {
+        name: "Sump Pit Liner",
+        spec: "18\"×24\" plastic sump basin with lid",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Zoeller", url: "https://www.zoeller.com" }
+        ],
+        notes: "Set in gravel at lowest point of drain tile run. Sump pump installed later during mechanical phase."
+      }
+    ]
+  },
+
+  // ── FRAMING ─────────────────────────────────
+  {
+    category: "Framing Lumber",
+    icon: "fa-grip-lines-vertical",
+    items: [
+      {
+        name: "2×6 Dimensional Lumber — Exterior Walls",
+        spec: "2×6×9' or 2×6×8', SPF or Southern Yellow Pine",
+        qty: "Per framing takeoff",
+        status: "needed",
+        brands: [],
+        notes: "2×6 exterior walls allow R-23 Rockwool cavity insulation. Builder's lumber package takeoff will provide exact count. Get quotes from local yards and big box."
+      },
+      {
+        name: "2×4 Dimensional Lumber — Interior Walls",
+        spec: "2×4×8' precut studs",
+        qty: "Per framing takeoff",
+        status: "needed",
+        brands: [],
+        notes: "Standard interior partition walls. Precut 92-5/8\" studs are faster to frame than full-length."
+      },
+      {
+        name: "OSB Wall Sheathing",
+        spec: "7/16\" OSB, 4×8 sheets",
+        qty: "~115 sheets (~900 sq ft of wall area + waste)",
+        status: "needed",
+        brands: [],
+        notes: "Structural sheathing behind house wrap and Rockwool ComfortBoard. Alternative: ZIP System (sheathing + WRB in one — adds cost but eliminates house wrap step)."
+      },
+      {
+        name: "ZIP System Sheathing (alternative to OSB + wrap)",
+        spec: "7/16\" ZIP panel, 4×8",
+        qty: "~115 sheets",
+        status: "needed",
+        brands: [
+          { name: "Huber ZIP System", url: "https://www.zipsystem.com" }
+        ],
+        notes: "OPTIONAL: ZIP integrates structural sheathing + water-resistive barrier in one product. Eliminates separate house wrap step. Costs more upfront but saves labor. Tape seams with ZIP tape."
+      },
+      {
+        name: "House Wrap (if using standard OSB)",
+        spec: "WRB — vapor permeable",
+        qty: "~1,000 sq ft",
+        status: "needed",
+        brands: [
+          { name: "DuPont Tyvek HomeWrap", url: "https://www.dupont.com" },
+          { name: "Huber ZIP (see above)", url: "https://www.zipsystem.com" }
+        ],
+        notes: "Skip if using ZIP System. Tyvek is the standard; drape over sheathing before Rockwool ComfortBoard goes on. Lap seams and tape."
+      },
+      {
+        name: "Roof Sheathing — OSB or CDX Plywood",
+        spec: "7/16\" OSB or 1/2\" CDX, 4×8",
+        qty: "~170 sheets (~1,350 sq ft roof area)",
+        status: "needed",
+        brands: [],
+        notes: "Roof deck over rafters/trusses. CDX plywood preferred if using Rockwool ComfortBoard 110 under-deck since it holds fasteners better."
+      }
+    ]
+  },
+
+  // ── ROOFING ──────────────────────────────────
+  {
+    category: "Roofing",
+    icon: "fa-house-chimney",
+    items: [
+      {
+        name: "Galvanized Standing Seam Metal Roofing",
+        spec: "24-gauge, 16\" panels, standing seam, Galvalume or true galvanized",
+        qty: "~1,350 sq ft + 15% waste = ~1,550 sq ft",
+        status: "needed",
+        brands: [
+          { name: "McElroy Metal", url: "https://www.mcelroymetal.com" },
+          { name: "Sheffield Metals", url: "https://www.sheffieldmetals.com" },
+          { name: "Metal Sales Manufacturing", url: "https://www.metalsales.us.com" }
+        ],
+        notes: "True galvanized (G90 or G115) for the classic raw zinc look. Galvalume is more corrosion-resistant but more silvery. McElroy Metal is AL/Southeast-based — check for local rep. Specify concealed fastener standing seam, not exposed fastener corrugated."
+      },
+      {
+        name: "Synthetic Roofing Underlayment",
+        spec: "Self-adhering or mechanically fastened synthetic WRB",
+        qty: "~1,550 sq ft",
+        status: "needed",
+        brands: [
+          { name: "GAF WeatherWatch (self-adhering)", url: "https://www.gaf.com" },
+          { name: "VaproShield SlopeShield", url: "https://www.vaproshield.com" }
+        ],
+        notes: "Goes under metal panels on roof deck. Use self-adhering ice & water shield at eaves (2 rows) and valleys. Synthetic felt on field."
+      },
+      {
+        name: "Ridge Cap Flashing",
+        spec: "Matching galvanized metal, field-formed or pre-made",
+        qty: "~46 lin ft (42' + 4' overhang each side)",
+        status: "needed",
+        brands: [],
+        notes: "Should match roof panel material and supplier. Order at same time as panels."
+      },
+      {
+        name: "Drip Edge Flashing",
+        spec: "Galvanized or painted steel",
+        qty: "~180 lin ft perimeter",
+        status: "needed",
+        brands: [],
+        notes: "Eaves and rakes. Install before underlayment at eaves, after underlayment at rakes."
+      },
+      {
+        name: "Rockwool ComfortBoard 110 (Under-Roof Deck)",
+        spec: "1\" rigid, 2×4 ft boards, R-4",
+        qty: "~1,350 sq ft = ~170 boards",
+        status: "needed",
+        brands: [
+          { name: "Rockwool ComfortBoard 110", url: "https://www.rockwool.com" }
+        ],
+        notes: "High-density (110 kg/m³) — rated for under-roof-deck use unlike standard ComfortBoard 80. Goes between rafters/trusses and sheathing. Adds R-4 continuous and acts as thermal break and sound barrier. Fire-resistant."
+      }
+    ]
+  },
+
+  // ── INSULATION ───────────────────────────────
+  {
+    category: "Insulation — Rock Wool",
+    icon: "fa-temperature-low",
+    items: [
+      {
+        name: "Rockwool Comfortbatt — Exterior Wall Cavities",
+        spec: "R-23, 2×6 width (5.5\"), 47\"×15\" batts",
+        qty: "~900 sq ft = ~11–12 bags",
+        status: "needed",
+        brands: [
+          { name: "Rockwool Comfortbatt", url: "https://www.rockwool.com" }
+        ],
+        notes: "Fills 2×6 exterior wall cavities. Fire-resistant, mold-resistant, no VOC, no itch. Does not need a vapor barrier in most AL climates — confirm with building official."
+      },
+      {
+        name: "Rockwool Comfortbatt — Ceiling",
+        spec: "R-30 or R-38 batts to fit joist spacing",
+        qty: "~1,114 sq ft = ~14 bags",
+        status: "needed",
+        brands: [
+          { name: "Rockwool Comfortbatt", url: "https://www.rockwool.com" }
+        ],
+        notes: "Ceiling/attic floor insulation. If using vaulted ceiling in living room, use batt between rafters + ComfortBoard 110 above deck."
+      },
+      {
+        name: "Rockwool ComfortBoard 80 — Exterior Continuous",
+        spec: "1.5\" thick, R-6, 2×4 ft boards",
+        qty: "~900 sq ft = ~113 boards",
+        status: "needed",
+        brands: [
+          { name: "Rockwool ComfortBoard 80", url: "https://www.rockwool.com" }
+        ],
+        notes: "Continuous exterior insulation — goes over OSB sheathing or ZIP, under Hardie siding. Eliminates thermal bridging at studs. Fire-rated (no face exposure limit). ComfortBoard 80 = standard density for walls."
+      },
+      {
+        name: "Rockwool Safe'n'Sound — Interior Partitions",
+        spec: "3.5\" (2×4 cavity), 47\"×15\" batts",
+        qty: "~600 sq ft = ~8 bags",
+        status: "needed",
+        brands: [
+          { name: "Rockwool Safe'n'Sound", url: "https://www.rockwool.com" }
+        ],
+        notes: "Sound insulation (STC 45+) for master bedroom, bathrooms, laundry room interior walls. Not R-value rated — purely acoustic and fire separation. The single best upgrade for bedroom privacy."
+      }
+    ]
+  },
+
+  // ── EXTERIOR ─────────────────────────────────
+  {
+    category: "Exterior — Siding & Trim",
+    icon: "fa-house",
+    items: [
+      {
+        name: "James Hardie HardiePanel (Board & Batten)",
+        spec: "HardiePanel Vertical Siding, smooth or cedarmill texture",
+        qty: "~900 sq ft + 10% waste = ~990 sq ft",
+        status: "needed",
+        brands: [
+          { name: "James Hardie HardiePanel", url: "https://www.jameshardie.com" }
+        ],
+        notes: "The 'board' in Board & Batten. Order smooth or CedarMill texture. Comes primed — needs top coat with Sherwin-Williams Duration or similar. Available in ColorPlus if you want factory-painted (costs more, lasts longer, better warranty)."
+      },
+      {
+        name: "James Hardie HardieTrim Boards (Battens)",
+        spec: "5/4×2\" or 5/4×4\" HardieTrim, smooth",
+        qty: "Per linear footage of batten spacing (~1 batten per 8–12\")",
+        status: "needed",
+        brands: [
+          { name: "James Hardie HardieTrim", url: "https://www.jameshardie.com" }
+        ],
+        notes: "The 'batten' in Board & Batten — vertical trim strips applied over HardiePanel joints. Spacing is typically 8–12\" on center. Confirm with builder what spacing looks best on your elevation."
+      },
+      {
+        name: "Exterior Trim — Corner Boards, Fascia, Soffits",
+        spec: "HardieTrim or PVC trim",
+        qty: "Per lineal footage — builder to quantify",
+        status: "needed",
+        brands: [
+          { name: "James Hardie HardieTrim", url: "https://www.jameshardie.com" },
+          { name: "AZEK PVC Trim (for soffits)", url: "https://www.azek.com" }
+        ],
+        notes: "Corners, fascia board, soffits. PVC soffit panels at carport and porch eaves are low-maintenance and don't rot. Hardie for vertical trim, PVC for soffits is a common combo."
+      },
+      {
+        name: "Exterior Paint — Zero-VOC, Earth Tone",
+        spec: "100% Acrylic exterior, zero-VOC",
+        qty: "~2 gallons per 100 sq ft = ~18 gallons (body + primer)",
+        status: "needed",
+        brands: [
+          { name: "Sherwin-Williams Emerald Exterior", url: "https://www.sherwin-williams.com" },
+          { name: "Benjamin Moore Aura Exterior", url: "https://www.benjaminmoore.com" }
+        ],
+        notes: "SW Emerald and BM Aura are top-tier zero-VOC exterior lines. Warm Clay or Sage Green palette discussed — SW 'Whole Wheat', 'Birdseye Maple', or 'Sage' are good starting points. Prime bare Hardie with SW Extreme Bond Primer first."
+      },
+      {
+        name: "Porch Columns",
+        spec: "6×6 wrapped fiberglass or smooth cellular PVC columns, tapered",
+        qty: "4 (front porch per plans)",
+        status: "needed",
+        brands: [
+          { name: "Fypon Urethane Columns", url: "https://www.fypon.com" },
+          { name: "Turncraft Poly-Classic", url: "https://www.turncraft.com" }
+        ],
+        notes: "Plans show 4 covered front porch columns. PVC/fiberglass wrap over structural post won't rot or need paint touch-ups. Confirm column height with builder based on porch roof pitch."
+      }
+    ]
+  },
+
+  // ── WINDOWS & DOORS ──────────────────────────
+  {
+    category: "Windows & Doors",
+    icon: "fa-door-open",
+    items: [
+      {
+        name: "Double-Hung Windows",
+        spec: "Double-pane, Low-E glass, vinyl or fiberglass frame",
+        qty: "15 units (per plans)",
+        status: "needed",
+        brands: [
+          { name: "Andersen 400 Series", url: "https://www.andersenwindows.com" },
+          { name: "Pella 250 Series", url: "https://www.pella.com" },
+          { name: "Jeld-Wen Premium Vinyl", url: "https://www.jeld-wen.com" }
+        ],
+        notes: "Andersen 400 is fiberglass-clad wood interior — premium. Pella 250 is solid choice mid-range. Jeld-Wen vinyl if budget-focused. All 3 offer Low-E glass. Get window schedule from plans to confirm exact sizes before ordering."
+      },
+      {
+        name: "Front Entry French Door (Double)",
+        spec: "Fiberglass, 36\"+36\" (72\" opening), with sidelites or transom",
+        qty: "1 set",
+        status: "needed",
+        brands: [
+          { name: "Therma-Tru Benchmark", url: "https://www.thermatru.com" },
+          { name: "Masonite Performance Door", url: "https://www.masonite.com" },
+          { name: "ProVia Heritage", url: "https://www.provia.com" }
+        ],
+        notes: "Fiberglass doors don't rot, dent, or warp — strongly preferred over wood for exterior. Therma-Tru Benchmark is widely available; ProVia Heritage is more custom/premium. Specify with keyed deadbolt prep and multi-point lock if desired."
+      },
+      {
+        name: "Rear & Side Exterior Doors",
+        spec: "Fiberglass or steel insulated, 32\" or 36\" wide",
+        qty: "2 units",
+        status: "needed",
+        brands: [
+          { name: "Therma-Tru Benchmark", url: "https://www.thermatru.com" },
+          { name: "Masonite Performance Door", url: "https://www.masonite.com" }
+        ],
+        notes: "Steel doors are more budget-friendly for back/side entries. Fiberglass preferred near moisture (rear deck walkout)."
+      },
+      {
+        name: "Interior Prehung Doors",
+        spec: "Prehung, 1-3/8\" solid or hollow core, 6-panel or flat",
+        qty: "12 units",
+        status: "needed",
+        brands: [
+          { name: "Masonite (big box)", url: "https://www.masonite.com" },
+          { name: "Steves & Sons (solid wood upgrade)", url: "https://www.stevedoor.com" }
+        ],
+        notes: "Standard hollow-core for closets/utility. Consider solid-core for bedrooms (much better sound isolation — pairs well with the Safe'n'Sound insulation). Steves & Sons offers solid wood prehung if upgrading."
+      }
+    ]
+  },
+
+  // ── ELECTRICAL ───────────────────────────────
+  {
+    category: "Electrical",
+    icon: "fa-bolt",
+    items: [
+      {
+        name: "MC Cable (Metal-Clad Shielded Wiring)",
+        spec: "12/2 and 14/2 MC aluminum-sheathed cable",
+        qty: "Per electrical plan (builder/electrician to quantify)",
+        status: "needed",
+        brands: [
+          { name: "Southwire MC Cable", url: "https://www.southwire.com" },
+          { name: "AFC Cable Systems", url: "https://www.afcwire.com" }
+        ],
+        notes: "MC cable (metal clad) is the low-tox choice — aluminum sheath acts as both ground and EMF shield vs standard NM-B (Romex). Costs more but this is a core low-tox spec. Southwire and AFC are the two main suppliers. Your electrician should be familiar with it."
+      },
+      {
+        name: "200A Main Electrical Panel",
+        spec: "200A, 40-space or 60-space load center",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Square D QO Series", url: "https://www.se.com" },
+          { name: "Siemens PL Series", url: "https://www.siemens.com" }
+        ],
+        notes: "Square D QO is the go-to quality panel — copper bus bars, solid breakers. Avoid Eaton CH if possible. Get at least 40 spaces; 60-space is worth the small upcharge for future circuits."
+      },
+      {
+        name: "Cat6 Ethernet Cable",
+        spec: "Cat6 CMR (riser-rated) or CMP (plenum) solid copper",
+        qty: "~2,000 ft (all rooms, home run to panel location)",
+        status: "needed",
+        brands: [
+          { name: "Belden DataTwist 350", url: "https://www.belden.com" },
+          { name: "Monoprice Cat6 (budget)", url: "https://www.monoprice.com" }
+        ],
+        notes: "Run to every room, both floors, plus exterior camera/access points. All home-run to a central patch panel in the mechanical/utility room. Belden is spec-grade; Monoprice is fine for residential budget. Pull while walls are open — cost to add later is 10× more."
+      },
+      {
+        name: "Structured Media Center / Patch Panel",
+        spec: "16-port or 24-port patch panel + enclosure",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Leviton Structured Media Center", url: "https://www.leviton.com" },
+          { name: "Monoprice Patch Panel", url: "https://www.monoprice.com" }
+        ],
+        notes: "Central termination point for all Cat6 runs. Install in mechanical room or dedicated closet. Add a small UPS to keep network up during brief power outages."
+      },
+      {
+        name: "Electrical Boxes & Devices",
+        spec: "Metal boxes (not plastic) for MC cable",
+        qty: "Per electrical plan",
+        status: "needed",
+        brands: [
+          { name: "Raco / Hubbell", url: "https://www.hubbell.com" }
+        ],
+        notes: "MC cable requires metal boxes (no plastic cut-in boxes). Specify to electrician upfront."
+      }
+    ]
+  },
+
+  // ── PLUMBING ─────────────────────────────────
+  {
+    category: "Plumbing",
+    icon: "fa-droplet",
+    items: [
+      {
+        name: "PEX-A Tubing — Supply Lines",
+        spec: "1/2\" and 3/4\" PEX-A, white or red/blue (not PEX-B or PEX-C)",
+        qty: "Per plumbing plan",
+        status: "needed",
+        brands: [
+          { name: "Uponor AquaPEX (PEX-A)", url: "https://www.uponor.com" },
+          { name: "Watts PEX-A", url: "https://www.watts.com" }
+        ],
+        notes: "PEX-A specifically — not PEX-B (SharkBite), not PEX-C. PEX-A uses expansion fittings (not crimp), is more flexible, self-heals kinks, and has fewer fittings = fewer leak points. Uponor (Wirsbo) is the gold standard for PEX-A. Use Uponor ProPEX fittings only."
+      },
+      {
+        name: "Copper Pipe — Supply (if choosing copper over PEX-A)",
+        spec: "Type L copper, 1/2\" and 3/4\"",
+        qty: "Per plumbing plan",
+        status: "needed",
+        brands: [],
+        notes: "Copper is the other low-tox choice for supply. Type L (medium wall) is standard for residential. More expensive and requires soldering skill. PEX-A is easier to install and equally inert — builder will have a preference."
+      },
+      {
+        name: "Tankless Propane Water Heater",
+        spec: "Whole-house, min 8.0 GPM at 35°F rise",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Rinnai RU Series", url: "https://www.rinnai.us" },
+          { name: "Navien NPE-A2 Series", url: "https://www.navieninc.com" }
+        ],
+        notes: "Size for 2 simultaneous fixtures (shower + sink). Rinnai RU199 or Navien NPE-240A are solid whole-house units. Rinnai has better AL service network. Mount on interior wall, vent through exterior (not in unconditioned attic). Gas line must be 3/4\" minimum."
+      },
+      {
+        name: "Well Pressure Tank",
+        spec: "Bladder-type, 44-gallon minimum",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Amtrol Well-X-Trol", url: "https://www.amtrol.com" },
+          { name: "Pentair Sta-Rite", url: "https://www.pentair.com" }
+        ],
+        notes: "Amtrol Well-X-Trol WX-250 (44 gal) is the standard recommendation. Larger tank = fewer pump cycles = longer pump life. Install near pressure switch in mechanical room."
+      },
+      {
+        name: "Whole-House Water Filtration",
+        spec: "Sediment + iron/manganese filter + carbon + UV sterilizer",
+        qty: "1 system",
+        status: "needed",
+        brands: [
+          { name: "US Water Systems", url: "https://www.uswatersystems.com" },
+          { name: "Aquasana Whole House", url: "https://www.aquasana.com" },
+          { name: "Pelican Water", url: "https://www.pelicanwater.com" }
+        ],
+        notes: "AL rural well water often has iron, sediment, and bacteria. Start with a water test BEFORE ordering a system — test for iron, manganese, hardness, pH, and coliform. US Water Systems will build a custom system around your test results. Budget ~$1,500–$3,500 depending on results."
+      },
+      {
+        name: "ABS or PVC Drain-Waste-Vent (DWV) Pipe",
+        spec: "3\" and 4\" ABS or Schedule 40 PVC",
+        qty: "Per plumbing plan",
+        status: "needed",
+        brands: [],
+        notes: "DWV plastic is fine from a health standpoint since it's drain-only (no drinking water contact). ABS is common in the Southeast. Install in walls before framing closes up."
+      }
+    ]
+  },
+
+  // ── HVAC & MECHANICAL ────────────────────────
+  {
+    category: "HVAC & Mechanical",
+    icon: "fa-wind",
+    items: [
+      {
+        name: "Ductless Mini-Split System (Multi-Zone)",
+        spec: "2-zone, 2×12,000 BTU heads + outdoor condenser, SEER2 ≥20",
+        qty: "1 system (2 indoor heads)",
+        status: "needed",
+        brands: [
+          { name: "Mitsubishi MXZ Multi-Zone", url: "https://www.mitsubishicomfort.com" },
+          { name: "Daikin Multi-Zone", url: "https://www.daikincomfort.com" },
+          { name: "Fujitsu AOU Multi-Zone", url: "https://www.fujitsugeneral.com" }
+        ],
+        notes: "Mitsubishi MXZ-2C24NA2 (2-zone outdoor) + 2× MSZ-GL12NA heads is a strong combo. Mitsubishi Hyper Heat models work down to -13°F. Specify H2i series for cold snaps. Daikin is excellent; Fujitsu also top-tier. Avoid off-brand mini-splits (MRCOOL, Pioneer) for a primary system."
+      },
+      {
+        name: "HRV / ERV Fresh Air Ventilation Unit",
+        spec: "Whole-house HRV or ERV, min 150 CFM, HEPA or MERV-13 filtration",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Zehnder ComfoAir Q350 (premium)", url: "https://www.zehnderamerica.com" },
+          { name: "Fantech SH 704 HRV", url: "https://www.fantech.net" },
+          { name: "Broan HRV (budget)", url: "https://www.broan-nutone.com" }
+        ],
+        notes: "Mandatory with a tight rock wool envelope — without it, you get moisture buildup and poor air quality. Zehnder is the Cadillac of HRVs (best recovery efficiency, quietest, medical-grade filtration) — worth the cost if you can swing it. Fantech is solid mid-range. Wire to a simple wall control."
+      },
+      {
+        name: "EPA-Certified Wood Burning Stove",
+        spec: "EPA Step 2 certified, 2.0 g/hr or less emissions, 60,000–80,000 BTU",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Blaze King Ashford 25.4", url: "https://www.blazeking.com" },
+          { name: "Hearthstone Heritage", url: "https://www.hearthstonestoves.com" },
+          { name: "Quadra-Fire Discovery III", url: "https://www.quadrafire.com" }
+        ],
+        notes: "Blaze King has exceptionally long burn times and a catalytic combustor — very efficient. Hearthstone soapstone models hold heat long after the fire dies out. Size for 1,000–1,500 sq ft of heating area. Install on a properly insulated hearth pad; stovepipe through ceiling with double-wall insulated flue."
+      },
+      {
+        name: "Double-Wall Insulated Chimney Flue (Class A)",
+        spec: "6\" or 8\" diameter, Class A rated, 15–20 ft",
+        qty: "1 run",
+        status: "needed",
+        brands: [
+          { name: "DuraVent DuraPlus", url: "https://www.duravent.com" },
+          { name: "Simpson Dura-Tech", url: "https://www.metalbestos.com" }
+        ],
+        notes: "Double-wall insulated (not single-wall black stovepipe) for the portion through the ceiling/roof. Maintain 2\" clearance from combustibles. Install rain cap and spark arrestor at top."
+      }
+    ]
+  },
+
+  // ── INTERIOR FINISHES ────────────────────────
+  {
+    category: "Interior Finishes",
+    icon: "fa-paintbrush",
+    items: [
+      {
+        name: "Shiplap — Solid Wood (Living Areas & Hallways)",
+        spec: "1×6 or 1×8 tongue & groove shiplap, poplar or pine, primed",
+        qty: "~2,000 sq ft of wall area",
+        status: "needed",
+        brands: [
+          { name: "Eucaboard / local mill (solid wood)", url: "" },
+          { name: "Metrie Shiplap Profile", url: "https://www.metrie.com" }
+        ],
+        notes: "Solid wood shiplap (no MDF or composite — those off-gas formaldehyde). Poplar is excellent — stable, tight grain, takes paint well, low VOC by nature. Pine is cheaper but knottier. Avoid 'shiplap-style' MDF paneling sold at big box stores. Ask local lumber yard for primed poplar boards."
+      },
+      {
+        name: "Solid Wood Cabinets — Kitchen",
+        spec: "Solid wood box and door faces, formaldehyde-free, low-VOC finish",
+        qty: "Per kitchen layout (builder to specify)",
+        status: "needed",
+        brands: [
+          { name: "Wellborn Cabinet (SE-based)", url: "https://www.wellborncabinet.com" },
+          { name: "Fabuwood (all-wood, semi-custom)", url: "https://www.fabuwood.com" },
+          { name: "Local cabinet shop (ideal)", url: "" }
+        ],
+        notes: "AVOID IKEA and Home Depot stock cabinets — particleboard and formaldehyde-based glues. Wellborn is Alabama-based and builds solid wood boxes. Fabuwood 'Nexus' line is all-wood (no particleboard) at a reasonable price. Best option: local custom cabinet shop — you control the materials and finish."
+      },
+      {
+        name: "Solid Wood Cabinets — Bathrooms (×3)",
+        spec: "Solid wood vanity base, 30\" or 36\" wide per bath",
+        qty: "3 vanity bases",
+        status: "needed",
+        brands: [
+          { name: "Wellborn Cabinet", url: "https://www.wellborncabinet.com" },
+          { name: "Strasser Woodenworks", url: "https://www.strasserwood.com" }
+        ],
+        notes: "Strasser makes solid wood bath vanities specifically — good option if going semi-custom. Match finish to kitchen for continuity."
+      },
+      {
+        name: "Quartz Countertops — Kitchen & Baths",
+        spec: "Engineered quartz, 3cm thick",
+        qty: "~90 sq ft total (kitchen + 3 baths)",
+        status: "needed",
+        brands: [
+          { name: "Silestone by Cosentino", url: "https://www.silestone.com" },
+          { name: "Caesarstone", url: "https://www.caesarstone.com" },
+          { name: "MSI Q Premium Quartz", url: "https://www.msisurfaces.com" }
+        ],
+        notes: "Quartz is non-porous, no sealing needed, very low VOC vs natural stone. Silestone is well-regarded; MSI is good value. Get samples to compare in the actual light conditions of your kitchen."
+      },
+      {
+        name: "Solid Hardwood Flooring",
+        spec: "3/4\" solid hardwood, 3.25\" or 5\" wide plank, site-finished",
+        qty: "~700 sq ft (living, dining, bedrooms)",
+        status: "needed",
+        brands: [
+          { name: "Mullican Hardwoods", url: "https://www.mullicanflooring.com" },
+          { name: "Bruce Hardwood (Puregrade)", url: "https://www.bruce.com" },
+          { name: "Local mill / unfinished select oak", url: "" }
+        ],
+        notes: "Site-finished solid hardwood is the best low-tox option — you control the finish (use zero-VOC finish like Rubio Monocoat or Bona Traffic HD). White oak or red oak are durable and widely available. Mullican makes quality domestic hardwood; unfinished oak from a local mill is cost-effective."
+      },
+      {
+        name: "Zero-VOC Floor Finish (for site-finished hardwood)",
+        spec: "Water-based or natural oil, zero-VOC, matte or satin",
+        qty: "~3 gallons (3 coats on 700 sq ft)",
+        status: "needed",
+        brands: [
+          { name: "Rubio Monocoat Oil Plus 2C", url: "https://www.rubiomonocoat.com" },
+          { name: "Bona Traffic HD", url: "https://www.bona.com" }
+        ],
+        notes: "Rubio Monocoat is a plant-based single-coat penetrating oil — zero VOC, minimal odor, no offgassing after cure. Bona Traffic HD is a waterborne urethane — zero VOC certified, very durable. Both are significantly better than oil-based polyurethane (high VOC, offgasses for weeks)."
+      },
+      {
+        name: "Porcelain or Ceramic Tile — Bathrooms & Laundry",
+        spec: "Porcelain floor tile, rectified edges, 12×24\" or 18×18\"",
+        qty: "~250 sq ft",
+        status: "needed",
+        brands: [
+          { name: "MSI Stone (wide selection)", url: "https://www.msisurfaces.com" },
+          { name: "Dal-Tile", url: "https://www.daltile.com" }
+        ],
+        notes: "Porcelain is non-porous and no-VOC — ideal for bathrooms. Rectified tiles (machine-cut edges) allow tighter grout lines. Use unsanded grout for tight joints. Low-VOC tile adhesive/mortar: Laticrete PERMACOLOR Select."
+      },
+      {
+        name: "Zero-VOC Interior Paint",
+        spec: "100% acrylic latex, zero-VOC (0 g/L), flat and eggshell sheens",
+        qty: "~12–15 gallons depending on shiplap coverage",
+        status: "needed",
+        brands: [
+          { name: "Sherwin-Williams Harmony (zero-VOC)", url: "https://www.sherwin-williams.com" },
+          { name: "Benjamin Moore Natura", url: "https://www.benjaminmoore.com" },
+          { name: "AFM Safecoat (strictest low-tox line)", url: "https://www.afmsafecoat.com" }
+        ],
+        notes: "SW Harmony and BM Natura are zero-VOC certified and widely available. AFM Safecoat is the strictest option — made specifically for chemically sensitive individuals. Specify zero-VOC tints as well (many tints add VOCs even to a zero-VOC base)."
+      },
+      {
+        name: "Incandescent / Halogen Light Fixtures",
+        spec: "A-19 incandescent or halogen, standard E26 base",
+        qty: "Per room count (main floor + basement)",
+        status: "needed",
+        brands: [
+          { name: "Westinghouse Lighting (incandescent-compatible)", url: "https://www.westinghouselighting.com" },
+          { name: "Satco Products", url: "https://www.satco.com" }
+        ],
+        notes: "Specify fixtures with E26 standard base (not GU10 or LED-only) so you can use incandescent or halogen bulbs. Full-spectrum incandescent bulbs (3,000K color temp, high CRI) produce the warmest light with zero flicker. Stock up on bulbs — standard incandescents are being phased out of retail. Bulbrite and GE still sell them."
+      }
+    ]
+  },
+
+  // ── APPLIANCES ───────────────────────────────
+  {
+    category: "Appliances",
+    icon: "fa-utensils",
+    items: [
+      {
+        name: "Propane Freestanding Range (5-Burner)",
+        spec: "36\" or 30\" propane, cast iron grates, convection oven optional",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Thor Kitchen (36\", budget pro-style)", url: "https://www.thorkitchen.com" },
+          { name: "Cosmo Commercial-Style", url: "https://www.cosmoappliances.com" },
+          { name: "Zline Ranges", url: "https://www.zlinekitchen.com" }
+        ],
+        notes: "Propane conversion kits come with most ranges — confirm propane-ready out of box. Thor Kitchen and Zline are popular pro-style ranges at a fraction of Wolf/Viking prices. Cast iron grates and sealed burners are easier to clean."
+      },
+      {
+        name: "Range Hood (Vented to Exterior)",
+        spec: "600 CFM minimum, exterior-vented only",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Zline Wall Mount Hood", url: "https://www.zlinekitchen.com" },
+          { name: "Cosmo Island Hood", url: "https://www.cosmoappliances.com" }
+        ],
+        notes: "MUST vent to exterior — not recirculating. Recirculating hoods just redistribute cooking fumes. Minimum 600 CFM for a gas range. Size hood to be 3\" wider than range on each side if possible. Run ductwork before drywall."
+      },
+      {
+        name: "Refrigerator",
+        spec: "Counter-depth, 30\" wide, bottom-freezer or French door",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "LG LRMVS3006S (stainless)", url: "https://www.lg.com" },
+          { name: "GE Profile Series", url: "https://www.geappliances.com" }
+        ],
+        notes: "Counter-depth (24\" deep) keeps the kitchen from feeling cramped. Bottom-freezer puts fresh food at eye level. Avoid models with too many 'smart' features — more components = more to break."
+      },
+      {
+        name: "Dishwasher",
+        spec: "24\" standard width, stainless tub",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Bosch 500 Series", url: "https://www.bosch-home.com" },
+          { name: "Miele G 5000 Series", url: "https://www.mieleusa.com" }
+        ],
+        notes: "Bosch is the reliability standard for dishwashers. The 500 series is the sweet spot — quiet (44 dBA), stainless tub, no plastic components touching food. Miele is premium (quietest, longest-lasting) if budget allows."
+      }
+    ]
+  }
+
+];
+
 const BUDGET_CATEGORIES = [
   {
     id: 1,
