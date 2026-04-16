@@ -58,6 +58,89 @@ const LOW_TOX = [
 // ─────────────────────────────────────────────
 const MATERIALS = [
 
+  // ── ALABAMA CLIMATE & CODE ───────────────────
+  // Zone 3A (hot-humid). High termite pressure. Tornado zone.
+  // Heavy clay soil. ~54" annual rainfall. Cooling-dominated.
+  {
+    category: "Alabama Climate & Code",
+    icon: "fa-triangle-exclamation",
+    items: [
+      {
+        name: "BoraCare — Borate Termite Treatment (Framing)",
+        spec: "Concentrate, dilute 1:1 with water, spray/brush all framing",
+        qty: "2–3 gallons concentrate (covers ~1,114 sq ft framing)",
+        status: "needed",
+        brands: [
+          { name: "BoraCare by Nisus Corp", url: "https://www.nisuscorp.com" },
+          { name: "Timbor (less penetrating, budget option)", url: "https://www.nisuscorp.com" }
+        ],
+        notes: "CRITICAL for central Alabama — one of the highest termite pressure states in the US (Formosan + Eastern subterranean both present). Apply BoraCare to ALL framing lumber, OSB, and wood trim before drywall or sheathing closes in. BoraCare penetrates deep into the wood; Timbor is surface-only and cheaper. A licensed pest control company can apply during framing phase — get this scheduled early."
+      },
+      {
+        name: "Termite Soil Pre-Treatment",
+        spec: "Liquid termiticide soil treatment, perimeter + under slab",
+        qty: "Per licensed pest control contractor",
+        status: "needed",
+        brands: [
+          { name: "Termidor (fipronil) — industry standard", url: "https://www.termidor.com" },
+          { name: "Altriset (chlorantraniliprole) — lower toxicity", url: "" }
+        ],
+        notes: "Apply before concrete pour and after backfill. Required by most Alabama building codes for new construction. Termidor is the most effective and long-lasting; Altriset is a lower-mammalian-toxicity alternative. Your builder's pest control sub should handle this — confirm it's in the contract."
+      },
+      {
+        name: "Radiant Barrier — Foil-Faced Roof Deck",
+        spec: "Foil-faced OSB roof deck, or staple-up radiant barrier foil in attic",
+        qty: "~1,350 sq ft (roof area)",
+        status: "needed",
+        brands: [
+          { name: "LP TechShield (foil-faced OSB)", url: "https://www.lpcorp.com" },
+          { name: "Reflectix (staple-up foil)", url: "https://www.reflectixinc.com" }
+        ],
+        notes: "Alabama summers are brutal — a radiant barrier under the roof deck can reduce attic temperatures by 20–30°F and cut cooling costs 10–15%. LP TechShield is foil-laminated OSB — you use it instead of standard roof sheathing, no extra step. Reflectix is installed in the attic after the fact but works. Given the standing seam metal roof (already reflective), add LP TechShield for the inside benefit."
+      },
+      {
+        name: "Hurricane/Tornado Roof Connectors",
+        spec: "Rafter-to-top-plate and rafter-to-ridge connectors, galvanized",
+        qty: "Per truss/rafter count — every connection",
+        status: "needed",
+        brands: [
+          { name: "Simpson Strong-Tie H2.5A (rafter tie)", url: "https://www.strongtie.com" },
+          { name: "Simpson Strong-Tie LSTA strap ties", url: "https://www.strongtie.com" }
+        ],
+        notes: "Alabama sits in Dixie Alley — tornado risk is real and serious. Simpson Strong-Tie hurricane ties at EVERY rafter-to-top-plate connection are cheap insurance ($1–2/connector) and required by IRC in high-wind zones. Specify to builder that all roof framing connections get Simpson ties. Also use continuous load path (anchor bolts → sill plate → studs → top plate → rafter ties)."
+      },
+      {
+        name: "Basement / Lower Level Dehumidifier",
+        spec: "Whole-basement unit, 70+ pint/day capacity, auto-drain",
+        qty: "1",
+        status: "needed",
+        brands: [
+          { name: "Santa Fe Compact70", url: "https://www.santa-fe-products.com" },
+          { name: "Aprilaire E100 (100 pint)", url: "https://www.aprilaire.com" }
+        ],
+        notes: "Alabama humidity + walkout basement = guaranteed moisture issues without active dehumidification. A Santa Fe or Aprilaire unit designed for below-grade spaces (handles cold air better than box-store units) is worth every penny. Plumb the drain line directly to a floor drain or sump — no emptying buckets. Run continuously during warm/humid months."
+      },
+      {
+        name: "Pressure-Treated Lumber — Exterior & Ground Contact",
+        spec: "ACQ or CA-C treated, Ground Contact rated (UC4A/UC4B), .40 or .60 retention",
+        qty: "All sill plates, porch posts, deck framing, any wood near grade",
+        status: "needed",
+        brands: [],
+        notes: "All sill plates on concrete (basement and main floor perimeter) must be pressure-treated regardless of termite treatment above. Porch columns/posts: use PT post with PVC or Fypon sleeve on top. Rear deck framing: all PT. Any wood within 6\" of grade: PT. In Alabama, use .40 retention minimum for above-ground, .60 for ground contact. Specify lumber yard includes this — don't assume."
+      },
+      {
+        name: "Low-E Window Glass — Low SHGC Specification",
+        spec: "Solar Heat Gain Coefficient (SHGC) ≤ 0.25 for all windows",
+        qty: "All 15 windows",
+        status: "needed",
+        brands: [
+          { name: "Cardinal LoĒ-366 glass coating", url: "https://www.cardinalcorp.com" }
+        ],
+        notes: "Alabama is Zone 3A — COOLING dominated. Low SHGC (≤0.25) is more important than U-factor here. Standard Low-E glass sold at big box stores often has SHGC of 0.30–0.40 which lets in significant heat gain. Specify Cardinal LoĒ-366 or equivalent triple-silver Low-E coating: U-factor ~0.27, SHGC ~0.20. This spec can cut summer cooling loads significantly. Tell your window supplier 'Zone 3 Low-E, low SHGC' — they'll know what you mean."
+      }
+    ]
+  },
+
   // ── FOUNDATION & STRUCTURE ──────────────────
   {
     category: "Foundation & Structure",
@@ -727,6 +810,41 @@ const MATERIALS = [
           { name: "Satco Products", url: "https://www.satco.com" }
         ],
         notes: "Specify fixtures with E26 standard base (not GU10 or LED-only) so you can use incandescent or halogen bulbs. Full-spectrum incandescent bulbs (3,000K color temp, high CRI) produce the warmest light with zero flicker. Stock up on bulbs — standard incandescents are being phased out of retail. Bulbrite and GE still sell them."
+      },
+      {
+        name: "Magnesium Oxide (MgO) Board — Drywall Alternative",
+        spec: "1/2\" or 5/8\" MgO board, fire-rated, mold-resistant",
+        qty: "~4,500 sq ft (walls + ceilings, main floor + basement)",
+        status: "needed",
+        brands: [
+          { name: "Falcon Board (MgO)", url: "https://www.falconpanel.com" },
+          { name: "MagMatrix Structural MgO", url: "https://www.magmatrix.com" },
+          { name: "Magnastruct by Elemag", url: "https://www.elemagbuilding.com" }
+        ],
+        notes: "MgO board is a near drop-in drywall replacement — same installation (screws, tape, mud), similar weight. Key advantages for Alabama: completely mold-resistant, termite-resistant, fireproof, no VOCs, no formaldehyde. Roughly $1.50–2.50/sq ft vs $0.50–0.80 for standard drywall, but eliminates mold risk in high-humidity environment. Especially good for basement walls. Cuts with standard drywall tools. Available through specialty distributors — call Falcon Board for nearest stocking dealer in Alabama."
+      },
+      {
+        name: "Pine Shiplap — Budget Natural Wood (Accent Walls)",
+        spec: "1×6 or 1×8 pine, shiplap or T&G profile, kiln-dried, unfinished",
+        qty: "~500–800 sq ft (accent walls, mudroom, specific rooms)",
+        status: "needed",
+        brands: [
+          { name: "84 Lumber (AL locations)", url: "https://www.84lumber.com" },
+          { name: "Builders FirstSource (local)", url: "https://www.buildersfirstsource.com" },
+          { name: "Local Alabama lumber yard / sawmill", url: "" }
+        ],
+        notes: "Budget-friendly natural wood shiplap — doesn't need to be expensive, just real wood. Kiln-dried #2 pine shiplap runs ~$1.50–2.50/sq ft at 84 Lumber or local yards. Far cheaper than poplar ($3–5/sq ft) with the same look once painted or stained. Local sawmills in central Alabama often sell t&g pine boards cheaper than big box. Seal with zero-VOC primer before painting. Avoid 'shiplap-look' MDF paneling — it off-gasses formaldehyde."
+      },
+      {
+        name: "PureBond Hardwood Plywood — Cabinets, Shelving & Built-ins",
+        spec: "3/4\" PureBond hardwood plywood, soy-based NAF adhesive",
+        qty: "~30–40 sheets (cabinet boxes, shelving, built-ins)",
+        status: "needed",
+        brands: [
+          { name: "Columbia Forest Products PureBond", url: "https://www.columbiaforestproducts.com" },
+          { name: "Available at Home Depot (stocked)", url: "https://www.homedepot.com" }
+        ],
+        notes: "PureBond by Columbia Forest Products uses a soy-based adhesive — no added formaldehyde (NAF certified). This is a direct drop-in for standard plywood for cabinet boxes, closet shelving, and built-ins, at a comparable price (~$55–70/sheet at Home Depot). Standard plywood uses urea-formaldehyde glue which off-gasses for years. PureBond is stocked in most Home Depot stores in Alabama — no special order required. Use for anything you'd normally use 3/4\" plywood for inside the house."
       }
     ]
   },
