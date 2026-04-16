@@ -707,10 +707,10 @@ function filterMaterials(btn, status) {
 }
 
 // ── Init ──
-renderBudget();
-renderSpecs();
-renderLowTox();
-renderMaterials('all');
+try { renderBudget(); } catch(e) { console.error('renderBudget failed:', e); }
+try { renderSpecs(); } catch(e) { console.error('renderSpecs failed:', e); }
+try { renderLowTox(); } catch(e) { console.error('renderLowTox failed:', e); }
+try { renderMaterials('all'); } catch(e) { console.error('renderMaterials failed:', e); }
 </script>
 </body>
 </html>
