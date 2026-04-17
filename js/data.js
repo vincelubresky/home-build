@@ -705,34 +705,66 @@ let MATERIALS = [
     icon: "fa-wind",
     items: [
       {
-        name: "Ductless Mini-Split System (Multi-Zone)",
-        spec: "2-zone, 2×12,000 BTU heads + outdoor condenser, SEER2 ≥20",
-        qty: "1 system (2 indoor heads)",
-        cost: 3500,
+        name: "Central AC — 3-Ton Condenser + Coil",
+        spec: "14+ SEER2, R-410A or R-32, 36,000 BTU, sized for 1,114 sq ft Zone 3A",
+        qty: "1 system",
+        cost: 3200,
         status: "needed",
         brands: [
-          { name: "Mitsubishi MXZ Multi-Zone", url: "https://www.mitsubishicomfort.com" },
-          { name: "Daikin Multi-Zone", url: "https://www.daikincomfort.com" },
-          { name: "Fujitsu AOU Multi-Zone", url: "https://www.fujitsugeneral.com" }
+          { name: "Carrier Performance Series", url: "https://www.carrier.com" },
+          { name: "Lennox ML14XC1", url: "https://www.lennox.com" },
+          { name: "Trane XR14", url: "https://www.trane.com" }
         ],
-        notes: "Mitsubishi MXZ-2C24NA2 (2-zone outdoor) + 2× MSZ-GL12NA heads is a strong combo. Mitsubishi Hyper Heat models work down to -13°F. Specify H2i series for cold snaps. Daikin is excellent; Fujitsu also top-tier. Avoid off-brand mini-splits (MRCOOL, Pioneer) for a primary system."
+        notes: "For Zone 3A (hot-humid, cooling-dominated), AC is the primary load. 3-ton is right for 1,114 sq ft with good insulation. Pair with high-efficiency air handler/coil. Carrier, Lennox, and Trane all have strong Alabama dealer networks. Contractor pricing typically includes air handler coil."
       },
       {
-        name: "HRV / ERV Fresh Air Ventilation Unit",
-        spec: "Whole-house HRV or ERV, min 150 CFM, HEPA or MERV-13 filtration",
+        name: "Propane Gas Furnace — 80,000 BTU",
+        spec: "80% AFUE minimum, two-stage preferred, LP/propane",
         qty: "1",
-        cost: 1500,
+        cost: 900,
         status: "needed",
         brands: [
-          { name: "Zehnder ComfoAir Q350 (premium)", url: "https://www.zehnderamerica.com" },
-          { name: "Fantech SH 704 HRV", url: "https://www.fantech.net" },
-          { name: "Broan HRV (budget)", url: "https://www.broan-nutone.com" }
+          { name: "Carrier 59SC5 (two-stage)", url: "https://www.carrier.com" },
+          { name: "Lennox ML193 (LP)", url: "https://www.lennox.com" },
+          { name: "Rheem Classic Plus", url: "https://www.rheem.com" }
         ],
-        notes: "Mandatory with a tight rock wool envelope — without it, you get moisture buildup and poor air quality. Zehnder is the Cadillac of HRVs (best recovery efficiency, quietest, medical-grade filtration) — worth the cost if you can swing it. Fantech is solid mid-range. Wire to a simple wall control."
+        notes: "Propane furnace pairs with the AC unit (split system). 80,000 BTU is sufficient for 1,114 sq ft in Alabama — winters are mild. Two-stage is more efficient and quieter than single-stage. Confirm LP conversion kit included. Match brand to the AC unit for warranty coverage."
+      },
+      {
+        name: "Air Handler + Evaporator Coil",
+        spec: "Matching air handler for split system, MERV-8 filter rack",
+        qty: "1",
+        cost: 1100,
+        status: "needed",
+        brands: [
+          { name: "Match to condenser brand (Carrier/Lennox/Trane)", url: "" }
+        ],
+        notes: "Must match condenser brand and tonnage for warranty and efficiency ratings. Install in mechanical room or interior closet — never in unconditioned attic space (AL summers will destroy efficiency). Include a 4\" MERV-8 or MERV-11 filter rack."
+      },
+      {
+        name: "Ductwork — Supply + Return (Sheet Metal)",
+        spec: "Galvanized sheet metal trunk + flex duct branches, mastic-sealed",
+        qty: "1,114 sq ft main floor",
+        cost: 2200,
+        status: "needed",
+        brands: [],
+        notes: "Sheet metal trunk lines with flex duct to registers. Mastic-seal all joints — duct tape is not code-compliant and fails over time. Right-size supply registers for each room (Manual J or D calculation). Run during framing before insulation. Seal and insulate any duct in unconditioned space with R-8 duct wrap."
+      },
+      {
+        name: "Supply Registers + Return Grilles",
+        spec: "White steel registers, floor or ceiling, sized by CFM",
+        qty: "~15 supply + 3 returns",
+        cost: 350,
+        status: "needed",
+        brands: [
+          { name: "Hart & Cooley (standard)", url: "https://www.hartandcooley.com" },
+          { name: "Accord (budget)", url: "" }
+        ],
+        notes: "One return per zone minimum; ideally one per bedroom (keeps doors from pressurizing). Size supply registers at 100 CFM per 100 sq ft as starting point."
       },
       {
         name: "EPA-Certified Wood Burning Stove",
-        spec: "EPA Step 2 certified, 2.0 g/hr or less emissions, 60,000–80,000 BTU",
+        spec: "EPA Step 2 certified, 2.0 g/hr or less, 60,000–80,000 BTU",
         qty: "1",
         cost: 1500,
         status: "needed",
@@ -741,7 +773,7 @@ let MATERIALS = [
           { name: "Hearthstone Heritage", url: "https://www.hearthstonestoves.com" },
           { name: "Quadra-Fire Discovery III", url: "https://www.quadrafire.com" }
         ],
-        notes: "Blaze King has exceptionally long burn times and a catalytic combustor — very efficient. Hearthstone soapstone models hold heat long after the fire dies out. Size for 1,000–1,500 sq ft of heating area. Install on a properly insulated hearth pad; stovepipe through ceiling with double-wall insulated flue."
+        notes: "Backup heat and ambiance. Blaze King has the longest burn times (catalytic combustor). Install on a code-compliant hearth pad; stovepipe through ceiling with double-wall insulated Class A flue."
       },
       {
         name: "Double-Wall Insulated Chimney Flue (Class A)",
@@ -753,7 +785,7 @@ let MATERIALS = [
           { name: "DuraVent DuraPlus", url: "https://www.duravent.com" },
           { name: "Simpson Dura-Tech", url: "https://www.metalbestos.com" }
         ],
-        notes: "Double-wall insulated (not single-wall black stovepipe) for the portion through the ceiling/roof. Maintain 2\" clearance from combustibles. Install rain cap and spark arrestor at top."
+        notes: "Double-wall insulated (not single-wall black stovepipe) for ceiling/roof penetration. 2\" clearance from combustibles. Rain cap + spark arrestor required."
       }
     ]
   },
@@ -975,6 +1007,113 @@ let MATERIALS = [
 
 ];
 
+// ── FRAMING TAKEOFF ──────────────────────────────────────────────────────────
+// Quantities based on: 42'×26' main body, 9' ceilings, 2×6 ext / 2×4 int walls,
+// 8:12 pitch roof, 18" overhang. Basement = concrete shell only, unfinished.
+// Includes standard waste factors. Verify with builder before ordering.
+const TAKEOFF = [
+  {
+    trade: "Foundation & Concrete",
+    icon: "fa-layer-group",
+    note: "Unfinished basement shell — poured concrete walls + slab",
+    items: [
+      { desc: "Ready-mix — Continuous Footings", spec: "3,000 PSI, 24\"×16\", 136 LF perimeter", qty: "14 cu yd", cost: 2100 },
+      { desc: "Ready-mix — Basement Walls", spec: "3,000 PSI, 12\" thick × 10' high × 136 LF", qty: "51 cu yd", cost: 7650 },
+      { desc: "Ready-mix — Basement Floor Slab", spec: "4\" slab, 1,114 sq ft, unfinished", qty: "14 cu yd", cost: 2100 },
+      { desc: "CMU Block — Alternate Bid", spec: "8\"×8\"×16\" standard CMU, 136 LF × 15 courses", qty: "1,530 block", cost: 2754 },
+      { desc: "Mortar, Block Fill, #4 Rebar at Corners", spec: "If CMU block option chosen", qty: "1 lot", cost: 800 },
+      { desc: "Anchor Bolts — J-Bolts 1/2\"×10\"", spec: "Every 6' around perimeter + breaks", qty: "80 each", cost: 80 },
+    ]
+  },
+  {
+    trade: "Floor System",
+    icon: "fa-table-cells-large",
+    note: "Main floor deck over basement — I-joists on center beam",
+    items: [
+      { desc: "AdvanTech Subfloor — 23/32\" T&G", spec: "4×8 sheets, tongue & groove edges", qty: "39 sheets", cost: 1560 },
+      { desc: "LVL Rim Board — 1.75\"×11.25\"", spec: "Full perimeter rim board", qty: "136 LF", cost: 1088 },
+      { desc: "Engineered I-Joists — 11-7/8\" BCI 60", spec: "16\" OC, main floor span, avg 14' length", qty: "45 each", cost: 1733 },
+      { desc: "LVL Center Beam — 3.5\"×11.25\"", spec: "Center bearing beam, 42' total run", qty: "42 LF", cost: 504 },
+      { desc: "PT Sill Plates — 2×6", spec: "UC4A treated, .40 retention", qty: "136 LF", cost: 245 },
+      { desc: "Sill Seal Foam Tape — 3.5\"", spec: "Between sill plate and concrete", qty: "136 LF", cost: 55 },
+    ]
+  },
+  {
+    trade: "Exterior Wall Framing — 2×6",
+    icon: "fa-grip-lines-vertical",
+    note: "9' ceiling height, 2×6 walls, 16\" OC — main floor only",
+    items: [
+      { desc: "2×6×10' Studs — Exterior Walls", spec: "SPF #2, field studs + corners + opening studs", qty: "230 pcs", cost: 1840 },
+      { desc: "2×6×8' Bottom Plates", spec: "SPF #2, 136 LF perimeter + waste", qty: "18 pcs", cost: 99 },
+      { desc: "2×6×8' Double Top Plates", spec: "SPF #2, 272 LF total (2 layers)", qty: "38 pcs", cost: 209 },
+      { desc: "2×6×8' Blocking / Fire Stops", spec: "SPF #2, mid-height in all exterior bays", qty: "20 pcs", cost: 110 },
+      { desc: "LVL Headers — 1.75\"×9.25\" Doubled", spec: "15 window openings + 3 exterior doors", qty: "~174 LF", cost: 1740 },
+    ]
+  },
+  {
+    trade: "Interior Wall Framing — 2×4",
+    icon: "fa-bars",
+    note: "Main floor only — basement left open, no interior framing",
+    items: [
+      { desc: "2×4×9' Studs — Interior (104-5/8\" precut)", spec: "SPF #2, ~170 LF of interior partitions", qty: "250 pcs", cost: 1250 },
+      { desc: "2×4×8' Plates — Interior", spec: "SPF #2, bottom + double top = 510 LF", qty: "65 pcs", cost: 293 },
+      { desc: "2×4×8' Backing & Blocking", spec: "Cabinet backing, grab bars, misc", qty: "20 pcs", cost: 90 },
+      { desc: "Interior Door Headers — Doubled 2×6", spec: "12 interior door openings, misc pass-throughs", qty: "10 pcs", cost: 150 },
+    ]
+  },
+  {
+    trade: "Roof System — Pre-Engineered Trusses",
+    icon: "fa-house-chimney",
+    note: "8:12 pitch, 18\" overhang — trusses ordered from manufacturer",
+    items: [
+      { desc: "Roof Trusses — Main Body (26' span)", spec: "8:12 pitch, gable ends, 24\" OC, engineered", qty: "23 trusses", cost: 5750 },
+      { desc: "Roof Trusses — Carport (26' span)", spec: "8:12 pitch to match main, 24\" OC", qty: "14 trusses", cost: 3500 },
+      { desc: "Gable End Framing — 2×4 Studs", spec: "Fill gable triangle at each gable end", qty: "24 pcs", cost: 108 },
+      { desc: "2×8 Fascia / Rake Boards", spec: "S4S, eaves + rake boards all four sides", qty: "200 LF", cost: 400 },
+      { desc: "Continuous Ridge Vent", spec: "Both ridges — main body + carport", qty: "70 LF", cost: 210 },
+      { desc: "AccuVent Soffit Baffles", spec: "Between truss bays at eaves, ensure airflow", qty: "50 each", cost: 100 },
+    ]
+  },
+  {
+    trade: "Sheathing — Walls & Roof Deck",
+    icon: "fa-table-cells",
+    note: "ZIP System recommended for walls — eliminates separate house wrap",
+    items: [
+      { desc: "ZIP System Wall Panels — 7/16\"", spec: "4×8, integrated WRB (recommended)", qty: "35 sheets", cost: 1225 },
+      { desc: "OSB Wall Sheathing — 7/16\" (alt to ZIP)", spec: "4×8 standard structural OSB", qty: "35 sheets", cost: 630 },
+      { desc: "Tyvek HomeWrap (only if OSB)", spec: "9' roll — skip if using ZIP System", qty: "2 rolls", cost: 180 },
+      { desc: "LP TechShield Roof Deck — 7/16\"", spec: "Foil-faced OSB, radiant barrier, all roof areas", qty: "88 sheets", cost: 3696 },
+      { desc: "ZIP Tape 3.75\" (for ZIP wall seams)", spec: "Roll, if using ZIP System panels", qty: "6 rolls", cost: 120 },
+    ]
+  },
+  {
+    trade: "Rear Deck — 497 sq ft",
+    icon: "fa-sun",
+    note: "Covered rear deck per plans, walkout from basement level",
+    items: [
+      { desc: "PT Deck Joists + Rim — 2×10", spec: "Ground Contact .40, 16\" OC", qty: "280 LF", cost: 980 },
+      { desc: "PT 6×6 Posts — Ground Contact", spec: ".60 retention UC4B, 10' length", qty: "8 each", cost: 480 },
+      { desc: "5/4×6 PT Deck Boards", spec: "Pressure-treated pine deck boards", qty: "572 sq ft", cost: 1716 },
+      { desc: "PT Ledger Board — 2×10", spec: "Lag-bolted to house rim board", qty: "26 LF", cost: 91 },
+      { desc: "Deck Hardware Kit", spec: "LUS28 hangers, ABA66 post bases, carriage bolts", qty: "1 lot", cost: 350 },
+      { desc: "Deck Stairs + Code Railing", spec: "PT stringers, 4×4 posts, top/bottom rail", qty: "1 lot", cost: 1200 },
+    ]
+  },
+  {
+    trade: "Hardware & Fasteners",
+    icon: "fa-screwdriver-wrench",
+    note: "Rough framing fasteners",
+    items: [
+      { desc: "Framing Nails — 16d Sinker 3.25\"", spec: "30 lb box, main framing", qty: "5 boxes", cost: 225 },
+      { desc: "Framing Nails — 10d Sinker 3\"", spec: "30 lb box, toenailing + cripples", qty: "3 boxes", cost: 135 },
+      { desc: "Simpson H2.5A Hurricane Ties", spec: "Every truss-to-top-plate connection", qty: "50 each", cost: 100 },
+      { desc: "Simpson LUS28 I-Joist Hangers", spec: "Both ends of each floor joist", qty: "90 each", cost: 135 },
+      { desc: "Subfloor Adhesive — PL Premium", spec: "28 oz tubes, T&G subfloor glue", qty: "20 tubes", cost: 160 },
+      { desc: "LedgerLOK + Structural Screws", spec: "Deck ledger attachment + misc structural", qty: "1 lot", cost: 120 },
+    ]
+  }
+];
+
 const BUDGET_CATEGORIES = [
   {
     id: 1,
@@ -1088,15 +1227,16 @@ const BUDGET_CATEGORIES = [
   {
     id: 8,
     name: "HVAC & Mechanical",
-    allocated: 11100,
-    notes: "2-zone ductless mini split, HRV/ERV fresh air unit, wood burning stove",
+    allocated: 10450,
+    notes: "Central AC + propane furnace (split system), ductwork, wood burning stove + chimney",
     items: [
-      { name: "2-zone ductless mini split — 2 heads + outdoor unit", cost: 5500, notes: "e.g. Mitsubishi or Daikin 2×12,000 BTU; sized for tight rock wool envelope" },
-      { name: "Mini split installation labor", cost: 1200, notes: "" },
-      { name: "HRV/ERV fresh air ventilation unit", cost: 2500, notes: "Required with tight rock wool envelope; HEPA filtration model preferred" },
-      { name: "HRV/ERV ducting and installation", cost: 600, notes: "" },
-      { name: "Wood burning stove", cost: 1000, notes: "Backup heat + ambiance; EPA-certified model" },
-      { name: "Stove chimney liner, cap, and installation", cost: 300, notes: "" },
+      { name: "Central AC — 3-ton condenser + coil (14+ SEER2)", cost: 3200, notes: "Carrier/Lennox/Trane; sized for 1,114 sq ft Zone 3A" },
+      { name: "Propane gas furnace — 80,000 BTU, LP", cost: 900, notes: "Two-stage preferred; match brand to AC unit" },
+      { name: "Air handler + evaporator coil", cost: 1100, notes: "Must match condenser brand/tonnage" },
+      { name: "Ductwork — sheet metal trunk + flex branches", cost: 2200, notes: "Main floor only; mastic-sealed all joints" },
+      { name: "Supply registers + return grilles", cost: 350, notes: "~15 supply + 3 returns" },
+      { name: "Wood burning stove (EPA Step 2)", cost: 1500, notes: "Backup heat + ambiance; EPA-certified" },
+      { name: "Stove chimney flue (Class A, double-wall)", cost: 1200, notes: "15–20 ft run; rain cap + spark arrestor" },
     ]
   },
   {

@@ -28,12 +28,13 @@
   <nav class="sidebar-nav">
     <div class="nav-section-label">Project</div>
     <a href="#overview" class="nav-item active" onclick="setActive(this)"><i class="fa-solid fa-gauge-high"></i>Overview</a>
-    <a href="#budget" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-dollar-sign"></i>Budget<span class="nav-badge amber">$278K</span></a>
+    <a href="#budget" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-dollar-sign"></i>Budget<span class="nav-badge amber">$267K</span></a>
     <div class="nav-section-label">Design</div>
     <a href="#design" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-drafting-compass"></i>Home Design</a>
     <a href="#lowtox" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-leaf"></i>Low-Tox Specs</a>
     <div class="nav-section-label">Build Tracking</div>
     <a href="#materials" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-boxes-stacked"></i>Materials</a>
+    <a href="#takeoff" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-list-ol"></i>Framing Takeoff</a>
     <a href="#timeline" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-calendar-days"></i>Timeline</a>
     <a href="#contractors" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-hard-hat"></i>Contractors</a>
     <div class="nav-section-label">Finance</div>
@@ -448,6 +449,19 @@
     <div id="materials-list"></div>
   </section>
 
+  <!-- ══ FRAMING TAKEOFF ══ -->
+  <section id="takeoff" class="section">
+    <div class="section-header">
+      <div class="section-title">Framing Takeoff</div>
+      <div class="section-sub">Quantities calculated from plans: 42'×26' main body · 9' ceilings · 2×6 exterior / 2×4 interior · 8:12 roof · 18" overhang · Basement shell only (unfinished, no interior framing) · Contractor pricing</div>
+    </div>
+    <div class="takeoff-summary-bar">
+      <div>Estimated Materials Total <span class="takeoff-summary-note">(structure + deck + hardware)</span></div>
+      <div class="takeoff-grand-total" id="takeoff-grand-total">$0</div>
+    </div>
+    <div id="takeoff-list"></div>
+  </section>
+
   <!-- ══ TIMELINE ══ -->
   <section id="timeline" class="section">
     <div class="section-header">
@@ -648,7 +662,7 @@ function setActive(el) {
 }
 
 // ── Scroll spy ──
-const sections = ['overview','budget','design','lowtox','materials','timeline','contractors','loan','permits'];
+const sections = ['overview','budget','design','lowtox','materials','takeoff','timeline','contractors','loan','permits'];
 const navLinks = {};
 sections.forEach(id => {
   navLinks[id] = document.querySelector(`.nav-item[href="#${id}"]`);
@@ -789,6 +803,37 @@ function filterMaterials(btn, status) {
   renderMaterials(status);
 }
 
+// ── Framing Takeoff rendering ──
+function renderTakeoff() {
+  const container = document.getElementById('takeoff-list');
+  let grandTotal = 0;
+  container.innerHTML = '';
+  TAKEOFF.forEach(trade => {
+    const tradeTotal = trade.items.reduce((s, i) => s + (i.cost || 0), 0);
+    grandTotal += tradeTotal;
+    const rows = trade.items.map(item => `
+      <tr>
+        <td class="to-desc">${escH(item.desc)}</td>
+        <td class="to-spec">${escH(item.spec)}</td>
+        <td class="to-qty">${escH(item.qty)}</td>
+        <td class="to-cost">${item.cost ? fmt(item.cost) : '<span style="color:var(--text-400)">TBD</span>'}</td>
+      </tr>`).join('');
+    const div = document.createElement('div');
+    div.className = 'takeoff-trade';
+    div.innerHTML = `
+      <div class="takeoff-trade-hdr">
+        <div class="takeoff-trade-title"><i class="fa-solid ${trade.icon}"></i>${escH(trade.trade)}${trade.note ? `<span class="takeoff-trade-note">${escH(trade.note)}</span>` : ''}</div>
+        <div class="takeoff-trade-sub">${fmt(tradeTotal)}</div>
+      </div>
+      <table class="takeoff-table">
+        <thead><tr><th>Material</th><th>Specification</th><th>Qty</th><th>Est. Cost</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+    container.appendChild(div);
+  });
+  document.getElementById('takeoff-grand-total').textContent = fmt(grandTotal);
+}
+
 // ── Init ──
 function showError(section, e) {
   const el = document.getElementById('materials-list');
@@ -799,6 +844,7 @@ try { renderBudget(); } catch(e) { showError('renderBudget', e); }
 try { renderSpecs(); } catch(e) { showError('renderSpecs', e); }
 try { renderLowTox(); } catch(e) { showError('renderLowTox', e); }
 try { renderMaterials('all'); } catch(e) { showError('renderMaterials', e); }
+try { renderTakeoff(); } catch(e) { showError('renderTakeoff', e); }
 </script>
 </body>
 </html>
