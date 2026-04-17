@@ -711,3 +711,79 @@ body {
   padding-top: 8px;
   border-top: 1px solid var(--border);
 }
+
+/* Cost display */
+.mat-cost {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  margin-top: 2px;
+}
+.mat-cost--tbd {
+  color: var(--text-400);
+  font-weight: 500;
+}
+
+/* Edit button */
+.mat-edit-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-400);
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 12px;
+  margin-left: 8px;
+  align-self: flex-start;
+  transition: color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.mat-edit-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Inline edit form */
+.mat-edit-form { padding: 4px 0; }
+.mat-edit-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+.mat-edit-row label { font-size: 11px; color: var(--text-400); text-transform: uppercase; letter-spacing: 0.05em; }
+.mat-edit-row input,
+.mat-edit-row select,
+.mat-edit-row textarea {
+  background: var(--bg-body);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  color: var(--text-100);
+  font-size: 13px;
+  padding: 7px 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.mat-edit-row input:focus,
+.mat-edit-row select:focus,
+.mat-edit-row textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.mat-edit-half { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+.mat-edit-half .mat-edit-row { margin-bottom: 0; }
+.mat-edit-actions { display: flex; gap: 8px; margin-top: 12px; }
+.mat-btn-save {
+  background: var(--accent);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 20px;
+}
+.mat-btn-save:hover { opacity: 0.85; }
+.mat-btn-cancel {
+  background: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  color: var(--text-300);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 8px 16px;
+}
+.mat-btn-cancel:hover { color: var(--text-100); }

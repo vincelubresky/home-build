@@ -56,7 +56,7 @@ const LOW_TOX = [
 // status options: "needed" | "ordered" | "delivered" | "installed"
 // Update status and qty as the build progresses.
 // ─────────────────────────────────────────────
-const MATERIALS = [
+let MATERIALS = [
 
   // ── ALABAMA CLIMATE & CODE ───────────────────
   // Zone 3A (hot-humid). High termite pressure. Tornado zone.
@@ -69,6 +69,7 @@ const MATERIALS = [
         name: "BoraCare — Borate Termite Treatment (Framing)",
         spec: "Concentrate, dilute 1:1 with water, spray/brush all framing",
         qty: "2–3 gallons concentrate (covers ~1,114 sq ft framing)",
+        cost: 280,
         status: "needed",
         brands: [
           { name: "BoraCare by Nisus Corp", url: "https://www.nisuscorp.com" },
@@ -80,6 +81,7 @@ const MATERIALS = [
         name: "Termite Soil Pre-Treatment",
         spec: "Liquid termiticide soil treatment, perimeter + under slab",
         qty: "Per licensed pest control contractor",
+        cost: 800,
         status: "needed",
         brands: [
           { name: "Termidor (fipronil) — industry standard", url: "https://www.termidor.com" },
@@ -91,6 +93,7 @@ const MATERIALS = [
         name: "Radiant Barrier — Foil-Faced Roof Deck",
         spec: "Foil-faced OSB roof deck, or staple-up radiant barrier foil in attic",
         qty: "~1,350 sq ft (roof area)",
+        cost: 1200,
         status: "needed",
         brands: [
           { name: "LP TechShield (foil-faced OSB)", url: "https://www.lpcorp.com" },
@@ -102,6 +105,7 @@ const MATERIALS = [
         name: "Hurricane/Tornado Roof Connectors",
         spec: "Rafter-to-top-plate and rafter-to-ridge connectors, galvanized",
         qty: "Per truss/rafter count — every connection",
+        cost: 450,
         status: "needed",
         brands: [
           { name: "Simpson Strong-Tie H2.5A (rafter tie)", url: "https://www.strongtie.com" },
@@ -113,6 +117,7 @@ const MATERIALS = [
         name: "Basement / Lower Level Dehumidifier",
         spec: "Whole-basement unit, 70+ pint/day capacity, auto-drain",
         qty: "1",
+        cost: 850,
         status: "needed",
         brands: [
           { name: "Santa Fe Compact70", url: "https://www.santa-fe-products.com" },
@@ -124,6 +129,7 @@ const MATERIALS = [
         name: "Pressure-Treated Lumber — Exterior & Ground Contact",
         spec: "ACQ or CA-C treated, Ground Contact rated (UC4A/UC4B), .40 or .60 retention",
         qty: "All sill plates, porch posts, deck framing, any wood near grade",
+        cost: 900,
         status: "needed",
         brands: [],
         notes: "All sill plates on concrete (basement and main floor perimeter) must be pressure-treated regardless of termite treatment above. Porch columns/posts: use PT post with PVC or Fypon sleeve on top. Rear deck framing: all PT. Any wood within 6\" of grade: PT. In Alabama, use .40 retention minimum for above-ground, .60 for ground contact. Specify lumber yard includes this — don't assume."
@@ -132,6 +138,7 @@ const MATERIALS = [
         name: "Low-E Window Glass — Low SHGC Specification",
         spec: "Solar Heat Gain Coefficient (SHGC) ≤ 0.25 for all windows",
         qty: "All 15 windows",
+        cost: 0,
         status: "needed",
         brands: [
           { name: "Cardinal LoĒ-366 glass coating", url: "https://www.cardinalcorp.com" }
@@ -150,6 +157,7 @@ const MATERIALS = [
         name: "AdvanTech Subfloor Panels",
         spec: "23/32\" T&G, 4×8 sheets",
         qty: "~35 sheets (1,114 sq ft)",
+        cost: 1225,
         status: "needed",
         brands: [
           { name: "Huber AdvanTech", url: "https://www.huberwood.com" }
@@ -160,6 +168,7 @@ const MATERIALS = [
         name: "LVL Rim Beams & Headers",
         spec: "1.75×9.5\" or 1.75×11.25\" — confirm with engineer",
         qty: "Per structural plan",
+        cost: 2500,
         status: "needed",
         brands: [
           { name: "Boise Cascade (BCI Joists)", url: "https://www.bc.com" },
@@ -171,6 +180,7 @@ const MATERIALS = [
         name: "Engineered Floor Joists (I-Joists)",
         spec: "11-7/8\" or 14\" depth — confirm with engineer",
         qty: "Per structural plan",
+        cost: 3500,
         status: "needed",
         brands: [
           { name: "Boise Cascade (BCI Joists)", url: "https://www.bc.com" },
@@ -182,6 +192,7 @@ const MATERIALS = [
         name: "Concrete Block — Basement Walls",
         spec: "8\"×8\"×16\" CMU block",
         qty: "~3,600 block (~134 lin ft × 9 ft wall)",
+        cost: 6300,
         status: "needed",
         brands: [],
         notes: "Standard 8-inch CMU from local masonry supplier. Get quotes from 2–3 local suppliers — block pricing varies by region. Could also pour concrete walls; builder will advise."
@@ -190,6 +201,7 @@ const MATERIALS = [
         name: "Concrete — Footings",
         spec: "3,000 PSI mix, 24\"×16\" continuous",
         qty: "Per pour schedule",
+        cost: 3500,
         status: "needed",
         brands: [],
         notes: "Ready-mix from local batch plant. Confirm continuous footing dimensions with engineer — plan shows 24\"×16\"."
@@ -198,6 +210,7 @@ const MATERIALS = [
         name: "Foundation Waterproofing Membrane",
         spec: "Self-adhering rubberized asphalt or spray-applied",
         qty: "~1,200 sq ft",
+        cost: 1800,
         status: "needed",
         brands: [
           { name: "GRACE Bituthene", url: "https://www.grace.com" },
@@ -209,6 +222,7 @@ const MATERIALS = [
         name: "Drainage Board + Filter Fabric",
         spec: "Dimple mat drainage board with geotextile",
         qty: "~1,200 sq ft",
+        cost: 900,
         status: "needed",
         brands: [
           { name: "DELTA-MS (Cosella-Dörken)", url: "https://www.cosella-dorken.com" }
@@ -219,6 +233,7 @@ const MATERIALS = [
         name: "Perforated Drain Tile (French Drain)",
         spec: "4\" perforated pipe with sock",
         qty: "~140 lin ft",
+        cost: 280,
         status: "needed",
         brands: [],
         notes: "Runs at base of footing around full perimeter, directs groundwater to sump pit. Wrap with filter fabric sock to keep sediment out."
@@ -227,6 +242,7 @@ const MATERIALS = [
         name: "Sump Pit Liner",
         spec: "18\"×24\" plastic sump basin with lid",
         qty: "1",
+        cost: 150,
         status: "needed",
         brands: [
           { name: "Zoeller", url: "https://www.zoeller.com" }
@@ -245,6 +261,7 @@ const MATERIALS = [
         name: "2×6 Dimensional Lumber — Exterior Walls",
         spec: "2×6×9' or 2×6×8', SPF or Southern Yellow Pine",
         qty: "Per framing takeoff",
+        cost: 5200,
         status: "needed",
         brands: [],
         notes: "2×6 exterior walls allow R-23 Rockwool cavity insulation. Builder's lumber package takeoff will provide exact count. Get quotes from local yards and big box."
@@ -253,6 +270,7 @@ const MATERIALS = [
         name: "2×4 Dimensional Lumber — Interior Walls",
         spec: "2×4×8' precut studs",
         qty: "Per framing takeoff",
+        cost: 2100,
         status: "needed",
         brands: [],
         notes: "Standard interior partition walls. Precut 92-5/8\" studs are faster to frame than full-length."
@@ -261,6 +279,7 @@ const MATERIALS = [
         name: "OSB Wall Sheathing",
         spec: "7/16\" OSB, 4×8 sheets",
         qty: "~115 sheets (~900 sq ft of wall area + waste)",
+        cost: 2070,
         status: "needed",
         brands: [],
         notes: "Structural sheathing behind house wrap and Rockwool ComfortBoard. Alternative: ZIP System (sheathing + WRB in one — adds cost but eliminates house wrap step)."
@@ -269,6 +288,7 @@ const MATERIALS = [
         name: "ZIP System Sheathing (alternative to OSB + wrap)",
         spec: "7/16\" ZIP panel, 4×8",
         qty: "~115 sheets",
+        cost: 3220,
         status: "needed",
         brands: [
           { name: "Huber ZIP System", url: "https://www.zipsystem.com" }
@@ -279,6 +299,7 @@ const MATERIALS = [
         name: "House Wrap (if using standard OSB)",
         spec: "WRB — vapor permeable",
         qty: "~1,000 sq ft",
+        cost: 300,
         status: "needed",
         brands: [
           { name: "DuPont Tyvek HomeWrap", url: "https://www.dupont.com" },
@@ -290,6 +311,7 @@ const MATERIALS = [
         name: "Roof Sheathing — OSB or CDX Plywood",
         spec: "7/16\" OSB or 1/2\" CDX, 4×8",
         qty: "~170 sheets (~1,350 sq ft roof area)",
+        cost: 3060,
         status: "needed",
         brands: [],
         notes: "Roof deck over rafters/trusses. CDX plywood preferred if using Rockwool ComfortBoard 110 under-deck since it holds fasteners better."
@@ -306,6 +328,7 @@ const MATERIALS = [
         name: "Galvanized Standing Seam Metal Roofing",
         spec: "24-gauge, 16\" panels, standing seam, Galvalume or true galvanized",
         qty: "~1,350 sq ft + 15% waste = ~1,550 sq ft",
+        cost: 7750,
         status: "needed",
         brands: [
           { name: "McElroy Metal", url: "https://www.mcelroymetal.com" },
@@ -318,6 +341,7 @@ const MATERIALS = [
         name: "Synthetic Roofing Underlayment",
         spec: "Self-adhering or mechanically fastened synthetic WRB",
         qty: "~1,550 sq ft",
+        cost: 600,
         status: "needed",
         brands: [
           { name: "GAF WeatherWatch (self-adhering)", url: "https://www.gaf.com" },
@@ -329,6 +353,7 @@ const MATERIALS = [
         name: "Ridge Cap Flashing",
         spec: "Matching galvanized metal, field-formed or pre-made",
         qty: "~46 lin ft (42' + 4' overhang each side)",
+        cost: 300,
         status: "needed",
         brands: [],
         notes: "Should match roof panel material and supplier. Order at same time as panels."
@@ -337,6 +362,7 @@ const MATERIALS = [
         name: "Drip Edge Flashing",
         spec: "Galvanized or painted steel",
         qty: "~180 lin ft perimeter",
+        cost: 200,
         status: "needed",
         brands: [],
         notes: "Eaves and rakes. Install before underlayment at eaves, after underlayment at rakes."
@@ -345,6 +371,7 @@ const MATERIALS = [
         name: "Rockwool ComfortBoard 110 (Under-Roof Deck)",
         spec: "1\" rigid, 2×4 ft boards, R-4",
         qty: "~1,350 sq ft = ~170 boards",
+        cost: 2040,
         status: "needed",
         brands: [
           { name: "Rockwool ComfortBoard 110", url: "https://www.rockwool.com" }
@@ -363,6 +390,7 @@ const MATERIALS = [
         name: "Rockwool Comfortbatt — Exterior Wall Cavities",
         spec: "R-23, 2×6 width (5.5\"), 47\"×15\" batts",
         qty: "~900 sq ft = ~11–12 bags",
+        cost: 960,
         status: "needed",
         brands: [
           { name: "Rockwool Comfortbatt", url: "https://www.rockwool.com" }
@@ -373,6 +401,7 @@ const MATERIALS = [
         name: "Rockwool Comfortbatt — Ceiling",
         spec: "R-30 or R-38 batts to fit joist spacing",
         qty: "~1,114 sq ft = ~14 bags",
+        cost: 1120,
         status: "needed",
         brands: [
           { name: "Rockwool Comfortbatt", url: "https://www.rockwool.com" }
@@ -383,6 +412,7 @@ const MATERIALS = [
         name: "Rockwool ComfortBoard 80 — Exterior Continuous",
         spec: "1.5\" thick, R-6, 2×4 ft boards",
         qty: "~900 sq ft = ~113 boards",
+        cost: 1695,
         status: "needed",
         brands: [
           { name: "Rockwool ComfortBoard 80", url: "https://www.rockwool.com" }
@@ -393,6 +423,7 @@ const MATERIALS = [
         name: "Rockwool Safe'n'Sound — Interior Partitions",
         spec: "3.5\" (2×4 cavity), 47\"×15\" batts",
         qty: "~600 sq ft = ~8 bags",
+        cost: 600,
         status: "needed",
         brands: [
           { name: "Rockwool Safe'n'Sound", url: "https://www.rockwool.com" }
@@ -411,6 +442,7 @@ const MATERIALS = [
         name: "James Hardie HardiePanel (Board & Batten)",
         spec: "HardiePanel Vertical Siding, smooth or cedarmill texture",
         qty: "~900 sq ft + 10% waste = ~990 sq ft",
+        cost: 850,
         status: "needed",
         brands: [
           { name: "James Hardie HardiePanel", url: "https://www.jameshardie.com" }
@@ -421,6 +453,7 @@ const MATERIALS = [
         name: "James Hardie HardieTrim Boards (Battens)",
         spec: "5/4×2\" or 5/4×4\" HardieTrim, smooth",
         qty: "Per linear footage of batten spacing (~1 batten per 8–12\")",
+        cost: 800,
         status: "needed",
         brands: [
           { name: "James Hardie HardieTrim", url: "https://www.jameshardie.com" }
@@ -431,6 +464,7 @@ const MATERIALS = [
         name: "Exterior Trim — Corner Boards, Fascia, Soffits",
         spec: "HardieTrim or PVC trim",
         qty: "Per lineal footage — builder to quantify",
+        cost: 1200,
         status: "needed",
         brands: [
           { name: "James Hardie HardieTrim", url: "https://www.jameshardie.com" },
@@ -442,6 +476,7 @@ const MATERIALS = [
         name: "Exterior Paint — Zero-VOC, Earth Tone",
         spec: "100% Acrylic exterior, zero-VOC",
         qty: "~2 gallons per 100 sq ft = ~18 gallons (body + primer)",
+        cost: 1170,
         status: "needed",
         brands: [
           { name: "Sherwin-Williams Emerald Exterior", url: "https://www.sherwin-williams.com" },
@@ -453,6 +488,7 @@ const MATERIALS = [
         name: "Porch Columns",
         spec: "6×6 wrapped fiberglass or smooth cellular PVC columns, tapered",
         qty: "4 (front porch per plans)",
+        cost: 1400,
         status: "needed",
         brands: [
           { name: "Fypon Urethane Columns", url: "https://www.fypon.com" },
@@ -472,6 +508,7 @@ const MATERIALS = [
         name: "Double-Hung Windows",
         spec: "Double-pane, Low-E glass, vinyl or fiberglass frame",
         qty: "15 units (per plans)",
+        cost: 5250,
         status: "needed",
         brands: [
           { name: "Andersen 400 Series", url: "https://www.andersenwindows.com" },
@@ -484,6 +521,7 @@ const MATERIALS = [
         name: "Front Entry French Door (Double)",
         spec: "Fiberglass, 36\"+36\" (72\" opening), with sidelites or transom",
         qty: "1 set",
+        cost: 1800,
         status: "needed",
         brands: [
           { name: "Therma-Tru Benchmark", url: "https://www.thermatru.com" },
@@ -496,6 +534,7 @@ const MATERIALS = [
         name: "Rear & Side Exterior Doors",
         spec: "Fiberglass or steel insulated, 32\" or 36\" wide",
         qty: "2 units",
+        cost: 1000,
         status: "needed",
         brands: [
           { name: "Therma-Tru Benchmark", url: "https://www.thermatru.com" },
@@ -507,6 +546,7 @@ const MATERIALS = [
         name: "Interior Prehung Doors",
         spec: "Prehung, 1-3/8\" solid or hollow core, 6-panel or flat",
         qty: "12 units",
+        cost: 1800,
         status: "needed",
         brands: [
           { name: "Masonite (big box)", url: "https://www.masonite.com" },
@@ -526,6 +566,7 @@ const MATERIALS = [
         name: "MC Cable (Metal-Clad Shielded Wiring)",
         spec: "12/2 and 14/2 MC aluminum-sheathed cable",
         qty: "Per electrical plan (builder/electrician to quantify)",
+        cost: 3000,
         status: "needed",
         brands: [
           { name: "Southwire MC Cable", url: "https://www.southwire.com" },
@@ -537,6 +578,7 @@ const MATERIALS = [
         name: "200A Main Electrical Panel",
         spec: "200A, 40-space or 60-space load center",
         qty: "1",
+        cost: 300,
         status: "needed",
         brands: [
           { name: "Square D QO Series", url: "https://www.se.com" },
@@ -548,6 +590,7 @@ const MATERIALS = [
         name: "Cat6 Ethernet Cable",
         spec: "Cat6 CMR (riser-rated) or CMP (plenum) solid copper",
         qty: "~2,000 ft (all rooms, home run to panel location)",
+        cost: 600,
         status: "needed",
         brands: [
           { name: "Belden DataTwist 350", url: "https://www.belden.com" },
@@ -559,6 +602,7 @@ const MATERIALS = [
         name: "Structured Media Center / Patch Panel",
         spec: "16-port or 24-port patch panel + enclosure",
         qty: "1",
+        cost: 200,
         status: "needed",
         brands: [
           { name: "Leviton Structured Media Center", url: "https://www.leviton.com" },
@@ -570,6 +614,7 @@ const MATERIALS = [
         name: "Electrical Boxes & Devices",
         spec: "Metal boxes (not plastic) for MC cable",
         qty: "Per electrical plan",
+        cost: 500,
         status: "needed",
         brands: [
           { name: "Raco / Hubbell", url: "https://www.hubbell.com" }
@@ -588,6 +633,7 @@ const MATERIALS = [
         name: "PEX-A Tubing — Supply Lines",
         spec: "1/2\" and 3/4\" PEX-A, white or red/blue (not PEX-B or PEX-C)",
         qty: "Per plumbing plan",
+        cost: 1500,
         status: "needed",
         brands: [
           { name: "Uponor AquaPEX (PEX-A)", url: "https://www.uponor.com" },
@@ -599,6 +645,7 @@ const MATERIALS = [
         name: "Copper Pipe — Supply (if choosing copper over PEX-A)",
         spec: "Type L copper, 1/2\" and 3/4\"",
         qty: "Per plumbing plan",
+        cost: 2800,
         status: "needed",
         brands: [],
         notes: "Copper is the other low-tox choice for supply. Type L (medium wall) is standard for residential. More expensive and requires soldering skill. PEX-A is easier to install and equally inert — builder will have a preference."
@@ -607,6 +654,7 @@ const MATERIALS = [
         name: "Tankless Propane Water Heater",
         spec: "Whole-house, min 8.0 GPM at 35°F rise",
         qty: "1",
+        cost: 1400,
         status: "needed",
         brands: [
           { name: "Rinnai RU Series", url: "https://www.rinnai.us" },
@@ -618,6 +666,7 @@ const MATERIALS = [
         name: "Well Pressure Tank",
         spec: "Bladder-type, 44-gallon minimum",
         qty: "1",
+        cost: 350,
         status: "needed",
         brands: [
           { name: "Amtrol Well-X-Trol", url: "https://www.amtrol.com" },
@@ -629,6 +678,7 @@ const MATERIALS = [
         name: "Whole-House Water Filtration",
         spec: "Sediment + iron/manganese filter + carbon + UV sterilizer",
         qty: "1 system",
+        cost: 2500,
         status: "needed",
         brands: [
           { name: "US Water Systems", url: "https://www.uswatersystems.com" },
@@ -641,6 +691,7 @@ const MATERIALS = [
         name: "ABS or PVC Drain-Waste-Vent (DWV) Pipe",
         spec: "3\" and 4\" ABS or Schedule 40 PVC",
         qty: "Per plumbing plan",
+        cost: 800,
         status: "needed",
         brands: [],
         notes: "DWV plastic is fine from a health standpoint since it's drain-only (no drinking water contact). ABS is common in the Southeast. Install in walls before framing closes up."
@@ -657,6 +708,7 @@ const MATERIALS = [
         name: "Ductless Mini-Split System (Multi-Zone)",
         spec: "2-zone, 2×12,000 BTU heads + outdoor condenser, SEER2 ≥20",
         qty: "1 system (2 indoor heads)",
+        cost: 3500,
         status: "needed",
         brands: [
           { name: "Mitsubishi MXZ Multi-Zone", url: "https://www.mitsubishicomfort.com" },
@@ -669,6 +721,7 @@ const MATERIALS = [
         name: "HRV / ERV Fresh Air Ventilation Unit",
         spec: "Whole-house HRV or ERV, min 150 CFM, HEPA or MERV-13 filtration",
         qty: "1",
+        cost: 1500,
         status: "needed",
         brands: [
           { name: "Zehnder ComfoAir Q350 (premium)", url: "https://www.zehnderamerica.com" },
@@ -681,6 +734,7 @@ const MATERIALS = [
         name: "EPA-Certified Wood Burning Stove",
         spec: "EPA Step 2 certified, 2.0 g/hr or less emissions, 60,000–80,000 BTU",
         qty: "1",
+        cost: 1500,
         status: "needed",
         brands: [
           { name: "Blaze King Ashford 25.4", url: "https://www.blazeking.com" },
@@ -693,6 +747,7 @@ const MATERIALS = [
         name: "Double-Wall Insulated Chimney Flue (Class A)",
         spec: "6\" or 8\" diameter, Class A rated, 15–20 ft",
         qty: "1 run",
+        cost: 1200,
         status: "needed",
         brands: [
           { name: "DuraVent DuraPlus", url: "https://www.duravent.com" },
@@ -712,6 +767,7 @@ const MATERIALS = [
         name: "Shiplap — Solid Wood (Living Areas & Hallways)",
         spec: "1×6 or 1×8 tongue & groove shiplap, poplar or pine, primed",
         qty: "~2,000 sq ft of wall area",
+        cost: 7000,
         status: "needed",
         brands: [
           { name: "Eucaboard / local mill (solid wood)", url: "" },
@@ -723,6 +779,7 @@ const MATERIALS = [
         name: "Solid Wood Cabinets — Kitchen",
         spec: "Solid wood box and door faces, formaldehyde-free, low-VOC finish",
         qty: "Per kitchen layout (builder to specify)",
+        cost: 8000,
         status: "needed",
         brands: [
           { name: "Wellborn Cabinet (SE-based)", url: "https://www.wellborncabinet.com" },
@@ -735,6 +792,7 @@ const MATERIALS = [
         name: "Solid Wood Cabinets — Bathrooms (×3)",
         spec: "Solid wood vanity base, 30\" or 36\" wide per bath",
         qty: "3 vanity bases",
+        cost: 2400,
         status: "needed",
         brands: [
           { name: "Wellborn Cabinet", url: "https://www.wellborncabinet.com" },
@@ -746,6 +804,7 @@ const MATERIALS = [
         name: "Quartz Countertops — Kitchen & Baths",
         spec: "Engineered quartz, 3cm thick",
         qty: "~90 sq ft total (kitchen + 3 baths)",
+        cost: 5850,
         status: "needed",
         brands: [
           { name: "Silestone by Cosentino", url: "https://www.silestone.com" },
@@ -758,6 +817,7 @@ const MATERIALS = [
         name: "Solid Hardwood Flooring",
         spec: "3/4\" solid hardwood, 3.25\" or 5\" wide plank, site-finished",
         qty: "~700 sq ft (living, dining, bedrooms)",
+        cost: 3850,
         status: "needed",
         brands: [
           { name: "Mullican Hardwoods", url: "https://www.mullicanflooring.com" },
@@ -770,6 +830,7 @@ const MATERIALS = [
         name: "Zero-VOC Floor Finish (for site-finished hardwood)",
         spec: "Water-based or natural oil, zero-VOC, matte or satin",
         qty: "~3 gallons (3 coats on 700 sq ft)",
+        cost: 450,
         status: "needed",
         brands: [
           { name: "Rubio Monocoat Oil Plus 2C", url: "https://www.rubiomonocoat.com" },
@@ -781,6 +842,7 @@ const MATERIALS = [
         name: "Porcelain or Ceramic Tile — Bathrooms & Laundry",
         spec: "Porcelain floor tile, rectified edges, 12×24\" or 18×18\"",
         qty: "~250 sq ft",
+        cost: 875,
         status: "needed",
         brands: [
           { name: "MSI Stone (wide selection)", url: "https://www.msisurfaces.com" },
@@ -792,6 +854,7 @@ const MATERIALS = [
         name: "Zero-VOC Interior Paint",
         spec: "100% acrylic latex, zero-VOC (0 g/L), flat and eggshell sheens",
         qty: "~12–15 gallons depending on shiplap coverage",
+        cost: 1050,
         status: "needed",
         brands: [
           { name: "Sherwin-Williams Harmony (zero-VOC)", url: "https://www.sherwin-williams.com" },
@@ -804,6 +867,7 @@ const MATERIALS = [
         name: "Incandescent / Halogen Light Fixtures",
         spec: "A-19 incandescent or halogen, standard E26 base",
         qty: "Per room count (main floor + basement)",
+        cost: 2000,
         status: "needed",
         brands: [
           { name: "Westinghouse Lighting (incandescent-compatible)", url: "https://www.westinghouselighting.com" },
@@ -815,6 +879,7 @@ const MATERIALS = [
         name: "Magnesium Oxide (MgO) Board — Drywall Alternative",
         spec: "1/2\" or 5/8\" MgO board, fire-rated, mold-resistant",
         qty: "~4,500 sq ft (walls + ceilings, main floor + basement)",
+        cost: 9000,
         status: "needed",
         brands: [
           { name: "Falcon Board (MgO)", url: "https://www.falconpanel.com" },
@@ -827,6 +892,7 @@ const MATERIALS = [
         name: "Pine Shiplap — Budget Natural Wood (Accent Walls)",
         spec: "1×6 or 1×8 pine, shiplap or T&G profile, kiln-dried, unfinished",
         qty: "~500–800 sq ft (accent walls, mudroom, specific rooms)",
+        cost: 1300,
         status: "needed",
         brands: [
           { name: "84 Lumber (AL locations)", url: "https://www.84lumber.com" },
@@ -839,6 +905,7 @@ const MATERIALS = [
         name: "PureBond Hardwood Plywood — Cabinets, Shelving & Built-ins",
         spec: "3/4\" PureBond hardwood plywood, soy-based NAF adhesive",
         qty: "~30–40 sheets (cabinet boxes, shelving, built-ins)",
+        cost: 2275,
         status: "needed",
         brands: [
           { name: "Columbia Forest Products PureBond", url: "https://www.columbiaforestproducts.com" },
@@ -858,6 +925,7 @@ const MATERIALS = [
         name: "Propane Freestanding Range (5-Burner)",
         spec: "36\" or 30\" propane, cast iron grates, convection oven optional",
         qty: "1",
+        cost: 1800,
         status: "needed",
         brands: [
           { name: "Thor Kitchen (36\", budget pro-style)", url: "https://www.thorkitchen.com" },
@@ -870,6 +938,7 @@ const MATERIALS = [
         name: "Range Hood (Vented to Exterior)",
         spec: "600 CFM minimum, exterior-vented only",
         qty: "1",
+        cost: 600,
         status: "needed",
         brands: [
           { name: "Zline Wall Mount Hood", url: "https://www.zlinekitchen.com" },
@@ -881,6 +950,7 @@ const MATERIALS = [
         name: "Refrigerator",
         spec: "Counter-depth, 30\" wide, bottom-freezer or French door",
         qty: "1",
+        cost: 1500,
         status: "needed",
         brands: [
           { name: "LG LRMVS3006S (stainless)", url: "https://www.lg.com" },
@@ -892,6 +962,7 @@ const MATERIALS = [
         name: "Dishwasher",
         spec: "24\" standard width, stainless tub",
         qty: "1",
+        cost: 700,
         status: "needed",
         brands: [
           { name: "Bosch 500 Series", url: "https://www.bosch-home.com" },
@@ -999,14 +1070,14 @@ const BUDGET_CATEGORIES = [
   {
     id: 7,
     name: "Utilities — Rough In",
-    allocated: 59126,
+    allocated: 52126,
     notes: "Temp power, well + filtration, septic, propane tank, electrical, plumbing, Cat6 Ethernet, gravel driveway. Alabama Power hookup is FREE.",
     items: [
-      { name: "Temporary power — construction service + meter base", cost: 2500, notes: "Alabama Power hookup itself is FREE" },
+      { name: "Temporary power — construction service + meter base", cost: 1500, notes: "Alabama Power hookup itself is FREE" },
       { name: "Well drilling — approx 250 ft depth (rural AL typical)", cost: 8500, notes: "Depth varies; driller quotes by the foot" },
       { name: "Well pump, pressure tank, and wiring", cost: 2200, notes: "" },
       { name: "Water filtration system (sediment + carbon + UV)", cost: 3500, notes: "AL well water often needs iron/sediment filtration" },
-      { name: "Septic system — conventional 3-bedroom", cost: 14000, notes: "Shelby County; perc test required first" },
+      { name: "Septic system — conventional 3-bedroom", cost: 8000, notes: "Shelby County; perc test required first" },
       { name: "Propane tank — 500 gal, set, and first fill", cost: 2426, notes: "Tank can be rented or purchased" },
       { name: "Electrical rough-in — panel, service entrance, circuits", cost: 10000, notes: "200A panel; all rough wiring, boxes, grounding" },
       { name: "Plumbing rough-in — supply + drain + vent (14 fixture count)", cost: 8500, notes: "All in-wall piping only; fixtures are separate" },

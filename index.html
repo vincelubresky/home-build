@@ -547,8 +547,18 @@
 </main>
 </div>
 
-<script src="js/data.js"></script>
+<script src="js/data.js?v=3"></script>
 <script>
+// ── Load saved materials from localStorage ──
+(function() {
+  try {
+    const saved = localStorage.getItem('hb_materials');
+    if (saved) MATERIALS = JSON.parse(saved);
+  } catch(e) {}
+})();
+
+let currentFilter = 'all';
+
 // ── Budget rendering ──
 function fmt(n) {
   return '$' + n.toLocaleString('en-US');
@@ -657,10 +667,15 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ── Materials rendering ──
+function escH(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 function renderMaterials(filterStatus) {
+  currentFilter = filterStatus;
   const list = document.getElementById('materials-list');
   list.innerHTML = '';
-  MATERIALS.forEach(group => {
+  MATERIALS.forEach((group, gi) => {
     const items = filterStatus === 'all'
       ? group.items
       : group.items.filter(i => i.status === filterStatus);
@@ -671,6 +686,7 @@ function renderMaterials(filterStatus) {
     section.innerHTML = `<div class="mat-group-title"><i class="fa-solid ${group.icon}"></i>${group.category}</div>`;
 
     items.forEach(item => {
+      const ii = group.items.indexOf(item);
       const brandHtml = item.brands && item.brands.length
         ? item.brands.map(b => b.url
             ? `<a href="${b.url}" target="_blank" rel="noopener" class="mat-brand-link">${b.name} <i class="fa-solid fa-arrow-up-right-from-square"></i></a>`
@@ -678,26 +694,93 @@ function renderMaterials(filterStatus) {
           ).join('')
         : '<span style="color:var(--text-400);font-size:11px">Commodity — source locally</span>';
 
+      const costHtml = (item.cost && item.cost > 0)
+        ? `<div class="mat-cost">${fmt(item.cost)}</div>`
+        : `<div class="mat-cost mat-cost--tbd">$TBD</div>`;
+
       const card = document.createElement('div');
       card.className = `mat-card mat-card--${item.status}`;
+      card.dataset.gi = gi;
+      card.dataset.ii = ii;
       card.innerHTML = `
         <div class="mat-card-top">
           <div class="mat-card-left">
-            <div class="mat-card-name">${item.name}</div>
-            <div class="mat-card-spec">${item.spec}</div>
+            <div class="mat-card-name">${escH(item.name)}</div>
+            <div class="mat-card-spec">${escH(item.spec)}</div>
           </div>
           <div class="mat-card-right">
             <span class="badge ${item.status}">${item.status}</span>
-            <div class="mat-qty">${item.qty}</div>
+            <div class="mat-qty">${escH(item.qty)}</div>
+            ${costHtml}
           </div>
+          <button class="mat-edit-btn" onclick="editMaterial(${gi},${ii})" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
         </div>
         <div class="mat-brands">${brandHtml}</div>
-        ${item.notes ? `<div class="mat-notes">${item.notes}</div>` : ''}
+        ${item.notes ? `<div class="mat-notes">${escH(item.notes)}</div>` : ''}
       `;
       section.appendChild(card);
     });
     list.appendChild(section);
   });
+}
+
+function editMaterial(gi, ii) {
+  const card = document.querySelector(`[data-gi="${gi}"][data-ii="${ii}"]`);
+  if (!card) return;
+  const item = MATERIALS[gi].items[ii];
+  card.innerHTML = `
+    <form class="mat-edit-form" onsubmit="saveMaterial(event,${gi},${ii})">
+      <div class="mat-edit-row">
+        <label>Name</label>
+        <input name="ename" value="${escH(item.name)}" required>
+      </div>
+      <div class="mat-edit-row">
+        <label>Spec / Description</label>
+        <input name="espec" value="${escH(item.spec)}">
+      </div>
+      <div class="mat-edit-half">
+        <div class="mat-edit-row">
+          <label>Quantity</label>
+          <input name="eqty" value="${escH(item.qty)}">
+        </div>
+        <div class="mat-edit-row">
+          <label>Est. Cost ($)</label>
+          <input name="ecost" type="number" min="0" value="${item.cost||''}">
+        </div>
+      </div>
+      <div class="mat-edit-row">
+        <label>Status</label>
+        <select name="estatus">
+          <option value="needed"${item.status==='needed'?' selected':''}>Needed</option>
+          <option value="ordered"${item.status==='ordered'?' selected':''}>Ordered</option>
+          <option value="delivered"${item.status==='delivered'?' selected':''}>Delivered</option>
+          <option value="installed"${item.status==='installed'?' selected':''}>Installed</option>
+        </select>
+      </div>
+      <div class="mat-edit-row">
+        <label>Notes</label>
+        <textarea name="enotes" rows="3">${escH(item.notes||'')}</textarea>
+      </div>
+      <div class="mat-edit-actions">
+        <button type="submit" class="mat-btn-save">Save</button>
+        <button type="button" class="mat-btn-cancel" onclick="renderMaterials(currentFilter)">Cancel</button>
+      </div>
+    </form>
+  `;
+}
+
+function saveMaterial(e, gi, ii) {
+  e.preventDefault();
+  const f = e.target;
+  const item = MATERIALS[gi].items[ii];
+  item.name = f.ename.value.trim();
+  item.spec = f.espec.value.trim();
+  item.qty = f.eqty.value.trim();
+  item.cost = parseFloat(f.ecost.value) || 0;
+  item.status = f.estatus.value;
+  item.notes = f.enotes.value.trim();
+  try { localStorage.setItem('hb_materials', JSON.stringify(MATERIALS)); } catch(e2) {}
+  renderMaterials(currentFilter);
 }
 
 function filterMaterials(btn, status) {
