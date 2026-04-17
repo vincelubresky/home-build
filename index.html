@@ -707,10 +707,15 @@ function filterMaterials(btn, status) {
 }
 
 // ── Init ──
-try { renderBudget(); } catch(e) { console.error('renderBudget failed:', e); }
-try { renderSpecs(); } catch(e) { console.error('renderSpecs failed:', e); }
-try { renderLowTox(); } catch(e) { console.error('renderLowTox failed:', e); }
-try { renderMaterials('all'); } catch(e) { console.error('renderMaterials failed:', e); }
+function showError(section, e) {
+  const el = document.getElementById('materials-list');
+  if (el) el.innerHTML += '<div style="color:red;padding:12px;font-size:13px">ERROR in ' + section + ': ' + e.message + '</div>';
+  console.error(section + ' failed:', e);
+}
+try { renderBudget(); } catch(e) { showError('renderBudget', e); }
+try { renderSpecs(); } catch(e) { showError('renderSpecs', e); }
+try { renderLowTox(); } catch(e) { showError('renderLowTox', e); }
+try { renderMaterials('all'); } catch(e) { showError('renderMaterials', e); }
 </script>
 </body>
 </html>
