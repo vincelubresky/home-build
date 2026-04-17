@@ -390,7 +390,7 @@ let MATERIALS = [
         name: "Rockwool Comfortbatt — Exterior Wall Cavities",
         spec: "R-23, 2×6 width (5.5\"), 47\"×15\" batts",
         qty: "~900 sq ft = ~11–12 bags",
-        cost: 960,
+        cost: 650,
         status: "needed",
         brands: [
           { name: "Rockwool Comfortbatt", url: "https://www.rockwool.com" }
@@ -401,7 +401,7 @@ let MATERIALS = [
         name: "Rockwool Comfortbatt — Ceiling",
         spec: "R-30 or R-38 batts to fit joist spacing",
         qty: "~1,114 sq ft = ~14 bags",
-        cost: 1120,
+        cost: 920,
         status: "needed",
         brands: [
           { name: "Rockwool Comfortbatt", url: "https://www.rockwool.com" }
@@ -412,7 +412,7 @@ let MATERIALS = [
         name: "Rockwool ComfortBoard 80 — Exterior Continuous",
         spec: "1.5\" thick, R-6, 2×4 ft boards",
         qty: "~900 sq ft = ~113 boards",
-        cost: 1695,
+        cost: 1050,
         status: "needed",
         brands: [
           { name: "Rockwool ComfortBoard 80", url: "https://www.rockwool.com" }
@@ -423,7 +423,7 @@ let MATERIALS = [
         name: "Rockwool Safe'n'Sound — Interior Partitions",
         spec: "3.5\" (2×4 cavity), 47\"×15\" batts",
         qty: "~600 sq ft = ~8 bags",
-        cost: 600,
+        cost: 370,
         status: "needed",
         brands: [
           { name: "Rockwool Safe'n'Sound", url: "https://www.rockwool.com" }
@@ -1195,15 +1195,15 @@ const BUDGET_CATEGORIES = [
   {
     id: 6,
     name: "Insulation — Rock Wool",
-    allocated: 17544,
-    notes: "Comfortbatt walls + ceiling, ComfortBoard 80 exterior + 110 under roof, Safe'n'Sound interior, labor",
+    allocated: 7720,
+    notes: "Comfortbatt walls + ceiling, ComfortBoard 80 exterior + 110 under roof, Safe'n'Sound interior, labor — contractor pricing",
     items: [
-      { name: "Comfortbatt — 2×6 exterior wall cavities (~900 sq ft)", cost: 1800, notes: "R-23; ~$2.00/sq ft material" },
-      { name: "Comfortbatt — ceiling cavities (1,114 sq ft)", cost: 2500, notes: "R-30; installed between ceiling joists" },
-      { name: "ComfortBoard 80 — exterior continuous (900 sq ft wall area)", cost: 3200, notes: "1.5in = R-6; goes over sheathing under siding. Fire-rated" },
-      { name: "ComfortBoard 110 — under roof deck (1,350 sq ft)", cost: 4100, notes: "1in = R-4; high-density board rated for under-roof use" },
-      { name: "Safe'n'Sound — interior partition walls (600 sq ft)", cost: 1500, notes: "Sound + fire separation; master bedroom, bathrooms, laundry" },
-      { name: "Installation labor", cost: 4444, notes: "Rock wool is heavier than fiberglass; specialized installer preferred" },
+      { name: "Comfortbatt R-23 — 2×6 exterior wall cavities (~900 sq ft)", cost: 650, notes: "Contractor pricing ~$0.72/sq ft material" },
+      { name: "Comfortbatt R-38 — ceiling cavities (1,114 sq ft)", cost: 900, notes: "Contractor pricing ~$0.81/sq ft material" },
+      { name: "ComfortBoard 80 — exterior continuous (900 sq ft)", cost: 1050, notes: "1.5\" = R-6; contractor ~$9.30/board through distributor" },
+      { name: "ComfortBoard 110 — under roof deck (1,350 sq ft)", cost: 2300, notes: "1\" = R-4; high-density; contractor ~$13.50/board" },
+      { name: "Safe'n'Sound — interior partition walls (600 sq ft)", cost: 520, notes: "Acoustic + fire; contractor ~$0.87/sq ft" },
+      { name: "Installation labor", cost: 2300, notes: "Insulation sub; rock wool at ~$0.45–0.50/sq ft installed" },
     ]
   },
   {
