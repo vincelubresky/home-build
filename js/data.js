@@ -166,7 +166,7 @@ let MATERIALS = [
         notes: "QUOTED: OM Huber Blue $648.61 (37 sheets × $17.53). OM is 11% cheaper than BFS on T&G — keep this with OM. Folded into framing package on each quote."
       },
       {
-        name: "Engineered Wood Products (EWP) — BFS Quote",
+        name: "Engineered Wood Products (EWP) — BFS Quote (benchmark)",
         spec: "6× LSL rim 1-1/8×16 (TimberStrand), 49× TJI-360 I-joists (3×10', 1×18', 45×26'), 2× 1¾×9¼ LVL 18' (2.0E Microlam), 3× 24\" LVL @ 24' (Boise special order)",
         qty: "Full floor system EWP",
         cost: 8826,
@@ -174,7 +174,19 @@ let MATERIALS = [
         brands: [
           { name: "BFS Quote 87546716 (4/23/26) — $8,825.99", url: "" }
         ],
-        notes: "QUOTED: BFS EWP $8,023.63 + 10% tax = $8,825.99. Oak Mountain quoted EWP as a single 'SO60016' line at $2,571 — UNCLEAR if full scope. KEY NEGOTIATION POINT: ask OM owner what their EWP line covers. If only TJI joists and not the LSL rim or 24\" LVLs, the $5,455 gap will need to close."
+        notes: "QUOTED: BFS EWP $8,023.63 + 10% tax = $8,825.99. Oak Mountain ZIP quote #23356 has EWP as a single 'SO60016' line at $2,571 — UNCLEAR if full scope. KEY NEGOTIATION POINT: ask OM owner what their EWP line covers. If only TJI joists and not the LSL rim or 24\" LVLs, the $5,455 gap will need to close."
+      },
+      {
+        name: "ZIP System — Wall + Roof Sheathing (PREFERRED)",
+        spec: "78× 7/16\" ZIP Wall 4×8 sheets (walls) + 116× 1/2\" ZIP Roof 4×8 sheets (roof deck) + 36× ZIP Tape rolls. Integrated structural sheathing + WRB.",
+        qty: "Full wall + roof sheathing",
+        cost: 6173,
+        status: "needed",
+        brands: [
+          { name: "Huber ZIP System", url: "https://www.zipsystem.com" },
+          { name: "Bundled in OM Quote 23356 (4/28/26)", url: "" }
+        ],
+        notes: "USER CHOICE: ZIP over OSB+housewrap+felt. Eliminates separate WRB layer, fewer leak paths at penetrations, faster install. Net upgrade ~$3,514 over OSB+housewrap+felt version (#23351). Tape ALL panel seams + window/door rough openings. Inside the OM #23356 framing pkg total — no separate line item to order."
       },
       {
         name: "Roof Trusses — BFS Shelby Quote",
@@ -275,36 +287,17 @@ let MATERIALS = [
         notes: "Standard interior partition walls. Precut 92-5/8\" studs are faster to frame than full-length."
       },
       {
-        name: "OSB Wall Sheathing",
-        spec: "7/16\" OSB, 4×8 sheets",
-        qty: "~115 sheets (~900 sq ft of wall area + waste)",
-        cost: 2070,
-        status: "needed",
-        brands: [],
-        notes: "Structural sheathing behind house wrap and Rockwool ComfortBoard. Alternative: ZIP System (sheathing + WRB in one — adds cost but eliminates house wrap step)."
-      },
-      {
-        name: "ZIP System Sheathing (alternative to OSB + wrap)",
-        spec: "7/16\" ZIP panel, 4×8",
-        qty: "~115 sheets",
-        cost: 3220,
+        name: "Wall + Roof Sheathing — DECISION: ZIP vs OSB+wrap",
+        spec: "OPTION A (PREFERRED): ZIP wall + ZIP roof + ZIP tape (OM #23356) = +$3,514 over OSB. OPTION B: 7/16 OSB walls + 7/16 OSB roof + Tyvek wrap + #15 felt (OM #23351). Both Oak Mountain quotes available — see Vendor Brief tab.",
+        qty: "78 wall sheets + 116 roof sheets",
+        cost: 6173,
         status: "needed",
         brands: [
-          { name: "Huber ZIP System", url: "https://www.zipsystem.com" }
+          { name: "Huber ZIP System (chosen)", url: "https://www.zipsystem.com" },
+          { name: "OM Quote 23356 — ZIP version", url: "" },
+          { name: "OM Quote 23351 — OSB+Tyvek alt", url: "" }
         ],
-        notes: "OPTIONAL: ZIP integrates structural sheathing + water-resistive barrier in one product. Eliminates separate house wrap step. Costs more upfront but saves labor. Tape seams with ZIP tape."
-      },
-      {
-        name: "House Wrap (if using standard OSB)",
-        spec: "WRB — vapor permeable",
-        qty: "~1,000 sq ft",
-        cost: 300,
-        status: "needed",
-        brands: [
-          { name: "DuPont Tyvek HomeWrap", url: "https://www.dupont.com" },
-          { name: "Huber ZIP (see above)", url: "https://www.zipsystem.com" }
-        ],
-        notes: "Skip if using ZIP System. Tyvek is the standard; drape over sheathing before Rockwool ComfortBoard goes on. Lap seams and tape."
+        notes: "USER CHOICE: ZIP for integrated WRB, faster install, better air sealing in Zone 3A humid climate. Budgeted at OM ZIP pricing: 78× ZIP wall @ $24.60 + 116× 1/2 ZIP roof @ $26.60 + 36× ZIP tape @ $32.44 = $6,173. OSB+wrap path would be ~$2,659 cheaper — see Vendor Brief 'ZIP vs OSB' section for full pros/cons."
       },
       {
         name: "Roof Sheathing — OSB or CDX Plywood",
@@ -1156,12 +1149,13 @@ const BUDGET_CATEGORIES = [
   {
     id: 4,
     name: "Framing & Structure",
-    allocated: 57417,
-    notes: "Vendor-quoted April 2026. PREFERRED: Oak Mountain (relationship/proximity). Backup: BFS. Includes lumber+sheathing+Hardie+deck pkg, EWP, roof trusses, framing labor, porch, dumpster.",
+    allocated: 60930,
+    notes: "Vendor-quoted April 2026. PREFERRED: Oak Mountain #23356 (ZIP wall + ZIP roof + ZIP tape). User chose ZIP system over OSB for integrated WRB. Includes lumber+ZIP+Hardie+deck pkg, EWP, roof trusses, framing labor, porch, dumpster.",
     items: [
-      { name: "Framing material pkg — Oak Mountain Quote 23351 (PREFERRED)", cost: 41692, notes: "QUOTED 4/27/26 incl 5% tax. Lumber + 7/16 OSB + 3/4 T&G Huber Blue + Hardie panel/trim/soffit + deck materials + EWP $2,571 line + hardware. Alt: OM 23356 with ZIP wall/roof = $45,205. NEGOTIATION TARGETS — see Vendor Brief tab." },
-      { name: "Framing material pkg — BFS Quote 87577907 (alternate)", cost: 0, notes: "ALTERNATE: BFS framing $35,322 incl tax. Cheaper than OM by ~$6,370 on framing alone, but does NOT include EWP — add BFS EWP $8,826 = $44,148 all-in. OM still ~$2,455 more all-in if their EWP scope is full." },
-      { name: "EWP line in OM #23351 — verify scope", cost: 0, notes: "OM's $2,571 EWP line vs BFS standalone EWP $8,826. KEY QUESTION FOR OWNER. If OM is missing items, expect $5–6K add. See Vendor Brief tab." },
+      { name: "Framing material pkg — Oak Mountain Quote 23356 (PREFERRED, ZIP system)", cost: 45205, notes: "QUOTED 4/28/26 incl 5% tax. Lumber + 78× 7/16 ZIP Wall sheets + 116× 1/2 ZIP Roof + 36× ZIP Tape + 3/4 T&G Huber Blue + Hardie panel/trim/soffit + deck materials + EWP $2,571 line + hardware. ZIP eliminates housewrap and synthetic felt entirely. NEGOTIATION TARGETS — see Vendor Brief tab." },
+      { name: "Framing material pkg — Oak Mountain Quote 23351 (OSB alternate)", cost: 0, notes: "ALTERNATE: OSB + housewrap version $41,692. ZIP upgrade = +$3,514. Going with ZIP for the WRB integration and faster install." },
+      { name: "Framing material pkg — BFS Quote 87577907 (alternate, OSB)", cost: 0, notes: "ALTERNATE: BFS framing $35,322 incl tax (OSB only — no ZIP option quoted). Add BFS EWP $8,826 = $44,148 all-in. To match ZIP scope, BFS would need ~+$3,400 in ZIP materials → ~$47,548. OM ZIP at $45,205 is cheaper for equivalent scope." },
+      { name: "EWP line in OM #23356 — verify scope", cost: 0, notes: "OM's $2,571 EWP line vs BFS standalone EWP $8,826. KEY QUESTION FOR OWNER. If OM is missing items, expect $5–6K add. See Vendor Brief tab." },
       { name: "Roof trusses — BFS Shelby Quote 5403492", cost: 7195, notes: "QUOTED 4/29/26 ex tax. 63 trusses, 8/12 pitch, 18\" OH. Ask OM to beat to consolidate." },
       { name: "Framing labor — walls, floor", cost: 7798, notes: "$7/sq ft × 1,114 sq ft — confirmed rate" },
       { name: "Porch framing — materials + labor", cost: 2500, notes: "Covered front/back porch included in plans" },
@@ -1379,25 +1373,25 @@ const VENDOR_QUOTES = [
     vendor: "Oak Mountain Building Supply",
     location: "Sterrett, AL",
     quoteNum: "23351",
-    scope: "Framing Package — PREFERRED (relationship + proximity)",
-    detail: "1ST DROP: borate 2×6, PT lumber, 360+ SPF studs, 80+ YP joists, OSB, EWP $2,571 line, hangers. 2ND DROP: 37× T&G Huber Blue subfloor, 280 precut studs, more YP joists, pocket door kits. 3RD DROP: 116 OSB roof deck, synthetic felt, plastic cap nails. SIDING/CORNICE: full Hardie pkg (66× 4×10 panels, batten strip, trim, soffits, V-joint), 8×8 posts. DECK: PT 2×12, 5/4×6, hangers, Hitachi nails.",
+    scope: "Framing Package — OSB + housewrap version (alternate)",
+    detail: "ALTERNATE TO ZIP. 1ST DROP: borate 2×6, PT lumber, 360+ SPF studs, 80+ YP joists, OSB, EWP $2,571 line, hangers. 2ND DROP: 37× T&G Huber Blue subfloor, 280 precut studs, more YP joists, pocket door kits. 3RD DROP: 116 OSB roof deck, synthetic felt, plastic cap nails. SIDING/CORNICE: full Hardie pkg (66× 4×10 panels, batten strip, trim, soffits, V-joint), 8×8 posts. DECK: PT 2×12, 5/4×6, hangers, Hitachi nails.",
     date: "2026-04-27",
     subtotal: 39706.43,
     tax: 1985.32,
     total: 41691.75,
-    selected: true,
+    selected: false,
   },
   {
     vendor: "Oak Mountain Building Supply",
     location: "Sterrett, AL",
     quoteNum: "23356",
-    scope: "Framing Package — ZIP wall + ZIP roof upgrade alternate",
-    detail: "Same as #23351 but substitutes 7/16 ZIP Wall (+$1,230) for OSB, 1/2 ZIP Roof (+$3,086) for OSB roof deck, ZIP Tape ($1,168) replaces synthetic felt + housewrap. Net upgrade: ~$3,500 vs OSB version.",
+    scope: "Framing Package — PREFERRED (ZIP system, relationship + proximity)",
+    detail: "PREFERRED. Same lumber/EWP/Hardie/deck scope as #23351 but ZIP system: 78× 7/16 ZIP Wall sheets ($1,919), 116× 1/2 ZIP Roof sheets ($3,086), 36× ZIP Tape rolls ($1,168) — replaces all OSB wall/roof sheathing + housewrap + synthetic felt. Net upgrade ~$3,514 over OSB version. ZIP integrates structural sheathing + WRB in one product, faster install, fewer leak paths.",
     date: "2026-04-28",
     subtotal: 43052.79,
     tax: 2152.64,
     total: 45205.43,
-    selected: false,
+    selected: true,
   },
   {
     vendor: "Five Star Lumber",
@@ -1484,13 +1478,6 @@ const NEGOTIATION_TARGETS = [
     note: "BFS 2416T-B is borate-treated equivalent. Match $10.90."
   },
   {
-    item: "7/16\" OSB 4×8",
-    omCode: "71648OSB", omPrice: 11.04, omQty: 194, omTotal: 2141.76,
-    bestPrice: 8.95, bestVendor: "Five Star", category: "sheathing",
-    pctOver: 23.4, lineSavings: 405,
-    note: "Five Star item code 716. Big sheet-volume opportunity."
-  },
-  {
     item: "Subfloor adhesive 28oz",
     omCode: "SFG", omPrice: 6.79, omQty: 11, omTotal: 74.69,
     bestPrice: 5.69, bestVendor: "BFS", category: "consumables",
@@ -1524,20 +1511,6 @@ const NEGOTIATION_TARGETS = [
     bestPrice: 8.99, bestVendor: "Five Star", category: "flashing",
     pctOver: 23.9, lineSavings: 13,
     note: "Five Star code 38Z. Match $8.99."
-  },
-  {
-    item: "#15 synthetic underlayment (1,000 sf roll)",
-    omCode: "15RF", omPrice: 83.33, omQty: 4, omTotal: 333.32,
-    bestPrice: 70.00, bestVendor: "Five Star", category: "underlayment",
-    pctOver: 19.0, lineSavings: 53,
-    note: "Five Star code SL. Match $70."
-  },
-  {
-    item: "Housewrap 10×100 roll",
-    omCode: "10100HW", omPrice: 77.00, omQty: 3, omTotal: 231.00,
-    bestPrice: 65.00, bestVendor: "Five Star", category: "wrap",
-    pctOver: 18.5, lineSavings: 36,
-    note: "Five Star code HW. Match $65."
   },
   {
     item: "Sill seal 5.5\" × 50'",
@@ -1574,22 +1547,81 @@ const OM_ALREADY_WINNING = [
 // ─────────────────────────────────────────────
 const NEGOTIATION_SUMMARY = {
   preferredVendor: "Oak Mountain Building Supply",
-  preferredVendorReason: "Relationship + proximity (owner is known to homeowner)",
+  preferredVendorReason: "Relationship + proximity (owner is known to homeowner). ZIP system selected for wall + roof sheathing.",
   bottomLineComparison: {
-    omAllIn: { label: "Oak Mountain #23351 (incl. tax, framing pkg + EWP line)", amount: 41691.75 },
-    bfsAllIn: { label: "BFS Framing #87577907 + BFS EWP #87546716 (incl. tax)", amount: 35322.45 + 8825.99 },
-    fiveStar: { label: "Five Star Lumber #2604-146766 (no tax shown)", amount: 40831.69 },
-    omZip:    { label: "Oak Mountain #23356 (ZIP system upgrade)", amount: 45205.43 },
+    omZip:        { label: "Oak Mountain #23356 — ZIP system + EWP line (PREFERRED)", amount: 45205.43 },
+    omOsb:        { label: "Oak Mountain #23351 — OSB + housewrap version + EWP line", amount: 41691.75 },
+    bfsOsb:       { label: "BFS Framing #87577907 (OSB) + BFS EWP #87546716", amount: 35322.45 + 8825.99 },
+    bfsZipEquiv:  { label: "BFS framing + EWP + ZIP upgrade equivalent (~+$3,400 add)", amount: 35322.45 + 8825.99 + 3400 },
+    fiveStar:     { label: "Five Star Lumber #2604-146766 (no ZIP, no EWP, no tax shown)", amount: 40831.69 },
   },
   keyQuestion: "Oak Mountain's 'SO60016 EWP' line is $2,571.20 — what exactly is included? BFS quoted full EWP scope (LSL rim + 49 TJI-360 joists + 9¼ LVL + 24\" LVL) at $8,024 subtotal. Need confirmation OM line covers full scope or expect $5–6K add.",
-  lineSavingsTotal: 1325, // sum of NEGOTIATION_TARGETS lineSavings rounded
+  zipSystemNote: "ZIP wall + ZIP roof + ZIP tape = +$3,514 vs OSB version. Eliminates housewrap and synthetic felt entirely. ZIP wall sheets at $24.60/ea (78 pcs = $1,919); 1/2\" ZIP roof at $26.60/ea (116 pcs = $3,086); ZIP tape at $32.44/ea (36 rolls = $1,168). No competitor quoted ZIP, so no direct unit-price comparator.",
+  lineSavingsTotal: 831, // sum of NEGOTIATION_TARGETS lineSavings (after removing OSB/housewrap/felt)
   drop1AnomalySavings: 253,
-  totalCleanAsks: 1578,
+  totalCleanAsks: 1084,
   outsideQuoteOpportunity: {
     title: "Roof trusses — not yet quoted by Oak Mountain",
     benchmark: 7195,
     benchmarkSource: "BFS Shelby Quote 5403492 (4/29/26): 63 trusses, 8/12 pitch, 18\" OH",
     ask: "Match or beat $7,195 to consolidate the order"
   },
-  pitch: `I want to bring this whole job to you. BFS is at $44,148 framing+EWP all-in (incl. tax). Your #23351 is at $41,692 — already $2,456 cheaper. To make this easy, I need three things: (1) confirmation that your $2,571 EWP line covers full scope — LSL rim, all TJI-360 joists in needed lengths, the two 9¼ LVLs, and the three 24" LVLs; (2) the second-drop $6.35 price for 2×4-14 SPF applied to the first drop too (saves $253); (3) match competitor unit prices on the ~17 line items below. Also: quote 63 roof trusses (8:12 pitch, 18" OH, 2×4 SP No.2 KD SYP) — BFS is at $7,195. Hit those and the framing + EWP + trusses are all yours, ~$48,900 total.`
+  pitch: `I want to bring this whole job to you. I'm going with ZIP wall + ZIP roof — your #23356 is at $45,205 (incl. tax). For comparison BFS framing + EWP is $44,148 on OSB; to match my ZIP scope they'd be ~$47,548. So you're already ahead. To make this easy, I need three things: (1) confirmation that your $2,571 EWP line covers full scope — LSL rim, all TJI-360 joists in needed lengths, the two 9¼ LVLs, and the three 24" LVLs; (2) the second-drop $6.35 price for 2×4-14 SPF applied to the first drop too (saves $253); (3) match competitor unit prices on the line items in the brief — clean asks ~$830. Also: quote 63 roof trusses (8:12 pitch, 18" OH, 2×4 SP No.2 KD SYP) — BFS Shelby is at $7,195. Hit those and the framing + EWP + trusses are all yours, ~$52,400 total package.`
+};
+
+// ─────────────────────────────────────────────
+// ZIP vs OSB+WRAP DECISION
+// User picked ZIP. This block shows the full
+// side-by-side so the choice is documented.
+// ─────────────────────────────────────────────
+const ZIP_VS_OSB = {
+  costA_zip: {
+    label: "OPTION A — ZIP Wall + ZIP Roof + ZIP Tape (OM #23356)",
+    materialItems: [
+      { name: "7/16\" ZIP Wall sheets", qty: 78, unit: 24.60, total: 1918.80 },
+      { name: "1/2\" ZIP Roof sheets", qty: 116, unit: 26.60, total: 3085.60 },
+      { name: "ZIP Tape rolls", qty: 36, unit: 32.44, total: 1167.84 },
+    ],
+    materialSubtotal: 6172.24,
+    laborImpact: -600, // saves ~$400-800 vs separate housewrap install
+    quoteSubtotal: 43052.79,
+    quoteTotal: 45205.43,
+  },
+  costB_osb: {
+    label: "OPTION B — 7/16 OSB + Tyvek + #15 Felt (OM #23351)",
+    materialItems: [
+      { name: "7/16\" OSB walls (78 sheets)", qty: 78, unit: 11.04, total: 861.12 },
+      { name: "7/16\" OSB roof deck (116 sheets)", qty: 116, unit: 11.04, total: 1280.64 },
+      { name: "10×100 Housewrap rolls", qty: 3, unit: 77.00, total: 231.00 },
+      { name: "#15 synthetic felt (1,000 sq ft)", qty: 4, unit: 83.33, total: 333.32 },
+    ],
+    materialSubtotal: 2706.08,
+    laborImpact: 600, // additional housewrap install labor
+    quoteSubtotal: 39706.43,
+    quoteTotal: 41691.75,
+  },
+  netDifference: {
+    materialDeltaSubtotal: 3466.16,
+    materialDeltaWithTax: 3513.68,
+    laborSavings: 600,
+    netZipPremium: 2913.68, // material + tax delta minus labor saved
+  },
+  reasonsForZip: [
+    { icon: "fa-shield", title: "Integrated WRB — single point of failure becomes single point of integrity", detail: "Green facer IS the water-resistive barrier. Continuous plane vs lapped wrap means fewer leak paths at penetrations (windows, doors, electrical, HVAC)." },
+    { icon: "fa-wind", title: "Better air sealing", detail: "Properly taped ZIP shows 30–50% less air infiltration than OSB+Tyvek in blower-door testing. In Zone 3A (Alabama humid), tighter envelope = lower cooling loads, better humidity control." },
+    { icon: "fa-clock", title: "Faster construction = less weather exposure", detail: "No separate housewrap step. Walls go up dry-in faster. Tape seams as you go." },
+    { icon: "fa-droplet", title: "Better wet-during-construction tolerance", detail: "ZIP rated for 60-day weather exposure; Tyvek rated for 4 months but realistic 30 days before UV degradation. ZIP handles Alabama thunderstorms during framing better." },
+    { icon: "fa-house-chimney-crack", title: "Stiffer panel — better racking", detail: "Fewer creaks, slightly stiffer wall under wind load." },
+    { icon: "fa-leaf", title: "Fits low-tox build philosophy", detail: "Fewer construction membranes/adhesives in the wall assembly. ZIP facer is dimensionally stable and inert." },
+  ],
+  reasonsForOsb: [
+    { icon: "fa-dollar-sign", title: "Saves ~$2,914 net (after labor offset)", detail: "Material+tax delta is +$3,514 for ZIP, but ZIP saves ~$600 in housewrap install labor. Net premium: ~$2,900." },
+    { icon: "fa-hammer", title: "Universal contractor familiarity", detail: "Every framing crew has done OSB+Tyvek. ZIP requires correctly applied tape — done wrong, ZIP underperforms OSB+Tyvek." },
+    { icon: "fa-screwdriver-wrench", title: "Easier repairs", detail: "Tyvek tears can be patched. ZIP damage requires sheet replacement or specialized patching." },
+    { icon: "fa-layer-group", title: "Decoupled layers — independent failure modes", detail: "If Tyvek degrades, OSB still functions. With ZIP, the WRB and structural sheathing are one product — single failure = both fail." },
+  ],
+  verdict: {
+    chosen: "ZIP",
+    reasoning: "Net premium of ~$2,900 is small relative to the project ($277K budget = 1.0%). Air sealing improvement compounds over decades of cooling-dominated Alabama climate. ZIP done right outperforms OSB+wrap done well; OSB+wrap done well outperforms ZIP done poorly. Pin down a GC with ZIP experience — that's the only real risk."
+  }
 };
