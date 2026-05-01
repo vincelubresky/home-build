@@ -154,39 +154,38 @@ let MATERIALS = [
     icon: "fa-layer-group",
     items: [
       {
-        name: "AdvanTech Subfloor Panels",
-        spec: "23/32\" T&G, 4×8 sheets",
-        qty: "~35 sheets (1,114 sq ft)",
-        cost: 1225,
+        name: "AdvanTech / DuraStrand Subfloor Panels",
+        spec: "23/32\" T&G, 4×8. OM quotes Huber Blue ($17.53/sheet); BFS quotes DuraStrand PointSix ($19.71/sheet)",
+        qty: "37 sheets (per OM); 41 per BFS",
+        cost: 649,
         status: "needed",
         brands: [
-          { name: "Huber AdvanTech", url: "https://www.huberwood.com" }
+          { name: "Huber Blue (OM)", url: "https://www.huberwood.com" },
+          { name: "Norbord DuraStrand (BFS)", url: "" }
         ],
-        notes: "Moisture-resistant structural subfloor — far superior to standard OSB. T&G edges, no OSB-style swelling. Use on main floor deck over basement."
+        notes: "QUOTED: OM Huber Blue $648.61 (37 sheets × $17.53). OM is 11% cheaper than BFS on T&G — keep this with OM. Folded into framing package on each quote."
       },
       {
-        name: "LVL Rim Beams & Headers",
-        spec: "1.75×9.5\" or 1.75×11.25\" — confirm with engineer",
-        qty: "Per structural plan",
-        cost: 2500,
+        name: "Engineered Wood Products (EWP) — BFS Quote",
+        spec: "6× LSL rim 1-1/8×16 (TimberStrand), 49× TJI-360 I-joists (3×10', 1×18', 45×26'), 2× 1¾×9¼ LVL 18' (2.0E Microlam), 3× 24\" LVL @ 24' (Boise special order)",
+        qty: "Full floor system EWP",
+        cost: 8826,
         status: "needed",
         brands: [
-          { name: "Boise Cascade (BCI Joists)", url: "https://www.bc.com" },
-          { name: "Weyerhaeuser (Trus Joist)", url: "https://www.weyerhaeuser.com" }
+          { name: "BFS Quote 87546716 (4/23/26) — $8,825.99", url: "" }
         ],
-        notes: "Engineered for main floor span over basement. Size and species determined by structural engineer. Get local supplier quote — pricing varies."
+        notes: "QUOTED: BFS EWP $8,023.63 + 10% tax = $8,825.99. Oak Mountain quoted EWP as a single 'SO60016' line at $2,571 — UNCLEAR if full scope. KEY NEGOTIATION POINT: ask OM owner what their EWP line covers. If only TJI joists and not the LSL rim or 24\" LVLs, the $5,455 gap will need to close."
       },
       {
-        name: "Engineered Floor Joists (I-Joists)",
-        spec: "11-7/8\" or 14\" depth — confirm with engineer",
-        qty: "Per structural plan",
-        cost: 3500,
+        name: "Roof Trusses — BFS Shelby Quote",
+        spec: "63 wood roof trusses, 8/12 pitch, 18\" overhang, 2×4 SP No.2 chord, KD untreated SYP. Mix: 1×A01 + 11×A02 (26' span main), 2×B01 + 9×B02 + 1×B03 + 9×B04 + 1×B05 (38' span), 1×C01 + 2×C02 (17'-8\" span carport), 20×P01 + 2×PC01 (porch), 4 valley trusses",
+        qty: "63 trusses, total weight 8,146 lb",
+        cost: 7195,
         status: "needed",
         brands: [
-          { name: "Boise Cascade (BCI Joists)", url: "https://www.bc.com" },
-          { name: "Weyerhaeuser (Trus Joist)", url: "https://www.weyerhaeuser.com" }
+          { name: "BFS Shelby Quote 5403492 (4/29/26) — $7,195", url: "" }
         ],
-        notes: "Span basement walls to carry main floor. Engineered joists minimize bounce and squeak. Builder's lumber package should include these."
+        notes: "QUOTED: BFS Shelby $7,195 ex tax. Wind 115 MPH design, 20-10-0-10 PSF loading, 2'-0\" spacing. EXCLUDES: hurricane clips (use Simpson H2.5A separately), beams, blocking, dormers, structural fascia, bracing material. Quote good if accepted by 5/29/26, delivery by 6/13/26. ASK Oak Mountain to beat $7,195 to consolidate the order."
       },
       {
         name: "Concrete Block — Basement Walls",
@@ -505,42 +504,37 @@ let MATERIALS = [
     icon: "fa-door-open",
     items: [
       {
-        name: "Double-Hung Windows",
-        spec: "Double-pane, Low-E glass, vinyl or fiberglass frame",
-        qty: "15 units (per plans)",
-        cost: 5250,
+        name: "Comfort View Windows — BFS Quote",
+        spec: "Comfort View white, Lowe 366 glass, 4/1 grids, 7/8 GBG, no jambs/screens. Sizes: 5×2030 SH, 4×2860 SH, 1×2050 Twin SH (tempered), 4×3060 SH, 2×3060 Twin SH",
+        qty: "16 units (15 openings — twin units share opening)",
+        cost: 3655,
         status: "needed",
         brands: [
-          { name: "Andersen 400 Series", url: "https://www.andersenwindows.com" },
-          { name: "Pella 250 Series", url: "https://www.pella.com" },
-          { name: "Jeld-Wen Premium Vinyl", url: "https://www.jeld-wen.com" }
+          { name: "BFS Quote 87515008 (4/22/26) — $3,655.33", url: "" }
         ],
-        notes: "Andersen 400 is fiberglass-clad wood interior — premium. Pella 250 is solid choice mid-range. Jeld-Wen vinyl if budget-focused. All 3 offer Low-E glass. Get window schedule from plans to confirm exact sizes before ordering."
+        notes: "QUOTED: BFS Comfort View 16 units — $3,323.03 + tax = $3,655.33. Lowe 366 triple-silver is the Zone 3 spec we want (low SHGC). Down ~$1,600 from prior estimate. Compare-shop to Andersen 400 / Pella 250 if you want fiberglass-clad wood interior."
       },
       {
-        name: "Front Entry French Door (Double)",
-        spec: "Fiberglass, 36\"+36\" (72\" opening), with sidelites or transom",
-        qty: "1 set",
-        cost: 1800,
+        name: "Front Entry Double Door — BFS Quote",
+        spec: "Fiberglass smooth direct-glaze (Nova45) fullview Lowe, 5/0×8/0, 1-lite, T-astragal w/ head & foot bolts, 6-9/16\" primed jambs, primed 180 brick mold, black hinges/sill, RH active, dbl bore, inswing",
+        qty: "1 unit",
+        cost: 2196,
         status: "needed",
         brands: [
-          { name: "Therma-Tru Benchmark", url: "https://www.thermatru.com" },
-          { name: "Masonite Performance Door", url: "https://www.masonite.com" },
-          { name: "ProVia Heritage", url: "https://www.provia.com" }
+          { name: "BFS Quote 87489258 (4/21/26) — $2,195.80", url: "" }
         ],
-        notes: "Fiberglass doors don't rot, dent, or warp — strongly preferred over wood for exterior. Therma-Tru Benchmark is widely available; ProVia Heritage is more custom/premium. Specify with keyed deadbolt prep and multi-point lock if desired."
+        notes: "QUOTED: Fiberglass double door 5/0×8/0 fullview Lowe, $2,195.80 ea. Quote is on Phoenix line. Quote total for all 4 ext doors = $3,743.23 incl. tax."
       },
       {
-        name: "Rear & Side Exterior Doors",
-        spec: "Fiberglass or steel insulated, 32\" or 36\" wide",
-        qty: "2 units",
-        cost: 1000,
+        name: "Rear & Side Exterior Doors — BFS Quote",
+        spec: "1× steel 6-panel 3/0×6/8 RH ($335.71), 1× steel fullview 1-lite Lowe LH ($478.57), 1× fiberglass mahogany 6-panel 3/0×6/8 LH ($392.86) — all 4-9/16\" primed jambs, black hinges/sill, dbl bore, inswing",
+        qty: "3 units",
+        cost: 1207,
         status: "needed",
         brands: [
-          { name: "Therma-Tru Benchmark", url: "https://www.thermatru.com" },
-          { name: "Masonite Performance Door", url: "https://www.masonite.com" }
+          { name: "BFS Quote 87489258 (4/21/26)", url: "" }
         ],
-        notes: "Steel doors are more budget-friendly for back/side entries. Fiberglass preferred near moisture (rear deck walkout)."
+        notes: "QUOTED: 3 single-leaf doors @ BFS = $1,207.14. Combined w/ front double door = $3,743.23 incl. tax. Phoenix line."
       },
       {
         name: "Interior Prehung Doors",
@@ -1147,49 +1141,47 @@ const BUDGET_CATEGORIES = [
     id: 3,
     name: "Foundation & Basement Structure",
     allocated: 45000,
-    notes: "Excavation, footings, poured/block basement walls, main floor deck, waterproofing, drain tile, sump. Owner-rented excavator ($2,500 self-completed).",
+    notes: "Excavation, footings, poured/block basement walls, main floor deck, waterproofing, drain tile, sump. Owner-rented excavator ($2,500 self-completed). Concrete labor quoted by Jemison.",
     items: [
       { name: "Excavation — 1,114 sq ft footprint, ~9 ft deep", cost: 2500, notes: "Owner-rented excavator — self-completed" },
-      { name: "Perimeter footings — ~134 lin ft × 24in wide", cost: 3200, notes: "Continuous footing at base of basement walls" },
+      { name: "Concrete labor — Jemison Quote 1110 (4/19/26)", cost: 21631, notes: "QUOTED: footing labor $2,601 + walls $6,825 + waterproofing $4,875 + drain pipe $250 + slab labor $3,330 + slab materials $3,750. EXCLUDES concrete itself, concrete pump (×3), gravel for drain & slab. Based on 10 ft tall wall." },
+      { name: "Concrete material — 3,000 PSI ready-mix (footing+wall+slab)", cost: 12000, notes: "~80 cu yd × $150/yd. NOT in Jemison quote — get separate ready-mix quote." },
+      { name: "Concrete pump (×3 setups per Jemison)", cost: 3000, notes: "NOT in Jemison quote — typically ~$1,000/pour" },
+      { name: "Gravel for drain pipe + slab base", cost: 1500, notes: "NOT in Jemison quote" },
       { name: "Interior footings — posts and column pads", cost: 1800, notes: "Support for main floor beam system" },
-      { name: "Basement walls — poured concrete or block (~134 lin ft × 9 ft)", cost: 19500, notes: "Block common in AL; poured is stronger. ~$16/sq ft wall area" },
       { name: "Main floor beam + post system", cost: 2500, notes: "LVL or steel beam spanning basement, with lally columns" },
-      { name: "Main floor deck — engineered joists + 3/4in AdvanTech subfloor (1,114 sq ft)", cost: 7200, notes: "Engineered joists span basement walls; AdvanTech is moisture-resistant" },
-      { name: "Exterior waterproofing — membrane + damp-proofing", cost: 3200, notes: "Applied to outside of basement walls before backfill" },
-      { name: "Drain tile / French drain — perimeter at footing", cost: 2800, notes: "Directs groundwater to sump" },
-      { name: "Sump pit + sleeve", cost: 800, notes: "Required in most full basement builds" },
-      { name: "Rough basement floor — gravel or thin slab", cost: 1500, notes: "Keeps basement clean and dry; full slab finish is Phase 2" },
+      { name: "Sump pit + sleeve + pump", cost: 800, notes: "Required in most full basement builds" },
     ]
   },
   {
     id: 4,
     name: "Framing & Structure",
-    allocated: 30636,
-    notes: "Stick-built materials, framing labor ($7/sq ft × 1,114 sq ft), roofing labor, porch framing, dumpster",
+    allocated: 57417,
+    notes: "Vendor-quoted April 2026. PREFERRED: Oak Mountain (relationship/proximity). Backup: BFS. Includes lumber+sheathing+Hardie+deck pkg, EWP, roof trusses, framing labor, porch, dumpster.",
     items: [
-      { name: "Framing lumber package — walls, plates, blocking", cost: 8500, notes: "2×6 exterior walls for R-23 cavity insulation; 2×4 interior" },
-      { name: "LVL beams + ridge + headers", cost: 2800, notes: "Required over all openings and long spans" },
-      { name: "OSB wall sheathing (all walls)", cost: 1800, notes: "" },
-      { name: "Weather-resistant barrier (house wrap)", cost: 600, notes: "" },
+      { name: "Framing material pkg — Oak Mountain Quote 23351 (PREFERRED)", cost: 41692, notes: "QUOTED 4/27/26 incl 5% tax. Lumber + 7/16 OSB + 3/4 T&G Huber Blue + Hardie panel/trim/soffit + deck materials + EWP $2,571 line + hardware. Alt: OM 23356 with ZIP wall/roof = $45,205. NEGOTIATION TARGETS — see Vendor Brief tab." },
+      { name: "Framing material pkg — BFS Quote 87577907 (alternate)", cost: 0, notes: "ALTERNATE: BFS framing $35,322 incl tax. Cheaper than OM by ~$6,370 on framing alone, but does NOT include EWP — add BFS EWP $8,826 = $44,148 all-in. OM still ~$2,455 more all-in if their EWP scope is full." },
+      { name: "EWP line in OM #23351 — verify scope", cost: 0, notes: "OM's $2,571 EWP line vs BFS standalone EWP $8,826. KEY QUESTION FOR OWNER. If OM is missing items, expect $5–6K add. See Vendor Brief tab." },
+      { name: "Roof trusses — BFS Shelby Quote 5403492", cost: 7195, notes: "QUOTED 4/29/26 ex tax. 63 trusses, 8/12 pitch, 18\" OH. Ask OM to beat to consolidate." },
       { name: "Framing labor — walls, floor", cost: 7798, notes: "$7/sq ft × 1,114 sq ft — confirmed rate" },
-      { name: "Roof framing — rafters or trusses + sheathing", cost: 5638, notes: "Roof area ~1,300 sq ft with pitch and overhang" },
       { name: "Porch framing — materials + labor", cost: 2500, notes: "Covered front/back porch included in plans" },
       { name: "Dumpster rental (framing phase)", cost: 1000, notes: "Two hauls typical for framing debris" },
+      { name: "Roof framing labor (truss install)", cost: 1800, notes: "Crane setting + crew time for 63 trusses" },
     ]
   },
   {
     id: 5,
     name: "Exterior — Siding & Roof",
-    allocated: 22088,
-    notes: "Hardie Board & Batten, 15 windows, 3 exterior + 12 interior doors, exterior paint (earth tones), galvanized metal roof",
+    allocated: 19831,
+    notes: "Hardie B&B (folded into framing pkg), 16 BFS Comfort View windows, 4 BFS exterior doors, 12 interior doors, exterior paint, galvanized metal roof. Vendor quotes locked in April 2026.",
     items: [
-      { name: "Hardie Board & Batten — materials (~900 sq ft net wall area)", cost: 4500, notes: "" },
+      { name: "Hardie Board & Batten — materials", cost: 0, notes: "Now bundled inside Oak Mountain framing pkg ($23,351) — see Framing & Structure category" },
       { name: "Siding installation labor", cost: 3000, notes: "" },
-      { name: "Windows — 15 units (double-pane, vinyl frame)", cost: 5250, notes: "$350 avg; Low-E glass preferred" },
-      { name: "Exterior doors — 3 units (front, back, garage/side)", cost: 1800, notes: "Fiberglass or steel insulated" },
-      { name: "Interior doors — 12 units (prehung)", cost: 1800, notes: "$150 avg hollow-core; solid wood is higher" },
+      { name: "Windows — 16 units (BFS Comfort View Quote 87515008)", cost: 3655, notes: "QUOTED 4/22/26. Saved ~$1,595 vs initial estimate. Lowe 366 4/1 grids." },
+      { name: "Exterior doors — 4 units (BFS Quote 87489258)", cost: 3743, notes: "QUOTED 4/21/26. 1× fiberglass dbl front (5/0×8/0 Nova45 fullview Lowe), 3× single (steel 6-panel + steel fullview + fiberglass mahogany)." },
+      { name: "Interior doors — 12 units (prehung)", cost: 1800, notes: "$150 avg hollow-core; solid wood is higher. Not yet quoted." },
       { name: "Exterior paint — low-VOC, earth tones", cost: 1738, notes: "Materials + labor for Hardie" },
-      { name: "Galvanized metal roof — materials + labor (~1,350 sq ft)", cost: 4000, notes: "Standing seam galvanized; ~$3/sq ft installed" },
+      { name: "Galvanized metal roof — materials + labor (~1,350 sq ft)", cost: 4000, notes: "Standing seam galvanized; ~$3/sq ft installed. Not yet quoted." },
     ]
   },
   {
@@ -1311,3 +1303,293 @@ const BUDGET_CATEGORIES = [
     items: []
   },
 ];
+
+// ─────────────────────────────────────────────
+// VENDOR QUOTES (April 2026)
+// All quotes from PDFs — verified prices, dates, totals.
+// ─────────────────────────────────────────────
+const VENDOR_QUOTES = [
+  {
+    vendor: "BFS",
+    location: "Chelsea, AL Millwork",
+    quoteNum: "87515008",
+    scope: "Comfort View Windows",
+    detail: "16 units: 5×2030 SH, 4×2860 SH, 1×2050 Twin SH (tempered), 4×3060 SH, 2×3060 Twin SH. White, Lowe 366, 4/1 grids, 7/8 GBG, no jambs, no screens. Plus 3 rolls Protecto SS tape, 1 box galv roofing nails.",
+    date: "2026-04-22",
+    expires: "2026-04-30",
+    subtotal: 3323.03,
+    tax: 332.30,
+    total: 3655.33,
+    selected: true,
+  },
+  {
+    vendor: "BFS",
+    location: "Chelsea, AL Millwork",
+    quoteNum: "87489258",
+    scope: "Exterior Doors (Phoenix line)",
+    detail: "1× fiberglass double 5/0×8/0 fullview Lowe (Nova45) RH active T-astragal — $2,196. 1× steel 6-panel 3/0×6/8 RH — $336. 1× steel fullview 3/0×6/8 1-lite Lowe LH — $479. 1× fiberglass mahogany 6-panel 3/0×6/8 LH — $393. All primed jambs, black hinges/sill, dbl bore, inswing.",
+    date: "2026-04-21",
+    expires: "2026-04-30",
+    subtotal: 3402.94,
+    tax: 340.29,
+    total: 3743.23,
+    selected: true,
+  },
+  {
+    vendor: "BFS",
+    location: "Pelham, AL Yard",
+    quoteNum: "87546716",
+    scope: "Engineered Wood Products (EWP)",
+    detail: "First Floor: 6× LSL rim 1-1/8×16 (TimberStrand) — $331. 3× TJI-360 10' — $151. 1× TJI-360 18' — $90. 45× TJI-360 26' — $5,845. Second Floor: 2× 1¾×9¼ LVL 18' (2.0E Microlam) — $217. Special Order/Boise: 3× 24\" LVL @ 24' — $1,390.",
+    date: "2026-04-23",
+    expires: "2026-04-30",
+    subtotal: 8023.63,
+    tax: 802.36,
+    total: 8825.99,
+    selected: true,
+  },
+  {
+    vendor: "BFS",
+    location: "Pelham, AL Yard",
+    quoteNum: "87577907",
+    scope: "Framing Package — alternate to Oak Mountain",
+    detail: "Lumber (2×4/2×6/2×10/2×12 SPF/SYP), 7/16 OSB, 23/32 T&G DuraStrand, Tyvek/Barricade housewrap+tape, ice & water shield, Hardie panel/trim/soffit/batten, deck materials (5/4×6 PT, PT 2×10/12, 6×6 posts), Simpson hangers, Hitachi nails. NO EWP, NO trusses.",
+    date: "2026-04-27",
+    expires: "2026-04-30",
+    subtotal: 32111.32,
+    tax: 3211.13,
+    total: 35322.45,
+    selected: false,
+  },
+  {
+    vendor: "BFS Shelby",
+    location: "Shelby, AL",
+    quoteNum: "5403492",
+    scope: "Roof Trusses",
+    detail: "63 trusses, 8/12 pitch, 18\" overhang, 2×4 SP No.2 chord, KD untreated SYP. 1× A01 + 11× A02 (26' span, 170/138 lb), 22× B01–B05 (38' span, 235–296 lb), 3× C01–C02 (17'-8\" span carport), 22× P01/PC01 (porch), 4 valleys V01–V04. Total weight 8,146 lb. EXCLUDES: hurricane clips, beams, blocking, dormers, structural fascia, bracing.",
+    date: "2026-04-29",
+    expires: "2026-05-29",
+    delivery: "2026-06-13",
+    subtotal: 7195.00,
+    tax: null,
+    total: 7195.00,
+    selected: true,
+  },
+  {
+    vendor: "Oak Mountain Building Supply",
+    location: "Sterrett, AL",
+    quoteNum: "23351",
+    scope: "Framing Package — PREFERRED (relationship + proximity)",
+    detail: "1ST DROP: borate 2×6, PT lumber, 360+ SPF studs, 80+ YP joists, OSB, EWP $2,571 line, hangers. 2ND DROP: 37× T&G Huber Blue subfloor, 280 precut studs, more YP joists, pocket door kits. 3RD DROP: 116 OSB roof deck, synthetic felt, plastic cap nails. SIDING/CORNICE: full Hardie pkg (66× 4×10 panels, batten strip, trim, soffits, V-joint), 8×8 posts. DECK: PT 2×12, 5/4×6, hangers, Hitachi nails.",
+    date: "2026-04-27",
+    subtotal: 39706.43,
+    tax: 1985.32,
+    total: 41691.75,
+    selected: true,
+  },
+  {
+    vendor: "Oak Mountain Building Supply",
+    location: "Sterrett, AL",
+    quoteNum: "23356",
+    scope: "Framing Package — ZIP wall + ZIP roof upgrade alternate",
+    detail: "Same as #23351 but substitutes 7/16 ZIP Wall (+$1,230) for OSB, 1/2 ZIP Roof (+$3,086) for OSB roof deck, ZIP Tape ($1,168) replaces synthetic felt + housewrap. Net upgrade: ~$3,500 vs OSB version.",
+    date: "2026-04-28",
+    subtotal: 43052.79,
+    tax: 2152.64,
+    total: 45205.43,
+    selected: false,
+  },
+  {
+    vendor: "Five Star Lumber",
+    location: "Pelham, AL",
+    quoteNum: "2604-146766",
+    scope: "Framing Package — alternate",
+    detail: "PT and SPF dim lumber (2×4/2×6/2×8/2×10/2×12), 70× 7/16 OSB, 110× 5/8 CDX plywood, 40× 3/4 T&G Blue Plus, Hardie soffit/panel/trim, 3,040 LF 1×6 TGVJ #2, 60 LF 18\" LVL R/L, deck PT (5/4×6, 2×10/12, 6×6), housewrap, synthetic underlayment, hook flashing, FRH nails, Simpson hangers, deck tension ties. NO TJI joists, NO trusses.",
+    date: "2026-04-29",
+    expires: "2026-05-07",
+    subtotal: 40831.69,
+    tax: 0.00,
+    total: 40831.69,
+    selected: false,
+  },
+  {
+    vendor: "Jemison Concrete LLC",
+    location: "Jemison, AL",
+    quoteNum: "1110",
+    scope: "Concrete Labor — Foundation",
+    detail: "Footing labor $2,601 + Wall $6,825 + Waterproofing $4,875 + Drain pipe install $250 + Slab labor $3,330 + Slab materials $3,750. Based on 10 ft wall (price flexes if stepped). EXCLUDES: concrete itself, concrete pump (used 3×), gravel for drain pipe and slab.",
+    date: "2026-04-19",
+    subtotal: 21631.00,
+    tax: null,
+    total: 21631.00,
+    selected: true,
+  },
+];
+
+// ─────────────────────────────────────────────
+// NEGOTIATION TARGETS — items where Oak Mountain
+// (the user's preferred vendor) is priced higher
+// than at least one competitor. Use these to
+// negotiate a better deal.
+// ─────────────────────────────────────────────
+const NEGOTIATION_TARGETS = [
+  // Format: { item, omPrice, bestPrice, bestVendor, omQty, lineSavings }
+  {
+    item: "2×4-104⅝\" precut SPF stud",
+    omCode: "249PC", omPrice: 4.64, omQty: 280, omTotal: 1299.20,
+    bestPrice: 4.48, bestVendor: "BFS", category: "lumber",
+    pctOver: 3.6, lineSavings: 45,
+    note: "BFS code 2410458S. Match $4.48."
+  },
+  {
+    item: "2×4-116⅝\" precut SPF stud",
+    omCode: "2410PC", omPrice: 5.15, omQty: 245, omTotal: 1261.75,
+    bestPrice: 4.77, bestVendor: "BFS", category: "lumber",
+    pctOver: 8.0, lineSavings: 93,
+    note: "BFS code 2411658S. Match $4.77."
+  },
+  {
+    item: "2×4-14' SPF (1st drop)",
+    omCode: "2414S", omPrice: 8.55, omQty: 115, omTotal: 983.25,
+    bestPrice: 6.35, bestVendor: "Oak Mountain own 2nd drop", category: "anomaly",
+    pctOver: 34.6, lineSavings: 253,
+    note: "ANOMALY: same code 2414S quoted at $6.35 in 2nd drop (215 pcs). Apply $6.35 to 1st drop too."
+  },
+  {
+    item: "2×10-14' YP #2",
+    omCode: "21014YP", omPrice: 15.09, omQty: 8, omTotal: 120.72,
+    bestPrice: 13.11, bestVendor: "BFS", category: "lumber",
+    pctOver: 15.1, lineSavings: 16,
+    note: "BFS code 21014SYP2. Match $13.11."
+  },
+  {
+    item: "2×12-14' YP #2",
+    omCode: "21214YP", omPrice: 18.87, omQty: 42, omTotal: 792.54,
+    bestPrice: 15.54, bestVendor: "BFS", category: "lumber",
+    pctOver: 21.4, lineSavings: 140,
+    note: "BFS code 21214SYP2. Match $15.54. (36+6 pcs across drops)"
+  },
+  {
+    item: "2×10-12' PT #2",
+    omCode: "21012PT", omPrice: 17.91, omQty: 31, omTotal: 555.21,
+    bestPrice: 16.62, bestVendor: "BFS", category: "lumber-pt",
+    pctOver: 7.8, lineSavings: 40,
+    note: "BFS code 21012T. Match $16.62."
+  },
+  {
+    item: "2×4-16' PT prime ground contact",
+    omCode: "2416PT", omPrice: 12.14, omQty: 91, omTotal: 1104.74,
+    bestPrice: 10.90, bestVendor: "BFS (borate)", category: "lumber-pt",
+    pctOver: 11.4, lineSavings: 113,
+    note: "BFS 2416T-B is borate-treated equivalent. Match $10.90."
+  },
+  {
+    item: "7/16\" OSB 4×8",
+    omCode: "71648OSB", omPrice: 11.04, omQty: 194, omTotal: 2141.76,
+    bestPrice: 8.95, bestVendor: "Five Star", category: "sheathing",
+    pctOver: 23.4, lineSavings: 405,
+    note: "Five Star item code 716. Big sheet-volume opportunity."
+  },
+  {
+    item: "Subfloor adhesive 28oz",
+    omCode: "SFG", omPrice: 6.79, omQty: 11, omTotal: 74.69,
+    bestPrice: 5.69, bestVendor: "BFS", category: "consumables",
+    pctOver: 19.3, lineSavings: 12,
+    note: "Match BFS private-label SFG at $5.69."
+  },
+  {
+    item: "1\" plastic cap roofing nails (box)",
+    omCode: "1PCN", omPrice: 23.00, omQty: 4, omTotal: 92.00,
+    bestPrice: 12.00, bestVendor: "Five Star", category: "consumables",
+    pctOver: 91.7, lineSavings: 44,
+    note: "Five Star at $12, BFS at $17.39. OM is highest by far — biggest %-margin gap."
+  },
+  {
+    item: "3\" galv Hitachi nail (5,000 ct box)",
+    omCode: "3GALVHITACHI", omPrice: 90.00, omQty: 1, omTotal: 90.00,
+    bestPrice: 59.99, bestVendor: "BFS", category: "consumables",
+    pctOver: 50.0, lineSavings: 30,
+    note: "BFS code GR014L. Match $59.99."
+  },
+  {
+    item: "2-3/8\" galv Hitachi nail",
+    omCode: "2-3/8 GALV HI", omPrice: 90.00, omQty: 1, omTotal: 90.00,
+    bestPrice: 76.99, bestVendor: "BFS", category: "consumables",
+    pctOver: 16.9, lineSavings: 13,
+    note: "BFS code GR08R. Match $76.99."
+  },
+  {
+    item: "3/8\" Z-flashing",
+    omCode: "38ZF", omPrice: 11.14, omQty: 6, omTotal: 66.84,
+    bestPrice: 8.99, bestVendor: "Five Star", category: "flashing",
+    pctOver: 23.9, lineSavings: 13,
+    note: "Five Star code 38Z. Match $8.99."
+  },
+  {
+    item: "#15 synthetic underlayment (1,000 sf roll)",
+    omCode: "15RF", omPrice: 83.33, omQty: 4, omTotal: 333.32,
+    bestPrice: 70.00, bestVendor: "Five Star", category: "underlayment",
+    pctOver: 19.0, lineSavings: 53,
+    note: "Five Star code SL. Match $70."
+  },
+  {
+    item: "Housewrap 10×100 roll",
+    omCode: "10100HW", omPrice: 77.00, omQty: 3, omTotal: 231.00,
+    bestPrice: 65.00, bestVendor: "Five Star", category: "wrap",
+    pctOver: 18.5, lineSavings: 36,
+    note: "Five Star code HW. Match $65."
+  },
+  {
+    item: "Sill seal 5.5\" × 50'",
+    omCode: "512SS", omPrice: 9.64, omQty: 1, omTotal: 9.64,
+    bestPrice: 7.09, bestVendor: "BFS", category: "consumables",
+    pctOver: 36.0, lineSavings: 3,
+    note: "BFS code SS550. Match $7.09."
+  },
+  {
+    item: "LUS210 Z-Max 2×10 single hanger",
+    omCode: "LUS210ZMAX", omPrice: 2.98, omQty: 86, omTotal: 256.28,
+    bestPrice: 2.79, bestVendor: "BFS", category: "hardware",
+    pctOver: 6.8, lineSavings: 16,
+    note: "BFS code LUS210Z (50/PK). Match $2.79."
+  },
+];
+
+// Items where Oak Mountain is already CHEAPEST — don't push, but acknowledge:
+const OM_ALREADY_WINNING = [
+  { item: "3/4\" T&G Huber Blue subfloor", omPrice: 17.53, vsBfs: 19.71, vsFs: 29.95, advantageDesc: "11% cheaper than BFS, 41% cheaper than Five Star" },
+  { item: "1×4×12 Hardie Smooth Trim", omPrice: 15.40, vsBfs: 17.22, vsFs: 17.95, advantageDesc: "11% cheaper than BFS" },
+  { item: "1×6×12 Hardie Smooth Trim", omPrice: 23.90, vsBfs: 27.07, vsFs: 26.95, advantageDesc: "12% cheaper than BFS" },
+  { item: "1×12×12 Hardie Siding Trim", omPrice: 51.75, vsBfs: 56.96, vsFs: 53.95, advantageDesc: "9% cheaper than BFS" },
+  { item: "3\" Hardie Smooth Batten Strip", omPrice: 11.04, vsBfs: 12.66, vsFs: 13.95, advantageDesc: "13% cheaper than BFS" },
+  { item: "16\" Hardie Solid Soffit", omPrice: 26.21, vsBfs: 29.12, vsFs: null, advantageDesc: "10% cheaper than BFS" },
+  { item: "4×10 Smooth HardiePanel", omPrice: 62.22, vsBfs: 80.62, vsFs: null, advantageDesc: "23% cheaper than BFS — biggest single OM advantage" },
+  { item: "2×4-16' SPF #2", omPrice: 8.55, vsBfs: 10.03, vsFs: 8.50, advantageDesc: "15% cheaper than BFS" },
+  { item: "2×6-14 borate treated", omPrice: 12.15, vsBfs: 14.98, vsFs: null, advantageDesc: "19% cheaper than BFS" },
+  { item: "2×12-20' YP #2 PT (deck)", omPrice: 34.00, vsBfs: null, vsFs: 50.11, advantageDesc: "32% cheaper than Five Star" },
+];
+
+// ─────────────────────────────────────────────
+// NEGOTIATION SUMMARY (for printable brief)
+// ─────────────────────────────────────────────
+const NEGOTIATION_SUMMARY = {
+  preferredVendor: "Oak Mountain Building Supply",
+  preferredVendorReason: "Relationship + proximity (owner is known to homeowner)",
+  bottomLineComparison: {
+    omAllIn: { label: "Oak Mountain #23351 (incl. tax, framing pkg + EWP line)", amount: 41691.75 },
+    bfsAllIn: { label: "BFS Framing #87577907 + BFS EWP #87546716 (incl. tax)", amount: 35322.45 + 8825.99 },
+    fiveStar: { label: "Five Star Lumber #2604-146766 (no tax shown)", amount: 40831.69 },
+    omZip:    { label: "Oak Mountain #23356 (ZIP system upgrade)", amount: 45205.43 },
+  },
+  keyQuestion: "Oak Mountain's 'SO60016 EWP' line is $2,571.20 — what exactly is included? BFS quoted full EWP scope (LSL rim + 49 TJI-360 joists + 9¼ LVL + 24\" LVL) at $8,024 subtotal. Need confirmation OM line covers full scope or expect $5–6K add.",
+  lineSavingsTotal: 1325, // sum of NEGOTIATION_TARGETS lineSavings rounded
+  drop1AnomalySavings: 253,
+  totalCleanAsks: 1578,
+  outsideQuoteOpportunity: {
+    title: "Roof trusses — not yet quoted by Oak Mountain",
+    benchmark: 7195,
+    benchmarkSource: "BFS Shelby Quote 5403492 (4/29/26): 63 trusses, 8/12 pitch, 18\" OH",
+    ask: "Match or beat $7,195 to consolidate the order"
+  },
+  pitch: `I want to bring this whole job to you. BFS is at $44,148 framing+EWP all-in (incl. tax). Your #23351 is at $41,692 — already $2,456 cheaper. To make this easy, I need three things: (1) confirmation that your $2,571 EWP line covers full scope — LSL rim, all TJI-360 joists in needed lengths, the two 9¼ LVLs, and the three 24" LVLs; (2) the second-drop $6.35 price for 2×4-14 SPF applied to the first drop too (saves $253); (3) match competitor unit prices on the ~17 line items below. Also: quote 63 roof trusses (8:12 pitch, 18" OH, 2×4 SP No.2 KD SYP) — BFS is at $7,195. Hit those and the framing + EWP + trusses are all yours, ~$48,900 total.`
+};

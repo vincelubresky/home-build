@@ -37,6 +37,7 @@
     <a href="#takeoff" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-list-ol"></i>Framing Takeoff</a>
     <a href="#timeline" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-calendar-days"></i>Timeline</a>
     <a href="#contractors" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-hard-hat"></i>Contractors</a>
+    <a href="#vendor-brief" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-handshake"></i>Vendor Brief<span class="nav-badge accent">NEW</span></a>
     <div class="nav-section-label">Finance</div>
     <a href="#loan" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-building-columns"></i>Loan & Draws</a>
     <a href="#permits" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-file-contract"></i>Plans & Permits</a>
@@ -488,6 +489,137 @@
     </div>
   </section>
 
+  <!-- ══ VENDOR BRIEF (printable) ══ -->
+  <section id="vendor-brief" class="section">
+    <div class="section-header vb-header">
+      <div>
+        <div class="section-title">Vendor Brief — Print/Save as PDF</div>
+        <div class="section-sub">All vendor quotes (April 2026), Oak Mountain negotiation targets, and a one-page pitch. Click <b>Print to PDF</b> for a clean printable copy.</div>
+      </div>
+      <button class="vb-print-btn no-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Print to PDF</button>
+    </div>
+
+    <!-- PRINT HEADER (only shown in print) -->
+    <div class="vb-print-header">
+      <h1>Lubresky Build — Vendor Quote Brief</h1>
+      <div class="vb-print-meta">Shelby County, AL · Quotes from April 2026 · Prepared for Oak Mountain Building Supply</div>
+    </div>
+
+    <!-- ── 1. ALL VENDOR QUOTES TABLE ── -->
+    <div class="vb-block">
+      <h2 class="vb-h2">All Vendor Quotes</h2>
+      <table class="vb-table" id="vb-quotes-table">
+        <thead>
+          <tr><th>Vendor</th><th>Quote #</th><th>Scope</th><th>Date</th><th class="num">Subtotal</th><th class="num">Total</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- ── 2. BOTTOM-LINE COMPARISON ── -->
+    <div class="vb-block">
+      <h2 class="vb-h2">Bottom-Line Comparison (Framing + EWP)</h2>
+      <table class="vb-table vb-bottomline">
+        <thead>
+          <tr><th>Package</th><th class="num">Total (incl. tax)</th></tr>
+        </thead>
+        <tbody id="vb-bottomline-body"></tbody>
+      </table>
+      <div class="vb-callout">
+        <b>Headline:</b> <span id="vb-headline"></span>
+      </div>
+    </div>
+
+    <!-- ── 3. NEGOTIATION TARGETS — OM HIGHER ── -->
+    <div class="vb-block">
+      <h2 class="vb-h2 vb-h2--red">Where Oak Mountain Is Higher — Negotiation Targets</h2>
+      <div class="vb-sub">Items where OM is priced above at least one competitor. Total clean ask if all matched: <b id="vb-targets-total">$0</b>.</div>
+      <table class="vb-table">
+        <thead>
+          <tr><th>Item</th><th>OM Code</th><th class="num">OM $</th><th class="num">Best $</th><th>Best Vendor</th><th class="num">% Over</th><th class="num">Qty</th><th class="num">Save</th><th>Note</th></tr>
+        </thead>
+        <tbody id="vb-targets-body"></tbody>
+      </table>
+    </div>
+
+    <!-- ── 4. WHERE OM ALREADY WINS ── -->
+    <div class="vb-block">
+      <h2 class="vb-h2 vb-h2--green">Where Oak Mountain Already Wins — Don't Push</h2>
+      <div class="vb-sub">Items where OM is already cheapest. Acknowledge these to build trust during negotiation.</div>
+      <table class="vb-table">
+        <thead>
+          <tr><th>Item</th><th class="num">OM $</th><th class="num">BFS $</th><th class="num">Five Star $</th><th>OM Advantage</th></tr>
+        </thead>
+        <tbody id="vb-winning-body"></tbody>
+      </table>
+    </div>
+
+    <!-- ── 5. KEY QUESTION ── -->
+    <div class="vb-block">
+      <h2 class="vb-h2 vb-h2--amber">⚠️ Critical Question to Ask</h2>
+      <div class="vb-callout vb-callout--amber" id="vb-keyq"></div>
+      <table class="vb-table" style="margin-top:12px">
+        <thead>
+          <tr><th>BFS EWP Line Items</th><th class="num">Qty</th><th class="num">BFS Price</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1⅛×16 LSL rim 16' (TimberStrand)</td><td class="num">6</td><td class="num">$331</td></tr>
+          <tr><td>16" TJI-360 10' I-joist</td><td class="num">3</td><td class="num">$151</td></tr>
+          <tr><td>16" TJI-360 18' I-joist</td><td class="num">1</td><td class="num">$90</td></tr>
+          <tr><td><b>16" TJI-360 26' I-joist</b></td><td class="num"><b>45</b></td><td class="num"><b>$5,845</b></td></tr>
+          <tr><td>1¾×9¼ TJ LVL 18' (2.0E Microlam)</td><td class="num">2</td><td class="num">$217</td></tr>
+          <tr><td><b>3-ply 24" LVL @ 24'</b></td><td class="num"><b>3</b></td><td class="num"><b>$1,390</b></td></tr>
+          <tr class="vb-tr-total"><td><b>BFS EWP Subtotal</b></td><td></td><td class="num"><b>$8,024</b></td></tr>
+          <tr class="vb-tr-total"><td><b>Oak Mountain SO60016 EWP line</b></td><td></td><td class="num"><b>$2,571</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── 6. UNQUOTED OPPORTUNITY ── -->
+    <div class="vb-block">
+      <h2 class="vb-h2">Unquoted Opportunity — Roof Trusses</h2>
+      <div class="vb-callout">
+        <div><b>Benchmark:</b> BFS Shelby Quote 5403492 (4/29/26) — <b>$7,195</b> ex tax</div>
+        <div><b>Spec:</b> 63 trusses, 8/12 pitch, 18" overhang, 2×4 SP No.2, KD untreated SYP</div>
+        <div><b>Mix:</b> 12 main trusses (26' span) + 22 extended trusses (38' span) + 3 carport (17'-8") + 22 porch + 4 valley</div>
+        <div><b>Excludes:</b> hurricane clips, beams, blocking, structural fascia (use Simpson H2.5A separately)</div>
+        <div><b>Ask:</b> Match or beat $7,195 to consolidate framing + EWP + trusses with Oak Mountain.</div>
+      </div>
+    </div>
+
+    <!-- ── 7. ANOMALY ── -->
+    <div class="vb-block">
+      <h2 class="vb-h2 vb-h2--amber">Pricing Anomaly Inside the OM Quote</h2>
+      <div class="vb-callout vb-callout--amber">
+        <div>Item code <b>2414S (2×4-14 SPRUCE)</b> appears <b>twice in the same quote</b> at different prices:</div>
+        <ul style="margin:8px 0 0 22px">
+          <li>1st drop: 115 pcs @ <b>$8.55</b> = $983.25</li>
+          <li>2nd drop: 215 pcs @ <b>$6.35</b> = $1,365.25</li>
+        </ul>
+        <div style="margin-top:6px">Apply <b>$6.35</b> to all 330 pcs → saves <b>$253</b>.</div>
+      </div>
+    </div>
+
+    <!-- ── 8. PITCH ── -->
+    <div class="vb-block">
+      <h2 class="vb-h2">The Pitch (paste this into a text/email)</h2>
+      <div class="vb-pitch" id="vb-pitch"></div>
+      <div class="vb-totals">
+        <div class="vb-totalrow"><span>Framing pkg (OM #23351)</span><span class="num">$41,692</span></div>
+        <div class="vb-totalrow"><span>+ Roof trusses (if won at BFS price)</span><span class="num">$7,195</span></div>
+        <div class="vb-totalrow"><span>− Line item match savings</span><span class="num">−$1,325</span></div>
+        <div class="vb-totalrow"><span>− Drop-1 anomaly fix</span><span class="num">−$253</span></div>
+        <div class="vb-totalrow vb-totalrow--final"><span><b>Total package value to OM</b></span><span class="num"><b>$47,309</b></span></div>
+      </div>
+    </div>
+
+    <!-- ── 9. QUOTE DETAIL DUMP ── -->
+    <div class="vb-block">
+      <h2 class="vb-h2">Quote Detail (Reference)</h2>
+      <div id="vb-quote-detail"></div>
+    </div>
+  </section>
+
   <!-- ══ LOAN & DRAWS ══ -->
   <section id="loan" class="section">
     <div class="section-header">
@@ -561,7 +693,7 @@
 </main>
 </div>
 
-<script src="js/data.js?v=3"></script>
+<script src="js/data.js?v=4"></script>
 <script>
 // ── Load saved materials from localStorage ──
 (function() {
@@ -662,7 +794,7 @@ function setActive(el) {
 }
 
 // ── Scroll spy ──
-const sections = ['overview','budget','design','lowtox','materials','takeoff','timeline','contractors','loan','permits'];
+const sections = ['overview','budget','design','lowtox','materials','takeoff','timeline','contractors','vendor-brief','loan','permits'];
 const navLinks = {};
 sections.forEach(id => {
   navLinks[id] = document.querySelector(`.nav-item[href="#${id}"]`);
@@ -834,6 +966,104 @@ function renderTakeoff() {
   document.getElementById('takeoff-grand-total').textContent = fmt(grandTotal);
 }
 
+// ── Vendor Brief rendering ──
+function fmtMoney(n) {
+  if (n === null || n === undefined) return '—';
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+function fmtMoneyExact(n) {
+  if (n === null || n === undefined) return '—';
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function renderVendorBrief() {
+  // 1. Quotes table
+  const qbody = document.querySelector('#vb-quotes-table tbody');
+  qbody.innerHTML = VENDOR_QUOTES.map(q => `
+    <tr class="${q.selected ? 'vb-row-selected' : ''}">
+      <td><b>${escH(q.vendor)}</b><div class="vb-cell-sub">${escH(q.location||'')}</div></td>
+      <td class="vb-mono">${escH(q.quoteNum)}</td>
+      <td>${escH(q.scope)}<div class="vb-cell-sub">${escH(q.detail||'')}</div></td>
+      <td class="vb-mono">${escH(q.date)}</td>
+      <td class="num">${fmtMoneyExact(q.subtotal)}</td>
+      <td class="num"><b>${fmtMoneyExact(q.total)}</b></td>
+    </tr>`).join('');
+
+  // 2. Bottom-line comparison
+  const bl = NEGOTIATION_SUMMARY.bottomLineComparison;
+  const blRows = [
+    { label: bl.bfsAllIn.label, amt: bl.bfsAllIn.amount, tag: 'BFS' },
+    { label: bl.omAllIn.label, amt: bl.omAllIn.amount, tag: 'OM' },
+    { label: bl.fiveStar.label, amt: bl.fiveStar.amount, tag: 'FS' },
+    { label: bl.omZip.label, amt: bl.omZip.amount, tag: 'OM-ZIP' },
+  ].sort((a,b) => a.amt - b.amt);
+  document.getElementById('vb-bottomline-body').innerHTML = blRows.map((r, i) => `
+    <tr class="${i===0 ? 'vb-row-cheapest' : ''}">
+      <td>${i===0 ? '<i class="fa-solid fa-trophy" style="color:#10b981"></i> ' : ''}${escH(r.label)}</td>
+      <td class="num"><b>${fmtMoneyExact(r.amt)}</b></td>
+    </tr>`).join('');
+
+  const cheapest = blRows[0];
+  const omPosition = blRows.findIndex(r => r.tag === 'OM');
+  const omRow = blRows[omPosition];
+  const gap = omRow.amt - cheapest.amt;
+  document.getElementById('vb-headline').textContent = omPosition === 0
+    ? `Oak Mountain is already the cheapest by ${fmtMoneyExact(blRows[1].amt - omRow.amt)} — but the EWP scope question below could swing this $5–6K either way.`
+    : `Oak Mountain is ${fmtMoneyExact(gap)} more than ${cheapest.tag === 'BFS' ? 'BFS' : cheapest.tag} on apples-to-apples — close that gap with the line-item asks below.`;
+
+  // 3. Negotiation targets
+  let totalSavings = 0;
+  document.getElementById('vb-targets-body').innerHTML = NEGOTIATION_TARGETS.map(t => {
+    totalSavings += t.lineSavings;
+    return `
+    <tr>
+      <td><b>${escH(t.item)}</b></td>
+      <td class="vb-mono">${escH(t.omCode)}</td>
+      <td class="num">$${t.omPrice.toFixed(2)}</td>
+      <td class="num vb-num-good">$${t.bestPrice.toFixed(2)}</td>
+      <td>${escH(t.bestVendor)}</td>
+      <td class="num vb-num-bad">+${t.pctOver.toFixed(1)}%</td>
+      <td class="num">${t.omQty}</td>
+      <td class="num"><b>${fmtMoney(t.lineSavings)}</b></td>
+      <td class="vb-cell-sub">${escH(t.note)}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('vb-targets-total').textContent = fmtMoney(totalSavings);
+
+  // 4. OM already winning
+  document.getElementById('vb-winning-body').innerHTML = OM_ALREADY_WINNING.map(w => `
+    <tr>
+      <td><b>${escH(w.item)}</b></td>
+      <td class="num vb-num-good"><b>$${w.omPrice.toFixed(2)}</b></td>
+      <td class="num">${w.vsBfs ? '$'+w.vsBfs.toFixed(2) : '—'}</td>
+      <td class="num">${w.vsFs ? '$'+w.vsFs.toFixed(2) : '—'}</td>
+      <td class="vb-cell-sub">${escH(w.advantageDesc)}</td>
+    </tr>`).join('');
+
+  // 5. Key question
+  document.getElementById('vb-keyq').textContent = NEGOTIATION_SUMMARY.keyQuestion;
+
+  // 8. Pitch
+  document.getElementById('vb-pitch').textContent = NEGOTIATION_SUMMARY.pitch;
+
+  // 9. Detail dump — itemized for each quote
+  const detail = document.getElementById('vb-quote-detail');
+  detail.innerHTML = VENDOR_QUOTES.map(q => `
+    <div class="vb-quote-card">
+      <div class="vb-quote-card-hdr">
+        <div><b>${escH(q.vendor)}</b> · Quote #${escH(q.quoteNum)} · ${escH(q.date)}${q.expires ? ' (expires '+escH(q.expires)+')' : ''}</div>
+        <div class="num vb-quote-card-total">${fmtMoneyExact(q.total)}</div>
+      </div>
+      <div class="vb-quote-card-scope"><b>${escH(q.scope)}</b></div>
+      <div class="vb-quote-card-detail">${escH(q.detail||'')}</div>
+      <div class="vb-quote-card-totals">
+        <span>Subtotal: <b>${fmtMoneyExact(q.subtotal)}</b></span>
+        <span>Tax: ${q.tax === null ? 'not incl.' : fmtMoneyExact(q.tax)}</span>
+        <span>Total: <b>${fmtMoneyExact(q.total)}</b></span>
+      </div>
+    </div>`).join('');
+}
+
 // ── Init ──
 function showError(section, e) {
   const el = document.getElementById('materials-list');
@@ -845,6 +1075,7 @@ try { renderSpecs(); } catch(e) { showError('renderSpecs', e); }
 try { renderLowTox(); } catch(e) { showError('renderLowTox', e); }
 try { renderMaterials('all'); } catch(e) { showError('renderMaterials', e); }
 try { renderTakeoff(); } catch(e) { showError('renderTakeoff', e); }
+try { renderVendorBrief(); } catch(e) { showError('renderVendorBrief', e); }
 </script>
 </body>
 </html>

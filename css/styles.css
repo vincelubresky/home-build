@@ -868,3 +868,242 @@ body {
 .to-spec { padding: 10px 12px; color: var(--text-300); width: 40%; font-size: 12px; }
 .to-qty  { padding: 10px 12px; color: var(--text-200); width: 15%; white-space: nowrap; }
 .to-cost { padding: 10px 12px; color: var(--green); font-weight: 600; text-align: right; width: 15%; white-space: nowrap; }
+
+/* === VENDOR BRIEF TAB === */
+.vb-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.vb-print-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+.vb-print-btn:hover { background: var(--accent-hover); }
+.vb-print-header { display: none; }
+
+.vb-block { margin-bottom: 32px; }
+.vb-h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-100);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border-strong);
+}
+.vb-h2--red    { border-bottom-color: var(--red); color: var(--red); }
+.vb-h2--green  { border-bottom-color: var(--green); color: var(--green); }
+.vb-h2--amber  { border-bottom-color: var(--amber); color: var(--amber); }
+.vb-sub { font-size: 13px; color: var(--text-300); margin-bottom: 12px; }
+
+.vb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.vb-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-300);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-strong);
+}
+.vb-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-200);
+  vertical-align: top;
+}
+.vb-table tbody tr:last-child td { border-bottom: none; }
+.vb-table .num { text-align: right; font-family: 'Space Grotesk', sans-serif; white-space: nowrap; }
+.vb-table .vb-mono { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-300); }
+.vb-cell-sub { font-size: 11px; color: var(--text-400); margin-top: 2px; line-height: 1.4; }
+
+.vb-row-selected { background: rgba(16,185,129,0.06); }
+.vb-row-selected td:first-child { border-left: 3px solid var(--green); }
+.vb-row-cheapest { background: rgba(16,185,129,0.10); }
+.vb-row-cheapest td { color: var(--text-100); font-weight: 600; }
+
+.vb-num-good { color: var(--green); font-weight: 600; }
+.vb-num-bad  { color: var(--red); font-weight: 600; }
+
+.vb-callout {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-left: 4px solid var(--accent);
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-100);
+  margin-top: 12px;
+  line-height: 1.6;
+}
+.vb-callout--amber { border-left-color: var(--amber); background: var(--amber-dim); }
+
+.vb-tr-total td { background: var(--bg-card-hover); border-top: 2px solid var(--border-strong); }
+
+.vb-pitch {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-100);
+  white-space: pre-wrap;
+  font-style: italic;
+}
+
+.vb-totals {
+  margin-top: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 18px;
+}
+.vb-totalrow {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--text-200);
+  border-bottom: 1px solid var(--border);
+}
+.vb-totalrow:last-child { border-bottom: none; }
+.vb-totalrow .num { font-family: 'Space Grotesk', sans-serif; }
+.vb-totalrow--final { font-size: 16px; color: var(--green); padding-top: 10px; margin-top: 4px; border-top: 2px solid var(--border-strong); border-bottom: none; }
+
+.vb-quote-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+}
+.vb-quote-card-hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--text-200);
+}
+.vb-quote-card-total { color: var(--green); font-weight: 700; font-family: 'Space Grotesk', sans-serif; font-size: 16px; }
+.vb-quote-card-scope { font-size: 14px; color: var(--text-100); margin-bottom: 6px; }
+.vb-quote-card-detail { font-size: 12px; color: var(--text-300); line-height: 1.5; margin-bottom: 8px; }
+.vb-quote-card-totals { font-size: 12px; color: var(--text-400); display: flex; gap: 18px; flex-wrap: wrap; }
+.vb-quote-card-totals span b { color: var(--text-100); font-family: 'Space Grotesk', sans-serif; }
+
+/* Nav badge variant */
+.nav-badge.accent { background: var(--accent-dim); color: var(--accent); }
+
+/* === PRINT STYLES === */
+@media print {
+  /* Hide chrome */
+  .sidebar, .no-print, .nav-item, .vb-print-btn { display: none !important; }
+  body, html { background: #fff !important; color: #000 !important; }
+  .app { display: block; }
+  .main { margin-left: 0 !important; padding: 0 !important; max-width: 100% !important; }
+  /* Hide every section except the vendor brief */
+  section.section { display: none !important; }
+  section#vendor-brief { display: block !important; padding: 0 !important; margin: 0 !important; }
+  /* Make print readable */
+  .section-header.vb-header { display: none !important; }
+  .vb-print-header {
+    display: block;
+    border-bottom: 3px solid #000;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+  .vb-print-header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22pt;
+    color: #000;
+    margin-bottom: 6px;
+  }
+  .vb-print-meta {
+    font-size: 10pt;
+    color: #555;
+  }
+  .vb-block { margin-bottom: 20px; page-break-inside: avoid; }
+  .vb-h2 {
+    color: #000 !important;
+    border-bottom: 2px solid #000 !important;
+    font-size: 14pt;
+    margin-top: 14px;
+    margin-bottom: 8px;
+  }
+  .vb-h2--red   { color: #b00 !important; border-bottom-color: #b00 !important; }
+  .vb-h2--green { color: #060 !important; border-bottom-color: #060 !important; }
+  .vb-h2--amber { color: #b80 !important; border-bottom-color: #b80 !important; }
+  .vb-sub { color: #444 !important; font-size: 9pt; }
+  .vb-table {
+    background: #fff !important;
+    border: 1px solid #444 !important;
+    font-size: 9pt;
+    page-break-inside: auto;
+  }
+  .vb-table th {
+    background: #eee !important;
+    color: #222 !important;
+    border-bottom: 1px solid #444 !important;
+    font-size: 8pt;
+  }
+  .vb-table td {
+    color: #000 !important;
+    border-bottom: 1px solid #ccc !important;
+    padding: 6px 8px;
+  }
+  .vb-table tr { page-break-inside: avoid; }
+  .vb-cell-sub { color: #555 !important; font-size: 8pt; }
+  .vb-mono { color: #333 !important; }
+  .vb-row-selected { background: #f4fff8 !important; }
+  .vb-row-cheapest { background: #e8fff0 !important; }
+  .vb-num-good { color: #060 !important; }
+  .vb-num-bad  { color: #b00 !important; }
+  .vb-callout {
+    background: #f8f8f8 !important;
+    border: 1px solid #888 !important;
+    border-left: 4px solid #444 !important;
+    color: #000 !important;
+    font-size: 10pt;
+  }
+  .vb-callout--amber { background: #fff8e0 !important; border-left-color: #b80 !important; }
+  .vb-pitch {
+    background: #fafafa !important;
+    border: 1px solid #888 !important;
+    color: #000 !important;
+    font-size: 10pt;
+  }
+  .vb-totals { background: #fafafa !important; border: 1px solid #888 !important; color: #000 !important; }
+  .vb-totalrow { color: #000 !important; border-bottom-color: #ccc !important; }
+  .vb-totalrow--final { color: #060 !important; border-top-color: #444 !important; }
+  .vb-quote-card {
+    background: #fff !important;
+    border: 1px solid #888 !important;
+    color: #000 !important;
+    page-break-inside: avoid;
+  }
+  .vb-quote-card-total { color: #060 !important; }
+  .vb-quote-card-scope, .vb-quote-card-detail, .vb-quote-card-totals { color: #000 !important; }
+  .vb-tr-total td { background: #f0f0f0 !important; }
+
+  @page { margin: 0.5in; }
+}
