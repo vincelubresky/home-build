@@ -28,18 +28,14 @@
   <nav class="sidebar-nav">
     <div class="nav-section-label">Project</div>
     <a href="#overview" class="nav-item active" onclick="setActive(this)"><i class="fa-solid fa-gauge-high"></i>Overview</a>
-    <a href="#budget" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-dollar-sign"></i>Budget<span class="nav-badge amber">$267K</span></a>
+    <a href="#budget" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-dollar-sign"></i>Budget<span class="nav-badge amber" id="nav-budget-badge">—</span></a>
     <div class="nav-section-label">Design</div>
     <a href="#design" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-drafting-compass"></i>Home Design</a>
     <a href="#lowtox" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-leaf"></i>Low-Tox Specs</a>
     <div class="nav-section-label">Build Tracking</div>
     <a href="#materials" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-boxes-stacked"></i>Materials</a>
     <a href="#takeoff" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-list-ol"></i>Framing Takeoff</a>
-    <a href="#timeline" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-calendar-days"></i>Timeline</a>
-    <a href="#contractors" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-hard-hat"></i>Contractors</a>
     <a href="#vendor-brief" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-handshake"></i>Vendor Brief<span class="nav-badge accent">NEW</span></a>
-    <div class="nav-section-label">Finance</div>
-    <a href="#loan" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-building-columns"></i>Loan & Draws</a>
     <a href="#permits" class="nav-item" onclick="setActive(this)"><i class="fa-solid fa-file-contract"></i>Plans & Permits</a>
   </nav>
 </aside>
@@ -57,8 +53,8 @@
     <div class="stat-grid">
       <div class="stat-card amber">
         <div class="stat-label">Total Budget</div>
-        <div class="stat-value">$277,517</div>
-        <div class="stat-sub">14 categories · 84 line items</div>
+        <div class="stat-value" id="overview-total">—</div>
+        <div class="stat-sub" id="overview-total-sub">—</div>
       </div>
       <div class="stat-card accent">
         <div class="stat-label">Total Size</div>
@@ -463,32 +459,6 @@
     <div id="takeoff-list"></div>
   </section>
 
-  <!-- ══ TIMELINE ══ -->
-  <section id="timeline" class="section">
-    <div class="section-header">
-      <div class="section-title">Timeline</div>
-      <div class="section-sub">Phases and milestones</div>
-    </div>
-    <div class="empty-state">
-      <div class="empty-icon"><i class="fa-solid fa-calendar-days"></i></div>
-      <div class="empty-title">Timeline not set yet</div>
-      <div class="empty-sub">Waiting on loan approval to establish build schedule</div>
-    </div>
-  </section>
-
-  <!-- ══ CONTRACTORS ══ -->
-  <section id="contractors" class="section">
-    <div class="section-header">
-      <div class="section-title">Contractors</div>
-      <div class="section-sub">Contact info, quotes, and notes</div>
-    </div>
-    <div class="empty-state">
-      <div class="empty-icon"><i class="fa-solid fa-hard-hat"></i></div>
-      <div class="empty-title">No contractors added yet</div>
-      <div class="empty-sub">Add contractor info to js/data.js as bids come in</div>
-    </div>
-  </section>
-
   <!-- ══ VENDOR BRIEF (printable) ══ -->
   <section id="vendor-brief" class="section">
     <div class="section-header vb-header">
@@ -663,19 +633,6 @@
     </div>
   </section>
 
-  <!-- ══ LOAN & DRAWS ══ -->
-  <section id="loan" class="section">
-    <div class="section-header">
-      <div class="section-title">Loan & Draws</div>
-      <div class="section-sub">Construction loan details and draw schedule</div>
-    </div>
-    <div class="empty-state">
-      <div class="empty-icon"><i class="fa-solid fa-building-columns"></i></div>
-      <div class="empty-title">Loan not started</div>
-      <div class="empty-sub">Will begin loan process after county approves survey — add details here when ready</div>
-    </div>
-  </section>
-
   <!-- ══ PLANS & PERMITS ══ -->
   <section id="permits" class="section">
     <div class="section-header">
@@ -736,7 +693,7 @@
 </main>
 </div>
 
-<script src="js/data.js?v=5"></script>
+<script src="js/data.js?v=6"></script>
 <script>
 // ── Load saved materials from localStorage ──
 (function() {
@@ -756,10 +713,12 @@ function fmt(n) {
 function renderBudget() {
   const list = document.getElementById('budget-list');
   let totalAllocated = 0;
+  let totalLineItems = 0;
 
   BUDGET_CATEGORIES.forEach(cat => {
     totalAllocated += cat.allocated;
     const hasItems = cat.items && cat.items.length > 0;
+    if (hasItems) totalLineItems += cat.items.length;
     const itemsHtml = hasItems ? cat.items.map(item => `
       <div class="budget-item-row">
         <div>
@@ -787,6 +746,14 @@ function renderBudget() {
   });
 
   document.getElementById('budget-total').textContent = fmt(totalAllocated);
+
+  // Mirror to Overview hero + nav badge so they don't drift
+  const overviewTotal = document.getElementById('overview-total');
+  const overviewSub = document.getElementById('overview-total-sub');
+  const navBadge = document.getElementById('nav-budget-badge');
+  if (overviewTotal) overviewTotal.textContent = fmt(totalAllocated);
+  if (overviewSub) overviewSub.textContent = `${BUDGET_CATEGORIES.length} categories · ${totalLineItems} line items`;
+  if (navBadge) navBadge.textContent = '$' + Math.round(totalAllocated/1000) + 'K';
 }
 
 function toggleBudget(row) {
@@ -837,7 +804,7 @@ function setActive(el) {
 }
 
 // ── Scroll spy ──
-const sections = ['overview','budget','design','lowtox','materials','takeoff','timeline','contractors','vendor-brief','loan','permits'];
+const sections = ['overview','budget','design','lowtox','materials','takeoff','vendor-brief','permits'];
 const navLinks = {};
 sections.forEach(id => {
   navLinks[id] = document.querySelector(`.nav-item[href="#${id}"]`);

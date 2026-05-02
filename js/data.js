@@ -1105,7 +1105,7 @@ const BUDGET_CATEGORIES = [
   {
     id: 1,
     name: "Site & Permits",
-    allocated: 5500,
+    allocated: 4500,
     notes: "Health dept, county permit, engineering, survey, house plans",
     items: [
       { name: "Building permit fee", cost: 800, notes: "Shelby County estimate" },
@@ -1133,49 +1133,46 @@ const BUDGET_CATEGORIES = [
   {
     id: 3,
     name: "Foundation & Basement Structure",
-    allocated: 45000,
-    notes: "Excavation, footings, poured/block basement walls, main floor deck, waterproofing, drain tile, sump. Owner-rented excavator ($2,500 self-completed). Concrete labor quoted by Jemison.",
+    allocated: 45731,
+    notes: "Concrete labor quoted by Jemison (4/19/26). Concrete material, pump, and gravel sourced separately — not in Jemison quote.",
     items: [
-      { name: "Excavation — 1,114 sq ft footprint, ~9 ft deep", cost: 2500, notes: "Owner-rented excavator — self-completed" },
-      { name: "Concrete labor — Jemison Quote 1110 (4/19/26)", cost: 21631, notes: "QUOTED: footing labor $2,601 + walls $6,825 + waterproofing $4,875 + drain pipe $250 + slab labor $3,330 + slab materials $3,750. EXCLUDES concrete itself, concrete pump (×3), gravel for drain & slab. Based on 10 ft tall wall." },
-      { name: "Concrete material — 3,000 PSI ready-mix (footing+wall+slab)", cost: 12000, notes: "~80 cu yd × $150/yd. NOT in Jemison quote — get separate ready-mix quote." },
-      { name: "Concrete pump (×3 setups per Jemison)", cost: 3000, notes: "NOT in Jemison quote — typically ~$1,000/pour" },
-      { name: "Gravel for drain pipe + slab base", cost: 1500, notes: "NOT in Jemison quote" },
-      { name: "Interior footings — posts and column pads", cost: 1800, notes: "Support for main floor beam system" },
-      { name: "Main floor beam + post system", cost: 2500, notes: "LVL or steel beam spanning basement, with lally columns" },
-      { name: "Sump pit + sleeve + pump", cost: 800, notes: "Required in most full basement builds" },
+      { name: "Concrete labor — Jemison Quote #1110", cost: 21631, notes: "QUOTED 4/19/26: footing $2,601 + walls $6,825 + waterproofing $4,875 + drain pipe $250 + slab labor $3,330 + slab materials $3,750. Based on 10 ft wall. EXCLUDES concrete, pump, drain/slab gravel." },
+      { name: "Concrete material — 3,000 PSI ready-mix", cost: 12000, notes: "~80 cu yd × ~$150/yd for footing + walls + slab. Get separate ready-mix quote." },
+      { name: "Concrete pump (×3 pours per Jemison scope)", cost: 3000, notes: "~$1,000/pour" },
+      { name: "Excavation — 1,114 sq ft × ~9 ft", cost: 2500, notes: "Owner-rented excavator, self-completed" },
+      { name: "Main floor beam + post system", cost: 2500, notes: "LVL or steel beam, lally columns" },
+      { name: "Interior footings — posts + column pads", cost: 1800, notes: "Beam support pads" },
+      { name: "Gravel — drain pipe + slab base", cost: 1500, notes: "Not in Jemison quote" },
+      { name: "Sump pit + sleeve + pump", cost: 800, notes: "" },
     ]
   },
   {
     id: 4,
     name: "Framing & Structure",
-    allocated: 60930,
-    notes: "Vendor-quoted April 2026. PREFERRED: Oak Mountain #23356 (ZIP wall + ZIP roof + ZIP tape). User chose ZIP system over OSB for integrated WRB. Includes lumber+ZIP+Hardie+deck pkg, EWP, roof trusses, framing labor, porch, dumpster.",
+    allocated: 70998,
+    notes: "Quoted April 2026. Oak Mountain #23356 (ZIP wall + ZIP roof + tape) is the chosen package. EWP contingency held in case OM's $2,571 EWP line is incomplete — see Vendor Brief.",
     items: [
-      { name: "Framing material pkg — Oak Mountain Quote 23356 (PREFERRED, ZIP system)", cost: 45205, notes: "QUOTED 4/28/26 incl 5% tax. Lumber + 78× 7/16 ZIP Wall sheets + 116× 1/2 ZIP Roof + 36× ZIP Tape + 3/4 T&G Huber Blue + Hardie panel/trim/soffit + deck materials + EWP $2,571 line + hardware. ZIP eliminates housewrap and synthetic felt entirely. NEGOTIATION TARGETS — see Vendor Brief tab." },
-      { name: "Framing material pkg — Oak Mountain Quote 23351 (OSB alternate)", cost: 0, notes: "ALTERNATE: OSB + housewrap version $41,692. ZIP upgrade = +$3,514. Going with ZIP for the WRB integration and faster install." },
-      { name: "Framing material pkg — BFS Quote 87577907 (alternate, OSB)", cost: 0, notes: "ALTERNATE: BFS framing $35,322 incl tax (OSB only — no ZIP option quoted). Add BFS EWP $8,826 = $44,148 all-in. To match ZIP scope, BFS would need ~+$3,400 in ZIP materials → ~$47,548. OM ZIP at $45,205 is cheaper for equivalent scope." },
-      { name: "EWP line in OM #23356 — verify scope", cost: 0, notes: "OM's $2,571 EWP line vs BFS standalone EWP $8,826. KEY QUESTION FOR OWNER. If OM is missing items, expect $5–6K add. See Vendor Brief tab." },
-      { name: "Roof trusses — BFS Shelby Quote 5403492", cost: 7195, notes: "QUOTED 4/29/26 ex tax. 63 trusses, 8/12 pitch, 18\" OH. Ask OM to beat to consolidate." },
-      { name: "Framing labor — walls, floor", cost: 7798, notes: "$7/sq ft × 1,114 sq ft — confirmed rate" },
-      { name: "Porch framing — materials + labor", cost: 2500, notes: "Covered front/back porch included in plans" },
-      { name: "Dumpster rental (framing phase)", cost: 1000, notes: "Two hauls typical for framing debris" },
-      { name: "Roof framing labor (truss install)", cost: 1800, notes: "Crane setting + crew time for 63 trusses" },
+      { name: "Oak Mountain framing pkg — Quote #23356 (ZIP system)", cost: 45205, notes: "QUOTED 4/28/26 incl 5% tax. Lumber + 78× 7/16 ZIP Wall + 116× 1/2 ZIP Roof + 36× ZIP Tape + 3/4 T&G Huber Blue + full Hardie pkg + deck materials + EWP $2,571 line + hardware." },
+      { name: "EWP scope contingency", cost: 5500, notes: "Hold against possibility that OM's $2,571 EWP line is missing items vs BFS itemized $8,024 (LSL rim + 49 TJI-360 joists + LVLs). Confirm with OM owner before locking." },
+      { name: "Roof trusses — BFS Shelby #5403492", cost: 7195, notes: "QUOTED 4/29/26 ex tax. 63 trusses, 8/12 pitch, 18\" OH. Ask OM to match/beat to consolidate." },
+      { name: "Framing labor — walls + floor", cost: 7798, notes: "$7/sq ft × 1,114 sq ft" },
+      { name: "Roof framing labor (truss install)", cost: 1800, notes: "Crane + crew for 63 trusses" },
+      { name: "Porch framing — materials + labor", cost: 2500, notes: "Covered front + back porch" },
+      { name: "Dumpster rental (framing phase)", cost: 1000, notes: "Two hauls typical" },
     ]
   },
   {
     id: 5,
     name: "Exterior — Siding & Roof",
-    allocated: 19831,
-    notes: "Hardie B&B (folded into framing pkg), 16 BFS Comfort View windows, 4 BFS exterior doors, 12 interior doors, exterior paint, galvanized metal roof. Vendor quotes locked in April 2026.",
+    allocated: 17936,
+    notes: "Hardie B&B materials are bundled inside the OM framing pkg. Windows + exterior doors quoted by BFS (April 2026). Interior doors, paint, and metal roof still TBD.",
     items: [
-      { name: "Hardie Board & Batten — materials", cost: 0, notes: "Now bundled inside Oak Mountain framing pkg ($23,351) — see Framing & Structure category" },
-      { name: "Siding installation labor", cost: 3000, notes: "" },
-      { name: "Windows — 16 units (BFS Comfort View Quote 87515008)", cost: 3655, notes: "QUOTED 4/22/26. Saved ~$1,595 vs initial estimate. Lowe 366 4/1 grids." },
-      { name: "Exterior doors — 4 units (BFS Quote 87489258)", cost: 3743, notes: "QUOTED 4/21/26. 1× fiberglass dbl front (5/0×8/0 Nova45 fullview Lowe), 3× single (steel 6-panel + steel fullview + fiberglass mahogany)." },
-      { name: "Interior doors — 12 units (prehung)", cost: 1800, notes: "$150 avg hollow-core; solid wood is higher. Not yet quoted." },
-      { name: "Exterior paint — low-VOC, earth tones", cost: 1738, notes: "Materials + labor for Hardie" },
+      { name: "Windows — 16 units (BFS Comfort View Quote 87515008)", cost: 3655, notes: "QUOTED 4/22/26 incl. tax. Lowe 366 4/1 grids." },
+      { name: "Exterior doors — 4 units (BFS Quote 87489258)", cost: 3743, notes: "QUOTED 4/21/26 incl. tax. 1× fiberglass dbl front (5/0×8/0 Nova45 fullview Lowe) + 3× single (steel 6-panel + steel fullview + fiberglass mahogany)." },
+      { name: "Siding installation labor", cost: 3000, notes: "Hardie B&B install" },
       { name: "Galvanized metal roof — materials + labor (~1,350 sq ft)", cost: 4000, notes: "Standing seam galvanized; ~$3/sq ft installed. Not yet quoted." },
+      { name: "Interior doors — 12 prehung units", cost: 1800, notes: "$150 avg hollow-core; solid wood upgrade is higher. Not yet quoted." },
+      { name: "Exterior paint — low-VOC, earth tones", cost: 1738, notes: "Materials + labor for Hardie" },
     ]
   },
   {
@@ -1285,15 +1282,8 @@ const BUDGET_CATEGORIES = [
   {
     id: 13,
     name: "Contingency (10%)",
-    allocated: 25865,
-    notes: "10% buffer on base cost — strongly recommended for new build",
-    items: []
-  },
-  {
-    id: 14,
-    name: "Basement — Phase 2 (TBD)",
-    allocated: 0,
-    notes: "Basement structure included in Foundation above. Phase 2 = interior finishing (insulation, flooring, drywall, HVAC extension, plumbing, lighting). Est $40k–$60k if finished. Decision TBD.",
+    allocated: 26742,
+    notes: "10% buffer on the $267,417 base. Recommended for new construction; covers scope creep and quote variance.",
     items: []
   },
 ];
